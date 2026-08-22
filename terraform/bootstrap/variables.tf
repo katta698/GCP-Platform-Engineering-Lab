@@ -32,3 +32,18 @@ variable "region" {
   type        = string
   default     = "us-central1"
 }
+
+variable "budget_amount" {
+  description = <<-EOT
+    Monthly budget threshold in whole currency units. This is an alert level, not
+    a spending cap — Google Cloud does not stop resources when it is crossed.
+  EOT
+  type        = number
+  default     = 25
+}
+
+variable "budget_currency" {
+  description = "Currency code for the budget. Must match the billing account's currency."
+  type        = string
+  default     = "USD"
+}
