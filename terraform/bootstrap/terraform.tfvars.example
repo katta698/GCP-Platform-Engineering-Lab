@@ -1,0 +1,15 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored and must
+# stay that way — every value below is either an account identifier or something
+# that reveals one.
+
+# Numeric organization ID from `gcloud organizations list`.
+# Leave commented out if you have no Cloud Identity organization (Option A).
+# org_id = "000000000000"
+
+# From `gcloud billing accounts list`, format XXXXXX-XXXXXX-XXXXXX.
+billing_account = "XXXXXX-XXXXXX-XXXXXX"
+
+# Globally unique. Suggested shape: <initials>-gcp-lab-seed
+seed_project_id = "CHANGEME-gcp-lab-seed"
+
+region = "us-central1"

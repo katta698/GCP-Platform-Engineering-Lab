@@ -1,0 +1,60 @@
+# Terraform
+**/.terraform/
+**/.terraform.lock.hcl
+**/terraform.tfvars
+**/*.auto.tfvars
+**/tfplan
+**/*.tfstate
+**/*.tfstate.*
+
+# Credentials — never commit any of these
+**/*-key.json
+**/service-account*.json
+**/application_default_credentials.json
+.env
+.env.*
+!.env.example
+
+# Blog HTML (lives in katta698.github.io, kept local only if generated here)
+**/docs/blog/*.html
+
+# LinkedIn drafts — personal working files
+**/docs/linkedin/
+
+# Build artifacts
+**/functions/builds/
+**/*.zip
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# Local study/prep docs
+**/docs/explainer.md
+**/docs/blog-prep.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Working files for Claude Code — local only, same as the AWS lab
+CLAUDE.md
+SESSION_CONTEXT.md
+SESSION_ARCHIVE.md
+BRIEFINGS.md
+
+# Internal setup and design notes. These contain account specifics and working
+# reasoning; the public README carries what a reader actually needs.
+docs/SETUP.md
+docs/CLOUD-IDENTITY-SETUP.md
+docs/HIERARCHY.md
+
+# Per-week study material — local only
+**/docs/interview-questions.md
+**/docs/references.md
+
+# Playwright profile and exported cookies — session credentials, never committed
+playwright_profile/
+*_cookies.json

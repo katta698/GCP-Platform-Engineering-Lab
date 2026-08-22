@@ -1,0 +1,11 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored: org_id
+# and billing_account are account identifiers and must never reach git.
+
+org_id          = "000000000000"
+billing_account = "XXXXXX-XXXXXX-XXXXXX"
+region          = "us-central1"
+
+# Globally unique across all of Google Cloud.
+network_hub_project_id = "CHANGEME-gcp-net-hub"
+logging_project_id     = "CHANGEME-gcp-logging"
+security_project_id    = "CHANGEME-gcp-security"
