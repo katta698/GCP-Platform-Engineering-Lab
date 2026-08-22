@@ -109,12 +109,12 @@ A few things worth knowing if you are doing this yourself:
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
 | 12 | Shared VPC hub-and-spoke | Shared VPC, hierarchical firewall policies | 📅 Planned |
-| 13 | Hybrid connectivity | HA VPN, Cloud Router, BGP | 📅 Planned |
+| 13 | Hybrid and cross-cloud connectivity | HA VPN, Cloud Router, BGP, Cross-Cloud Network | 📅 Planned |
 | 14 | Private Service Connect | PSC endpoints, Private Google Access | 📅 Planned |
 | 15 | Global load balancing | Global external ALB, Cloud CDN, Cloud Armor | 📅 Planned |
 | 16 | Cloud NAT and egress control | Cloud NAT, Secure Web Proxy | 📅 Planned |
 | 17 | Cloud DNS: private and split-horizon | Cloud DNS, peering, forwarding | 📅 Planned |
-| 18 | Network observability | VPC Flow Logs, Network Intelligence Center | 📅 Planned |
+| 18 | Network observability | VPC Flow Logs, Network Intelligence Center, Cloud Network Insights | 📅 Planned |
 | 19 | VPC Service Controls perimeter | VPC-SC, Access Context Manager | 📅 Planned |
 
 ### Phase 4 — Compute (Weeks 20–25)
@@ -136,15 +136,85 @@ A few things worth knowing if you are doing this yourself:
 | 27 | GitOps with Config Sync | Config Sync, Policy Controller, fleets | 📅 Planned |
 | 28 | Cloud Run services and jobs | Cloud Run, traffic splitting | 📅 Planned |
 | 29 | Container supply chain security | Artifact Analysis, Binary Authorization | 📅 Planned |
-| 30 | Service mesh | Cloud Service Mesh, mTLS | 📅 Planned |
-| 31 | Multi-cluster and fleet ingress | Multi Cluster Ingress, Gateway API | 📅 Planned |
+| 30 | Ambient networking — mesh without sidecars | Ambient data plane for GKE and Cloud Run, zero-trust, mTLS | 📅 Planned |
+| 31 | Multi-cluster Gateway API | GKE fleets, multi-cluster Gateway, GatewayClass | 📅 Planned |
 
-### Phases 6–12 — Storage, data, serverless, security, operations, FinOps, DR (Weeks 32–53)
+### Phase 6 — Storage (Weeks 32–35)
 
-Storage lifecycle and Filestore · Cloud SQL, AlloyDB, Spanner, BigQuery ·
-Pub/Sub and Dataflow · Eventarc and Workflows · Security Command Center and
-Cloud Armor · Cloud Monitoring, SLOs and centralised logging · committed use
-discounts and showback · multi-region failover.
+| Week | Project | Key services | Status |
+|------|---------|--------------|--------|
+| 32 | Cloud Storage lifecycle and tiering | Storage classes, Autoclass, lifecycle, retention | 📅 Planned |
+| 33 | Block and file: Hyperdisk, Filestore, Managed Lustre | Hyperdisk, Filestore, Managed Lustre, snapshot schedules | 📅 Planned |
+| 34 | Backup and restore automation | Backup and DR Service, snapshot policies | 📅 Planned |
+| 35 | Data transfer and migration | Storage Transfer Service, Transfer Appliance | 📅 Planned |
+
+### Phase 7 — Databases and data platform (Weeks 36–42)
+
+| Week | Project | Key services | Status |
+|------|---------|--------------|--------|
+| 36 | Cloud SQL self-service platform | Cloud SQL, HA, read replicas, Auth Proxy, IAM auth | 📅 Planned |
+| 37 | AlloyDB and the lakehouse boundary | AlloyDB, columnar engine, live Iceberg/BigQuery reads, reverse ETL | 📅 Planned |
+| 38 | Spanner: global consistency and columnar scans | Spanner, multi-region configs, Columnar Engine, TrueTime | 📅 Planned |
+| 39 | BigQuery for variable workloads | Partitioning, clustering, fluid scaling, reservations | 📅 Planned |
+| 40 | Streaming pipelines | Pub/Sub, Dataflow, BigQuery streaming, continuous queries | 📅 Planned |
+| 41 | Database Migration Service | DMS, homogeneous and heterogeneous migration, CDC | 📅 Planned |
+| 42 | Firestore and Memorystore | Firestore, Memorystore for Valkey | 📅 Planned |
+
+### Phase 8 — Serverless and integration (Weeks 43–45)
+
+| Week | Project | Key services | Status |
+|------|---------|--------------|--------|
+| 43 | Event-driven platform | Eventarc, Pub/Sub, Cloud Run functions | 📅 Planned |
+| 44 | Workflows and orchestration | Workflows, Cloud Scheduler, Cloud Tasks | 📅 Planned |
+| 45 | API management | API Gateway, Apigee, Cloud Endpoints | 📅 Planned |
+
+### Phase 9 — Security and compliance (Weeks 46–48)
+
+| Week | Project | Key services | Status |
+|------|---------|--------------|--------|
+| 46 | Security Command Center | SCC findings, mute rules, auto-remediation | 📅 Planned |
+| 47 | Cloud Armor and edge protection | Cloud Armor policies, rate limiting, adaptive protection | 📅 Planned |
+| 48 | Audit logging, forensics and sovereignty | Cloud Audit Logs, log sinks, Confidential External Key Management | 📅 Planned |
+
+### Phase 10 — Observability and operations (Weeks 49–51)
+
+| Week | Project | Key services | Status |
+|------|---------|--------------|--------|
+| 49 | Cloud Monitoring and SLOs | SLOs, error budgets, alerting policies | 📅 Planned |
+| 50 | Centralised logging | Log Router, sinks, log buckets, Log Analytics | 📅 Planned |
+| 51 | Tracing and profiling | Cloud Trace, Cloud Profiler, OpenTelemetry | 📅 Planned |
+
+### Phases 11–12 — FinOps and reliability (Weeks 52–53)
+
+| Week | Project | Key services | Status |
+|------|---------|--------------|--------|
+| 52 | FinOps: CUDs, recommender, showback | Billing BigQuery export, Recommender, Looker Studio | 📅 Planned |
+| 53 | Disaster recovery and chaos | Multi-region failover, Backup and DR, fault injection | 📅 Planned |
+
+### Phase 13 — AI and agent platform (Weeks 54–58)
+
+The reason this phase exists: a platform-engineering lab running into 2027 that
+never touches agent infrastructure is describing a cloud that no longer matches
+the one people are being asked to run. Google's 2026 platform reorganised around
+agents — Vertex AI itself was folded into the **Gemini Enterprise Agent
+Platform** — and the interesting problems are the platform ones: identity for
+non-human callers, egress governance, isolation, and cost attribution for
+workloads whose usage is inherently variable.
+
+Treated as infrastructure, not as model demos.
+
+| Week | Project | Key services | Status |
+|------|---------|--------------|--------|
+| 54 | Agent platform foundations | Gemini Enterprise Agent Platform, Agent Runtime, IAM for agents | 📅 Planned |
+| 55 | Agent Gateway: governing agent traffic | Agent Gateway, MCP and A2A protocols, egress policy | 📅 Planned |
+| 56 | Isolating untrusted agent workloads | GKE Agent Sandbox, Workload Identity, network policy | 📅 Planned |
+| 57 | Grounding agents in governed data | BigQuery Graph, AI.PARSE_DOCUMENT, VPC-SC around the data plane | 📅 Planned |
+| 58 | Agent observability and cost control | Per-second billing exposure, tracing, budget guardrails | 📅 Planned |
+
+Week 55 is the direct counterpart to Week 17 of the AWS lab, which builds an MCP
+server over that lab's own operational data. Same problem — making a platform
+agent-consumable — approached from the governance side rather than the server
+side.
 
 ---
 
