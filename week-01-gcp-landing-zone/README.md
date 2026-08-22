@@ -1,56 +1,127 @@
-# Week 01 — GCP Landing Zone
+# Week 01 — Landing Zone
 
-**Status:** 🔨 Scaffolded, not deployed — blocked on [`../docs/SETUP.md`](../docs/SETUP.md).
+**Status:** ✅ Deployed — 15 resources, 0 changed, 0 destroyed.
 
-Builds the resource hierarchy everything else in this lab sits inside: folders
-for environment separation, projects created from a reusable module, a service
-account for CI, and enough IAM to make the hierarchy meaningful rather than
-decorative.
+The resource hierarchy every later week sits inside: folders that policy can
+attach to, and the platform projects that outlive any single week.
+
+Write-up: [A GCP Landing Zone, and Why It Is Not Two Accounts](https://jayanthkatta.com/blog/week-01-gcp-landing-zone/)
 
 ## Cost note
 
-Resource Manager objects — organizations, folders, projects, IAM bindings — are
-free. This week creates no compute, no storage beyond the bootstrap state
-bucket, and nothing that bills per hour. It is intended to **stay deployed
-permanently**; every later week depends on it. `scripts/cleanup.sh` therefore
-refuses to run without an explicit confirmation flag.
+**Zero.** Not "a few cents" — organizations, folders, projects, IAM bindings and
+API enablement are all free. Nothing here bills per hour.
 
-## What gets built
+This week is **permanent infrastructure**. Every later week creates its projects
+inside these folders, so tearing it down orphans the lab. `scripts/cleanup.sh`
+refuses to run without `--i-really-mean-it`.
+
+## What is deployed
+
+```
+organization
+├── platform                    folder
+│   ├── net-hub                 compute, dns, networkmanagement
+│   ├── logging                 logging, monitoring, bigquery
+│   └── security                cloudkms, secretmanager
+└── workloads                   folder
+    ├── dev                     folder — later weeks create dev projects here
+    └── prod                    folder
+```
 
 | Resource | Why |
 | --- | --- |
-| `folders/platform` | Shared services that outlive any one week |
-| `folders/workloads/{dev,prod}` | Environment separation enforced by hierarchy, not naming convention |
-| Project factory module | Every later week creates its project the same way, with the same labels and API enablement |
-| CI service account + WIF pool | Keyless authentication from GitHub Actions — no service account keys anywhere in this lab |
-| Baseline IAM at folder scope | Grants inherit down, so per-project bindings stay rare and reviewable |
+| `platform` folder | Shared services that outlive any one week |
+| `workloads/{dev,prod}` folders | Environment separation the org policy service can attach to. A label could not do this |
+| Three platform projects | Split by blast radius — whoever can rotate a KMS key should not also be able to rewrite the network |
+| `project-factory` module | Every later week creates its projects the same way: same labels, explicit API list, no default network |
 
-## Prerequisite that decides the shape of this week
+## Design notes
 
-Folders require an organization. If Option A was chosen in `docs/SETUP.md`
-(no Cloud Identity organization), the folder hierarchy cannot be created and
-this week reduces to project creation plus IAM. Confirm which option is live
-before writing the Terraform — the decision is recorded in
-`../SESSION_CONTEXT.md`.
+**Why folders and not projects.** A governance/workload split maps onto folders
+in Google Cloud, not onto projects. A project is free, created in seconds, and is
+the unit that owns IAM, quota, API enablement and billing attribution — so
+rationing projects concentrates exactly what the split was meant to separate. The
+full argument is in the [repository README](../README.md).
+
+**`auto_create_network = false` on every project.** The default network arrives
+with permissive firewall rules nobody chose. Every network in this lab is
+created explicitly.
+
+**`activate_apis` defaults to empty.** A project that enables nothing has the
+smallest possible surface; each week adds only what it uses.
+
+**Timings, measured on the apply.** Folders created in 11–12 seconds. Projects
+took 3m15s, 3m50s and 5m33s. Project creation is genuinely slow — worth knowing
+before assuming an apply has hung.
 
 ## Layout
 
 ```
 week-01-gcp-landing-zone/
 ├── terraform/
-│   ├── modules/project-factory/   # reusable project creation
-│   └── environments/{dev,prod}/
+│   ├── main.tf                        folders + platform projects
+│   ├── versions.tf                    HCP workspace gcp-week-01
+│   └── modules/project-factory/       reusable project creation
 ├── scripts/{deploy.sh,validate.sh,cleanup.sh}
 └── docs/
-    ├── architecture/              # SVG diagram for the blog post
-    ├── blog/screenshots/          # committed evidence
-    ├── references.md
-    └── interview-questions.md
+    ├── architecture/                  standalone SVG diagram
+    └── blog/screenshots/              committed evidence
 ```
 
-## Blog posts this feeds
+There is no `environments/dev` and `environments/prod` split here, unlike later
+weeks. The hierarchy is org-wide: there is one set of folders, and dev and prod
+are objects *inside* it rather than two deployments of it. The workspace is
+`gcp-week-01`, with no `-dev` suffix, for the same reason.
 
-GCP Architecture Series phase 1 (Foundations and governance), roughly #1–#8 —
-resource hierarchy, projects, folders, billing association, and the case for
-Terraform-managed hierarchy. See `GCP-ROADMAP.md` in the blog repo for the
-authoritative numbering; do not renumber published posts.
+## Running it
+
+Terraform reads Application Default Credentials, not your `gcloud auth login`
+session:
+
+```bash
+gcloud auth application-default login
+```
+
+Then:
+
+```bash
+cp terraform/terraform.tfvars.example terraform/terraform.tfvars
+```
+
+Fill in the organization ID, billing account and three globally unique project
+IDs. `terraform.tfvars` is gitignored and must stay that way.
+
+```bash
+cd terraform && terraform init && terraform plan
+```
+
+Expect 15 resources: 4 folders, 3 projects, 8 API enablements.
+
+## Verifying it
+
+State can be confidently wrong, so check Google Cloud directly rather than
+trusting it:
+
+```bash
+./scripts/validate.sh
+```
+
+```bash
+terraform plan -detailed-exitcode   # 0 = no drift
+```
+
+The field that matters on a project is `parent.id` — it is the difference
+between a project that is *in* the hierarchy and one that merely exists.
+
+## Prerequisites
+
+An **organization**, which requires Cloud Identity on a domain you control.
+Folders and organization policy do not exist without one, and there is no API
+that creates an organization — it appears when a user from a verified domain
+first signs in to the Cloud console.
+
+The identity running this needs `resourcemanager.organizationAdmin`,
+`folderCreator` and `projectCreator` at the organization, plus `billing.user` on
+the billing account. Organization Administrator does **not** include
+`folders.create`; that grant is separate and easy to miss.

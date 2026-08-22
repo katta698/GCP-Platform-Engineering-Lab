@@ -88,18 +88,43 @@ A few things worth knowing if you are doing this yourself:
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
 | [01](./week-01-gcp-landing-zone) | Landing zone: folders, projects, remote state | Resource Manager, Terraform, HCP | ✅ Complete |
-| 02 | Org policy and guardrails | Organization Policy Service, custom constraints | 📅 Planned |
-| 03 | Project vending machine | Cloud Build, Service Usage, Resource Manager | 📅 Planned |
-| 04 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |
-| 05 | Terraform CI/CD, keyless | Cloud Build, Workload Identity Federation | 📅 Planned |
+| 02 | Keyless CI: the baseline you inherited, and the only path it leaves | Security baseline constraints, Workload Identity Federation, HCP dynamic credentials | 📅 Planned |
+| 03 | Organization policy and guardrails | Organization Policy Service, custom constraints | 📅 Planned |
+| 04 | Project factory | Service Usage, Resource Manager, Cloud Build | 📅 Planned |
+| 05 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |
 | 06 | Resource hierarchy audit and drift | Cloud Asset Inventory, asset feeds, BigQuery | 📅 Planned |
+
+**Why CI comes second.** Two properties of Google Cloud decide this, and neither
+is a matter of taste.
+
+Organization policy is evaluated **at resource creation**. A constraint added
+after a project exists does not retroactively fix that project. So every week
+built before a pipeline exists is a week of resources created by hand, outside
+review, that later constraints will not clean up.
+
+And the usual failure mode in Google Cloud CI — a **service account key** in a
+file or a CI variable — is already impossible here, without anyone deciding it.
+Every organization created on or after **3 May 2024** inherits Google's security
+baseline constraints, and this one arrived with seven already enforced,
+including `iam.managed.disableServiceAccountKeyCreation` and
+`iam.disableServiceAccountKeyUpload`.
+
+So the week is not "ban the shortcut, then build the alternative". The shortcut
+was banned before I arrived. The week is: find out what the platform has already
+decided on your behalf, prove it by trying to create a key and watching it fail,
+and then build the only path left — Workload Identity Federation, where HCP
+Terraform mints an OIDC token per run and Google exchanges it for a short-lived
+credential that never touches disk.
+
+That is a more useful lesson than the one I set out to write, and it is only
+visible if you look at the org policy before assuming you have to write it.
 
 ### Phase 2 — Identity and access (Weeks 7–11)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
 | 07 | IAM: roles, conditions, deny policies | Cloud IAM, IAM Conditions, Deny Policies | 📅 Planned |
-| 08 | Service accounts and Workload Identity Federation | WIF, keyless GitHub Actions auth | 📅 Planned |
+| 08 | Service account lifecycle and impersonation | Short-lived tokens, impersonation chains, SA hygiene | 📅 Planned |
 | 09 | Cloud Identity and group-based access | Cloud Identity, Google Groups | 📅 Planned |
 | 10 | Privileged access and just-in-time elevation | Privileged Access Manager, IAM Recommender | 📅 Planned |
 | 11 | Secret management | Secret Manager, Cloud KMS, CMEK, rotation | 📅 Planned |
