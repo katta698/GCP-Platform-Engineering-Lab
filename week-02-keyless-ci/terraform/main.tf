@@ -148,19 +148,36 @@ resource "google_service_account_iam_member" "apply_federation" {
 # grant cannot create the folder it would be scoped to.
 # ---------------------------------------------------------------------------
 
-# Read-only, and deliberately broad in reach rather than in power. A plan has to
-# refresh every resource the configuration touches, across every project the lab
-# will ever create, or it reports drift that is not there.
+# Read-only, and narrow.
+#
+# roles/viewer was here first, on the reasoning that a plan only reads, so
+# breadth costs nothing. That reasoning is wrong. roles/viewer confers
+# storage.legacyObjectReader on every bucket, which makes this not "read the
+# hierarchy" but "read every object in every project in the organization,
+# including projects that do not exist yet" — reachable by any HCP workspace that
+# satisfies the attribute condition above. Google's guidance is not to grant
+# basic roles in production at all; they carry thousands of permissions across
+# every service.
+#   https://docs.cloud.google.com/storage/docs/access-control/iam-roles
+#   https://docs.cloud.google.com/iam/docs/choose-predefined-roles
+#
+# roles/browser stays, and the note that earned it stays with it: roles/viewer
+# does not include resourcemanager.folders.get. Basic roles predate the resource
+# hierarchy and describe a project's contents, not the structure a project hangs
+# from — so an organization-level grant of viewer inherits downward and still
+# cannot read a folder. Measured, not assumed: a remote plan of Week 01 failed on
+# exactly that permission.
+#
+# The rest is what a refresh of this lab's resources actually reads. If a later
+# week's plan needs more, add that one role and say which resource needed it.
+# Do not reach back for roles/viewer.
 resource "google_organization_iam_member" "plan" {
   for_each = toset([
-    "roles/viewer",
-    "roles/orgpolicy.policyViewer",
-    # roles/viewer does not include resourcemanager.folders.get. Basic roles
-    # predate the resource hierarchy and describe a project's contents, not the
-    # structure a project hangs from — so an organization-level grant of viewer
-    # inherits downward and still cannot read a folder. Measured, not assumed: a
-    # remote plan of Week 01 failed on exactly that permission.
-    "roles/browser",
+    "roles/browser",                         # folders, projects, the tree itself
+    "roles/orgpolicy.policyViewer",          # org policy, Week 03 onward
+    "roles/serviceusage.serviceUsageViewer", # google_project_service
+    "roles/iam.securityReviewer",            # IAM policies, for drift in bindings
+    "roles/iam.workloadIdentityPoolViewer",  # this week's own pool and provider
   ])
 
   org_id = var.org_id
@@ -213,3 +230,36 @@ resource "google_organization_iam_member" "apply" {
 # katta698@ deliberately does not hold — it has costsManager, which covers
 # budgets and nothing else.
 # ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# A lien on the seed project
+#
+# tf-apply holds roles/resourcemanager.projectDeleter at the organization, which
+# includes the seed project — the one holding this pool, this provider, and both
+# identities. An apply that deletes it takes the lab's entire authentication
+# layer with it, and there is nothing left to authenticate the repair.
+#
+# The bootstrap already sets prevent_destroy on that project, and that is worth
+# having, but it is a Terraform-side guard: it refuses a destroy in that one
+# configuration. It says nothing to a gcloud call, a console click, or a
+# different configuration running as tf-apply. The guard lives in the state file,
+# and the risk lives in the cloud.
+#
+# A lien is the same idea enforced by Google rather than by Terraform. Deletion
+# is refused at the API, whoever asks and however they ask, until the lien is
+# removed — which is itself a deliberate act requiring
+# resourcemanager.projects.updateLiens.
+#
+# It belongs in this week rather than the bootstrap because the thing it defends
+# against is the identity this week creates.
+# ---------------------------------------------------------------------------
+
+resource "google_resource_manager_lien" "seed" {
+  parent       = "projects/${var.seed_project_id}"
+  restrictions = ["resourcemanager.projects.delete"]
+
+  # Both fields are shown to whoever hits the refusal, so they are written for
+  # that person rather than for a change log.
+  origin = "week-02-keyless-ci"
+  reason = "Holds the workload identity pool and the CI service accounts. Deleting it removes the lab's ability to authenticate anything, including the repair."
+}

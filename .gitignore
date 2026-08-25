@@ -58,3 +58,10 @@ docs/HIERARCHY.md
 # Playwright profile and exported cookies — session credentials, never committed
 playwright_profile/
 *_cookies.json
+
+# Claude Code local permissions. Personal to this machine and deliberately not
+# committed, matching the AWS lab. A shared settings.json in a public repo would
+# hand every reader's Claude Code the same auto-approvals — and this one allowed
+# `terraform apply` without a prompt, on a repo whose whole point is showing
+# people how to run infrastructure carefully.
+.claude/settings.local.json
