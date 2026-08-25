@@ -1,0 +1,14 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored — the
+# first three values are account identifiers and never belong in git.
+
+org_id          = "000000000000"
+billing_account = "XXXXXX-XXXXXX-XXXXXX"
+seed_project_id = "your-lab-seed-project"
+region          = "us-central1"
+
+# Defaults below match this lab. Change them only if the HCP organization,
+# project or workspace naming differs — they are enforced as token claims, so a
+# mismatch fails closed at exchange rather than granting anything wider.
+# hcp_organization = "Katta"
+# hcp_project_name = "GCP Platform Lab"
+# workspace_prefix = "gcp-"
