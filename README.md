@@ -64,6 +64,7 @@ so the correct separation is free.
 | **Seed project** | Holds the lab's Terraform identity |
 | **State** | HCP Terraform, one workspace per week, alongside the AWS lab |
 | **Week 01** | 4 folders, 3 platform projects, reusable project-factory module |
+| **Week 02** | Keyless CI — workload identity pool, phase-split plan/apply identities, no key anywhere |
 
 A few things worth knowing if you are doing this yourself:
 
@@ -88,7 +89,7 @@ A few things worth knowing if you are doing this yourself:
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
 | [01](./week-01-gcp-landing-zone) | Landing zone: folders, projects, remote state | Resource Manager, Terraform, HCP | ✅ Complete |
-| 02 | Keyless CI: the baseline you inherited, and the only path it leaves | Security baseline constraints, Workload Identity Federation, HCP dynamic credentials | 📅 Planned |
+| [02](./week-02-keyless-ci) | Keyless CI: the baseline you inherited, and the only path it leaves | Security baseline constraints, Workload Identity Federation, HCP dynamic credentials | ✅ Complete |
 | 03 | Organization policy and guardrails | Organization Policy Service, custom constraints | 📅 Planned |
 | 04 | Project factory | Service Usage, Resource Manager, Cloud Build | 📅 Planned |
 | 05 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |

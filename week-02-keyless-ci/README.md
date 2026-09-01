@@ -1,6 +1,6 @@
 # Week 02 — Keyless CI
 
-**Status:** 🔨 In progress.
+**Status:** ✅ Deployed 2026-08-25 — 18 resources, workspace `gcp-week-02`.
 
 The baseline this organization inherited, what it already decided, and the only
 path it leaves open.
@@ -89,7 +89,82 @@ set here to a single Cloud Identity customer ID. That constraint governs members
 in IAM allow policies, and federated principals appear in those policies as
 `principalSet://` members rather than as a domain. Whether it blocks the binding
 that makes the keyless path work is settled by running the apply, not by reading
-about it. The outcome is recorded here once measured.
+about it.
+
+**Measured 2026-08-25: it does not block them.** Both federation bindings were
+created without complaint, with the constraint enforced and scoped to one Cloud
+Identity customer ID throughout. The reasoning that fits the result: the
+constraint tests *principals identified by a domain*, and a principalSet is
+identified by pool and attribute, so there is no domain for it to test. The
+documentation does not state this either way — the page describes the constraint
+in terms of users, groups and service accounts, and a federated principal is none
+of those.
+
+## Measured findings
+
+Everything in this section came from the deployment, not from documentation.
+
+**The attribute condition's string comparison is case-sensitive, and the claim
+carries a name no human-facing surface shows.** The HCP organization's stored
+name is lowercase. Every surface that resolves it — the console URL, the
+`cloud {}` block in `versions.tf`, the workspace list — is case-insensitive and
+displays it capitalised. The token carries the true value, so a condition written
+against the displayed spelling rejects every token. The error names no claim:
+only *"The given credential is rejected by the attribute condition."* Both ends
+look correct and nothing works. Cost roughly forty minutes, and it is the reason
+`hcp_organization` in `variables.tf` carries a comment longer than the variable.
+
+**`roles/viewer` at the organization cannot read a folder.** Basic roles predate
+the resource hierarchy: they describe a project's contents, not the structure a
+project hangs from. `resourcemanager.folders.get` is not among their thousands of
+permissions, and downward inheritance does not add it. A remote plan of Week 01
+failed on exactly that. `roles/browser` is what grants it. Removing
+`roles/viewer` was a separate and larger win — it confers
+`storage.legacyObjectReader` on every bucket in every project, including projects
+that do not exist yet.
+
+**`terraform init` creates new workspaces in HCP's `Default Project`,** not in
+the project the sibling workspaces live in. That is what initially put
+`gcp-week-02` outside `GCP Platform Lab`, and it explains an execution mode that
+appeared to ignore the UI: the workspace inherited Default Project's default of
+`remote` with `setting-overwrites.execution-mode = false`, so setting the radio
+button did not stick until that inheritance was broken. The attribute condition
+is what surfaced it — the `terraform_project_name` claim did not match, so a
+security control caught a governance mistake. That is the argument for writing
+the condition tightly rather than leaving the project check out.
+
+**`gcloud auth login` and Application Default Credentials are separate credential
+stores,** and Cloud Identity's reauthentication policy expires ADC independently
+of the CLI login. The symptom is `invalid_grant / invalid_rapt`, whose error text
+links a Workspace administration article about session control and never mentions
+`gcloud auth application-default login`. That command also **clears the ADC quota
+project**, so `gcloud auth application-default set-quota-project` has to follow
+it.
+
+**The federation is proven end to end.** `gcp-week-01` planned on an HCP agent
+with no Google Cloud credential stored anywhere, refreshed 4 folders and 3
+projects, and returned `No changes`.
+
+## Execution modes, and why two workspaces stay local
+
+| Workspace | Mode | Why |
+| --- | --- | --- |
+| `gcp-bootstrap` | local | Human layer — seed project and billing budget |
+| `gcp-week-02` | local, **permanently by design** | Defines who CI is |
+| `gcp-week-01` | remote | Retrofitted 2026-08-25; the proof federation works |
+| Weeks 03+ | remote | Run as `tf-apply` |
+
+For `tf-apply` to apply *this week's* configuration it would need
+`resourcemanager.organizations.setIamPolicy` — which exists only in Organization
+Administrator, and would let it grant itself anything — and admin on the pool,
+which would let it rewrite the attribute condition and trust whoever it liked.
+**An identity must not manage its own grants.** The same reasoning removed the
+billing binding from the configuration.
+
+A consequence worth stating so nobody tries to fix it: local execution disables
+remote execution, and version control integration is only available to workspaces
+with remote execution. So `gcp-bootstrap` and `gcp-week-02` will show an empty
+Repository column in HCP **forever**, and that is correct.
 
 ## Layout
 
@@ -97,16 +172,25 @@ about it. The outcome is recorded here once measured.
 week-02-keyless-ci/
 ├── terraform/          pool, provider, service accounts, bindings
 ├── scripts/            deploy, validate, cleanup (guarded)
-└── docs/               references, screenshots
+└── docs/
+    ├── references.md           sources, and what each one settled
+    ├── interview-questions.md  PCA material drawn from this deployment
+    └── blog/screenshots/       evidence
 ```
 
 ## Order of work
 
 1. Read the enforced baseline off the organization. Attempt a key, capture the denial.
 2. Apply this week from human credentials — the last hand-run apply in the lab.
-3. Set the workspace variables in HCP, flip `gcp-week-02` to remote execution, re-run.
-4. Retrofit `gcp-bootstrap` and `gcp-week-01` to remote execution and connect the repo.
+3. Set the workspace variables in HCP, then re-run.
+4. Retrofit `gcp-week-01` to remote execution and connect the repo. `gcp-bootstrap`
+   and this week's own workspace stay local — see the table above.
 5. Validate against the organization, capture screenshots, write up.
+
+Step 3 originally read "flip `gcp-week-02` to remote execution". That was the
+plan going in and it was wrong; the reasoning that replaced it is in *Execution
+modes* above. The step is left corrected rather than deleted because the
+correction is the interesting part.
 
 ## Verify
 

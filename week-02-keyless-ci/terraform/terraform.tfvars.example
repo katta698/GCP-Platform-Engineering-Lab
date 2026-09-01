@@ -9,6 +9,12 @@ region          = "us-central1"
 # Defaults below match this lab. Change them only if the HCP organization,
 # project or workspace naming differs — they are enforced as token claims, so a
 # mismatch fails closed at exchange rather than granting anything wider.
-# hcp_organization = "Katta"
+#
+# hcp_organization is lowercase and that is not a typo. It must match the token's
+# terraform_organization_name claim exactly; the comparison is case-sensitive.
+# HCP resolves organization names case-insensitively everywhere a human sees one,
+# so the console URL and the cloud {} block can show a different capitalisation
+# and still work, while the condition rejects every token.
+# hcp_organization = "katta"
 # hcp_project_name = "GCP Platform Lab"
 # workspace_prefix = "gcp-"
