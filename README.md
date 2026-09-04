@@ -91,9 +91,33 @@ A few things worth knowing if you are doing this yourself:
 | [01](./week-01-gcp-landing-zone) | Landing zone: folders, projects, remote state | Resource Manager, Terraform, HCP | ✅ Complete |
 | [02](./week-02-keyless-ci) | Keyless CI: the baseline you inherited, and the only path it leaves | Security baseline constraints, Workload Identity Federation, HCP dynamic credentials | ✅ Complete |
 | [03](.\week-03-org-policy-guardrails) | Organization policy: what the platform already decided, and what dry run is for | Organization Policy Service, managed and custom constraints, dry-run specs | ✅ Complete |
-| 04 | Project factory | Service Usage, Resource Manager, Cloud Build | 📅 Planned |
-| 05 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |
-| 06 | Resource hierarchy audit and drift | Cloud Asset Inventory, asset feeds, BigQuery | 📅 Planned |
+| 04 | Shared VPC hub-and-spoke: the first week anything runs | Shared VPC, hierarchical firewall policies, Compute Engine | 📅 Planned |
+| 05 | Project factory | Service Usage, Resource Manager, Cloud Build | 📅 Planned |
+| 06 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |
+| 07 | Resource hierarchy audit and drift | Cloud Asset Inventory, asset feeds, BigQuery | 📅 Planned |
+
+**Why Shared VPC moved from Week 12 to Week 04.** Re-sequenced 2026-09-03, and
+not for variety — for a dependency the original ordering had backwards.
+
+Week 03 left three constraints in dry run: `compute.managed.requireOsLogin`,
+`compute.managed.blockProjectSshKeys` and
+`compute.managed.disableSerialPortAccess`. A dry-run policy is evaluated on every
+request and logged when it would have denied. **With no Compute Engine resource
+in the organization, there are no requests to evaluate**, so those three generate
+no violations, and a constraint cannot be promoted out of dry run on no evidence.
+The original ordering left them parked until Week 12.
+
+The move costs nothing structurally. Shared VPC's prerequisite is a host project,
+and `katta698-gcp-net-hub` has existed since Week 01 with `compute`, `dns`,
+`networkmanagement` and `oslogin` already enabled and no VPC in it — Week 01 set
+`auto_create_network = false`, so the permissive default network never existed.
+Nothing in the project factory, billing export or asset inventory weeks is a
+prerequisite for a VPC, and the one IAM grant Shared VPC needs
+(`roles/compute.networkUser`) is a single binding, not a week.
+
+It is also the first week with a **non-zero cost note**. Weeks 01–03 created no
+billable resource; a VM and any egress do. That is a real change in what the lab
+is doing, and it should not be nine weeks away.
 
 **Why CI comes second.** Two properties of Google Cloud decide this, and neither
 is a matter of taste.
@@ -120,21 +144,27 @@ credential that never touches disk.
 That is a more useful lesson than the one I set out to write, and it is only
 visible if you look at the org policy before assuming you have to write it.
 
-### Phase 2 — Identity and access (Weeks 7–11)
+### Phase 2 — Identity and access (Weeks 8–12)
+
+Shifted by one, and improved by it. These weeks are about who may act on
+resources; running them after Week 04 means there are resources to act on, so
+every grant can be demonstrated against something real rather than described.
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 07 | IAM: roles, conditions, deny policies | Cloud IAM, IAM Conditions, Deny Policies | 📅 Planned |
-| 08 | Service account lifecycle and impersonation | Short-lived tokens, impersonation chains, SA hygiene | 📅 Planned |
-| 09 | Cloud Identity and group-based access | Cloud Identity, Google Groups | 📅 Planned |
-| 10 | Privileged access and just-in-time elevation | Privileged Access Manager, IAM Recommender | 📅 Planned |
-| 11 | Secret management | Secret Manager, Cloud KMS, CMEK, rotation | 📅 Planned |
+| 08 | IAM: roles, conditions, deny policies | Cloud IAM, IAM Conditions, Deny Policies | 📅 Planned |
+| 09 | Service account lifecycle and impersonation | Short-lived tokens, impersonation chains, SA hygiene | 📅 Planned |
+| 10 | Cloud Identity and group-based access | Cloud Identity, Google Groups | 📅 Planned |
+| 11 | Privileged access and just-in-time elevation | Privileged Access Manager, IAM Recommender | 📅 Planned |
+| 12 | Secret management | Secret Manager, Cloud KMS, CMEK, rotation | 📅 Planned |
 
-### Phase 3 — Networking (Weeks 12–19)
+### Phase 3 — Networking (Weeks 13–19)
+
+Shared VPC has moved out of this phase to Week 04; see the note above. What
+remains here is everything that needs a VPC to already exist.
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 12 | Shared VPC hub-and-spoke | Shared VPC, hierarchical firewall policies | 📅 Planned |
 | 13 | Hybrid and cross-cloud connectivity | HA VPN, Cloud Router, BGP, Cross-Cloud Network | 📅 Planned |
 | 14 | Private Service Connect | PSC endpoints, Private Google Access | 📅 Planned |
 | 15 | Global load balancing | Global external ALB, Cloud CDN, Cloud Armor | 📅 Planned |
