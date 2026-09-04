@@ -197,13 +197,32 @@ people would reach for. A constraint that can only be complied with by a
 different tool than the one that trips it is worth knowing about before it is
 enforced organization-wide.
 
-## 6. Enforcement is not instant
+## 6. Enforcement is not instant, and neither is switching it off
 
-The first denial attempt **succeeded** — the bucket was created roughly a minute
-after the flip to enforced, while `describe --effective` already reported
-`enforce: true`. The same request was refused about two minutes later.
+Measured 2026-09-03 with `scripts/measure-enforcement-lag.py`, three trials,
+polling every ten seconds. Each trial returns the constraint to dry run,
+confirms an unlabelled bucket is allowed again, then flips to enforced and polls
+until a bucket is actually refused. Timing runs from the moment the apply
+returned.
 
-So the effective policy is readable before it is enforced, and the two are not
-the same thing. A validation script that tests immediately after an apply will
-report a working constraint as broken, and the natural conclusion — that the
-constraint is wrong — sends you editing correct code.
+```
+dry run  -> enforced     75s    99s    75s
+enforced -> dry run     108s   103s    77s
+```
+
+**75 to 100 seconds** before a written policy starts refusing anything, known
+only to within one poll interval. `describe --effective` reports
+`enforce: true` for that entire window, so the API tells you the policy is in
+force well before it is.
+
+The second row was not what the script set out to measure. **Turning a
+constraint off lags as much as turning it on** — 77 to 108 seconds before a
+denied request succeeds again. Operationally that is the more dangerous number:
+disable a guardrail during an incident, watch the apply go green, retry, still
+get refused, and the obvious conclusion is that the change did not work.
+
+This replaces the original claim in this file, which was a single success
+followed by a single failure and was written up as "about two minutes". That was
+in the right area and was not a measurement. One observation cannot distinguish
+a lag from a transient error.
+

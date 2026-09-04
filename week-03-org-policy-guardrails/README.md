@@ -110,12 +110,22 @@ lands in the **project's** audit log, not an organization-level policy stream:
 querying the organization returns nothing *and no error*, which is
 indistinguishable from "no violations occurred".
 
-**Enforcement is not instant, and the effective policy lies about it.** The first
-denial attempt succeeded — a bucket was created about a minute after the flip,
-while `describe --effective` already read `enforce: true`. The same request was
-refused roughly two minutes later. A validation script that tests immediately
-after an apply will report a working constraint as broken, and the natural
-conclusion — that the constraint is wrong — sends you editing correct code.
+**Enforcement is not instant, and neither is switching it off.** Measured over
+three trials with `scripts/measure-enforcement-lag.py`, ten-second poll:
+
+```
+dry run  -> enforced     75s    99s    75s
+enforced -> dry run     108s   103s    77s
+```
+
+So 75 to 100 seconds before a written policy refuses anything, with
+`describe --effective` reporting `enforce: true` throughout that window. The
+reverse lag was not the target and is the more useful figure: disabling a
+guardrail during an incident leaves it refusing for up to two minutes after the
+apply returns green.
+
+The first version of this finding was a single success followed by a single
+failure, written up as "about two minutes". Right area, not a measurement.
 
 **The denial, once it landed:**
 
