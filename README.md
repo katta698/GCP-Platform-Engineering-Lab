@@ -90,7 +90,7 @@ A few things worth knowing if you are doing this yourself:
 |------|---------|--------------|--------|
 | [01](./week-01-gcp-landing-zone) | Landing zone: folders, projects, remote state | Resource Manager, Terraform, HCP | ✅ Complete |
 | [02](./week-02-keyless-ci) | Keyless CI: the baseline you inherited, and the only path it leaves | Security baseline constraints, Workload Identity Federation, HCP dynamic credentials | ✅ Complete |
-| 03 | Organization policy and guardrails | Organization Policy Service, custom constraints | 📅 Planned |
+| [03](.\week-03-org-policy-guardrails) | Organization policy: what the platform already decided, and what dry run is for | Organization Policy Service, managed and custom constraints, dry-run specs | ✅ Complete |
 | 04 | Project factory | Service Usage, Resource Manager, Cloud Build | 📅 Planned |
 | 05 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |
 | 06 | Resource hierarchy audit and drift | Cloud Asset Inventory, asset feeds, BigQuery | 📅 Planned |

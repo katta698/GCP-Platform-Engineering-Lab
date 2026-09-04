@@ -113,6 +113,50 @@ def assert_not_a_login_page(page) -> None:
         )
 
 
+def assert_not_an_error_page(page) -> None:
+    """Refuse to save a 404 or a permission wall.
+
+    The console answers a bad URL with a styled page inside the normal chrome —
+    same nav, same header, same everything but the content. A capture of it looks
+    like a real screenshot at a glance and is only caught by reading the words,
+    which nobody does when reviewing sixty images before publishing.
+
+    Cheaper to fail here than to publish a picture of "URL not found" captioned
+    as a custom constraint.
+    """
+    body = page.inner_text("body")[:4000]
+    # "Requested constraint not found" is a TOAST, not a page. The console
+    # silently returns to the list underneath it, so the capture looks like a
+    # perfectly good screenshot of the wrong page — the failure that produced
+    # this line was exactly that.
+    for marker in ("URL not found", "We couldn't find what you were looking for",
+                   "You don't have permission", "Error 404",
+                   "Requested constraint not found", "not found"):
+        if marker in body:
+            raise SystemExit(f"refusing to save: page shows {marker!r} — {page.url}")
+
+
+def click_text(page, text: str, settle_ms: int = 6000) -> None:
+    """Click the first visible element whose text contains `text`, then settle.
+
+    Failure is loud rather than silent. A missed click produces a screenshot of
+    the wrong view that still looks plausible — the unfiltered list rather than
+    the filtered one — and that is far worse than no screenshot, because it gets
+    published as evidence of something it does not show.
+    """
+    for sel in (f"button:has-text('{text}')", f"a:has-text('{text}')", f"text={text}"):
+        try:
+            el = page.locator(sel).first
+            if el.count() and el.is_visible():
+                el.click(timeout=10000)
+                settle(page)
+                page.wait_for_timeout(settle_ms)
+                return
+        except Exception:
+            continue
+    raise SystemExit(f"click-text: nothing visible matching {text!r} — refusing to capture the wrong view")
+
+
 def expand_tree(page, rounds: int = 4) -> None:
     """Expand every collapsed row in the Manage resources tree.
 
@@ -241,6 +285,23 @@ def screenshot_via_cdp(page, out: Path) -> None:
             pass
 
 
+def clear_stale(out: Path) -> None:
+    """Delete any previous file at this path before attempting a capture.
+
+    Every guard in this script refuses to SAVE. None of them delete, so a refused
+    run leaves the previous attempt's file sitting at the output path, with a
+    fresh-looking timestamp from whenever it was written. The reviewer sees a
+    file where they expected one and moves on.
+
+    Removing it first makes a refusal visible as an absence, which is the only
+    honest outcome of a capture that did not happen.
+    """
+    try:
+        out.unlink()
+    except FileNotFoundError:
+        pass
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("url")
@@ -251,6 +312,18 @@ def main() -> None:
     ap.add_argument("--width", type=int, default=1400)
     ap.add_argument("--goto-timeout", type=int, default=60000)
     ap.add_argument("--full-page", action="store_true")
+    ap.add_argument(
+        "--click-text",
+        action="append",
+        default=[],
+        help=(
+            "Click the first clickable element whose text contains this string, "
+            "then wait, then capture. The console's useful views are often behind "
+            "a button rather than a URL — 'View dry-run policies' filters the "
+            "list to the five that matter out of nearly two hundred, and there is "
+            "no query parameter that does the same."
+        ),
+    )
     ap.add_argument(
         "--expand-tree",
         action="store_true",
@@ -278,14 +351,26 @@ def main() -> None:
             # "load" never fires on the Cloud console — it holds long-poll
             # connections open indefinitely. domcontentloaded plus an explicit
             # settle is what actually works.
+            clear_stale(out)
             page.goto(args.url, wait_until="domcontentloaded", timeout=args.goto_timeout)
             settle(page)
             page.wait_for_timeout(args.wait_ms)
 
             assert_not_a_login_page(page)
+            assert_not_an_error_page(page)
 
             if args.expand_tree:
                 expand_tree(page)
+
+            # Clicking happens BEFORE redaction, not after. A click can trigger a
+            # fetch that repaints the table, and a repaint restores the original
+            # text — so redacting first would put the identifiers back on screen
+            # in the frame that gets saved.
+            # Repeatable, and applied in order. Some views are two clicks deep:
+            # the dry-run filter narrows nearly two hundred constraints to four,
+            # and only then is the custom constraint's link on screen to open.
+            for t in args.click_text:
+                click_text(page, t)
 
             redact(page, secrets)
             assert_gone(page, secrets)

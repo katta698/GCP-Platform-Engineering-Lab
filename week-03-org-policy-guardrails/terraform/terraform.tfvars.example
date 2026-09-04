@@ -1,0 +1,37 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored — org_id
+# is an account identifier and never belongs in git.
+#
+# For a REMOTE run these are workspace variables in HCP, not a local file. The
+# file exists so the configuration can also be planned by hand, which is how the
+# dry-run violations get read before anything is enforced.
+
+org_id          = "000000000000"
+seed_project_id = "your-lab-seed-project"
+
+# ---------------------------------------------------------------------------
+# The enforcement switch
+#
+# Empty means every constraint this week manages is in DRY RUN: evaluated on
+# every request, logged when it would have denied, denying nothing.
+#
+# That is the correct starting state and it is not a placeholder. A constraint
+# graduates by being added here as true, one at a time, after its own dry-run
+# violations have been read out of the audit log. Adding all of them at once
+# works, and gives up the only thing dry run was for — knowing which constraint
+# the breakage belongs to.
+# ---------------------------------------------------------------------------
+enforce = {}
+
+# enforce = {
+#   "compute.managed.requireOsLogin"                  = true
+#   "compute.managed.blockProjectSshKeys"             = true
+#   "compute.managed.disableSerialPortAccess"         = true
+#   "iam.managed.disableServiceAccountApiKeyCreation" = true
+#   "custom.requireTerraformLabelsOnBuckets"          = true
+# }
+
+# Defaults below match Week 01's hierarchy. The folder IDs are looked up from
+# these display names at plan time, so a rebuilt hierarchy needs no edit here.
+# folder_name defaults: workloads / dev
+# workloads_folder_name = "workloads"
+# dev_folder_name       = "dev"
