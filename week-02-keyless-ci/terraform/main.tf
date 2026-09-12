@@ -263,3 +263,186 @@ resource "google_resource_manager_lien" "seed" {
   origin = "week-02-keyless-ci"
   reason = "Holds the workload identity pool and the CI service accounts. Deleting it removes the lab's ability to authenticate anything, including the repair."
 }
+
+# ---------------------------------------------------------------------------
+# Compute, added for Week 04 — and why it is added HERE
+#
+# Week 04 builds a Shared VPC. tf-apply could not do any of it: the six roles
+# above cover folders, projects, service usage, service accounts and org policy,
+# and not one compute permission among them. Four things were missing — create
+# the network, enable Shared VPC hosting, write a hierarchical firewall policy,
+# and create an instance.
+#
+# The obvious fix is to grant those in Week 04's own configuration, next to the
+# resources that need them. That is the one thing this lab will not do, and the
+# reason is the same one that keeps this workspace on local execution and that
+# removed the billing binding from it: **an identity must not manage its own
+# grants.** A configuration applied by tf-apply that also widens tf-apply is a
+# configuration where the CI identity can give itself anything it later decides
+# it wants, and no reviewer sees a difference between that and a legitimate
+# feature.
+#
+# So the grants live in the human-run layer, applied from a person's
+# credentials, and Week 04 consumes them. This is the two-layer split working,
+# not an inconvenience around it. It also means every widening of CI is a
+# deliberate, separately-reviewed act rather than a line buried in a week that
+# happens to need it.
+#
+# Scope: folder where a folder will do, organization only where the API gives no
+# choice. Stated per role below rather than in one sweeping grant.
+# ---------------------------------------------------------------------------
+
+data "google_folders" "root" {
+  parent_id = "organizations/${var.org_id}"
+}
+
+locals {
+  platform_folder = one([
+    for f in data.google_folders.root.folders : f.name
+    if f.display_name == "platform"
+  ])
+  workloads_folder = one([
+    for f in data.google_folders.root.folders : f.name
+    if f.display_name == "workloads"
+  ])
+}
+
+# The network itself lives in the network hub project, which sits under
+# platform. Scoping here rather than at the organization means a compromised or
+# mistaken CI run cannot rewrite networking in projects this lab does not own —
+# including projects that do not exist yet, which is the reach that made
+# roles/viewer unacceptable for the plan identity.
+resource "google_folder_iam_member" "apply_network_admin" {
+  folder = local.platform_folder
+  role   = "roles/compute.networkAdmin"
+  member = google_service_account.apply.member
+}
+
+# Instances are created in service projects under workloads, never in platform.
+# The split is the point of the Week 01 hierarchy: the thing that runs workloads
+# and the thing that runs the platform are different blast radii.
+resource "google_folder_iam_member" "apply_instance_admin" {
+  folder = local.workloads_folder
+  role   = "roles/compute.instanceAdmin.v1"
+  member = google_service_account.apply.member
+}
+
+# Service projects are created under workloads and attached to the host project
+# under platform, so the attaching identity needs to be able to act on both.
+resource "google_folder_iam_member" "apply_workloads_network_admin" {
+  folder = local.workloads_folder
+  role   = "roles/compute.networkAdmin"
+  member = google_service_account.apply.member
+}
+
+# roles/compute.xpnAdmin CANNOT be narrowed the way the three above were, and
+# that is worth stating rather than glossing. Enabling a project as a Shared VPC
+# host, and attaching service projects to it, are organization-level operations;
+# Google defines the role at the organization or folder and the host-enablement
+# call is checked at the organization. Granting it at a folder does not work for
+# the enablement step.
+#
+# So this one grant is genuinely org-wide, and it is the widest permission this
+# lab has given CI. It permits designating any project in the organization as a
+# Shared VPC host and attaching any project to it. It does not permit creating
+# or changing the networks themselves — that is networkAdmin, scoped above.
+resource "google_organization_iam_member" "apply_xpn_admin" {
+  org_id = var.org_id
+  role   = "roles/compute.xpnAdmin"
+  member = google_service_account.apply.member
+}
+
+# Hierarchical firewall policies attach to organization and folder nodes, so the
+# role that administers them is defined at the organization. Same shape as
+# orgpolicy.policyAdmin, which Week 03 needed for the same structural reason:
+# the resource being managed is the hierarchy itself.
+resource "google_organization_iam_member" "apply_org_security_policy_admin" {
+  org_id = var.org_id
+  role   = "roles/compute.orgSecurityPolicyAdmin"
+  member = google_service_account.apply.member
+}
+
+# The plan identity needs to READ every one of the above, or a refresh fails the
+# way Week 01's did on resourcemanager.folders.get — a plan that cannot see a
+# resource reports it as needing creation, which is how a plan proposes to
+# rebuild something that already exists.
+#
+# roles/compute.viewer, not roles/viewer. The distinction is the one this file
+# already argues at length: a compute-scoped read role reads compute, where a
+# basic role reads every object in every bucket in the organization.
+resource "google_folder_iam_member" "plan_compute_viewer" {
+  for_each = toset([local.platform_folder, local.workloads_folder])
+
+  folder = each.value
+  role   = "roles/compute.viewer"
+  member = google_service_account.plan.member
+}
+
+# Shared VPC host and attachment state is read at the organization, not at the
+# folder, so the plan identity needs the org-level read counterpart to
+# xpnAdmin. roles/compute.xpnAdmin has no read-only sibling that covers it;
+# compute.networkViewer at the organization is the narrowest thing that does,
+# and it confers reading network configuration only.
+resource "google_organization_iam_member" "plan_network_viewer" {
+  org_id = var.org_id
+  role   = "roles/compute.networkViewer"
+  member = google_service_account.plan.member
+}
+
+# ---------------------------------------------------------------------------
+# Quota project consumers, added for Week 04
+#
+# A hierarchical firewall policy hangs off a folder and is owned by no project.
+# The Compute API is client-based, so it attributes the call to the CALLER's
+# quota project — and with none set it fails with
+# "Error 404: The resource 'projects/null' was not found", which reads like a
+# missing resource rather than a missing header.
+#
+# The fix is user_project_override plus billing_project on the provider, and the
+# consequence is that every call then needs serviceusage.services.use on that
+# quota project. Both identities need it: the plan identity refreshes the policy,
+# the apply identity writes it.
+#
+# roles/serviceusage.serviceUsageConsumer is the narrowest role that carries it —
+# permission to consume services and quota in one project, and nothing else. Not
+# to be confused with serviceUsageAdmin, which tf-apply already holds at the
+# organization and which ENABLES services; consuming and enabling are different
+# verbs and this is deliberately the smaller one.
+# ---------------------------------------------------------------------------
+
+resource "google_project_iam_member" "quota_consumer" {
+  for_each = {
+    plan  = google_service_account.plan.member
+    apply = google_service_account.apply.member
+  }
+
+  project = "katta698-gcp-net-hub"
+  role    = "roles/serviceusage.serviceUsageConsumer"
+  member  = each.value
+}
+
+# Attaching a firewall policy to a folder is a DIFFERENT role from creating one,
+# and the role names do not signal it. Measured 2026-09-12 by reading both role
+# definitions after the association was refused:
+#
+#   roles/compute.orgSecurityPolicyAdmin    compute.firewallPolicies.create,
+#                                           .update, .use  — and NOT
+#                                           compute.organizations.setFirewallPolicy
+#
+#   roles/compute.orgSecurityResourceAdmin  compute.organizations.setFirewallPolicy,
+#                                           compute.organizations.listAssociations
+#
+# So tf-apply could create the policy and could not attach it. That split is
+# reasonable once stated — a policy attached to nothing is inert, so attachment
+# is the act that actually changes behaviour — but nothing in the names says so,
+# and the error names a permission without naming a role that grants it.
+#
+# Granted at the workloads folder rather than the organization: this identity
+# should be able to attach policies to the branch that holds workloads, not to
+# the organization root, where an association governs every project including
+# the platform projects that run the lab itself.
+resource "google_folder_iam_member" "apply_folder_security_resource_admin" {
+  folder = local.workloads_folder
+  role   = "roles/compute.orgSecurityResourceAdmin"
+  member = google_service_account.apply.member
+}

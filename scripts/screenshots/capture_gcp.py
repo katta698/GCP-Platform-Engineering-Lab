@@ -136,6 +136,34 @@ def assert_not_an_error_page(page) -> None:
             raise SystemExit(f"refusing to save: page shows {marker!r} — {page.url}")
 
 
+def dismiss_panels(page) -> None:
+    """Close the console's side panels before capturing.
+
+    The Cloud console opens a "Learn"/tutorial drawer over the right third of
+    the page on several product screens. It is not part of the product being
+    documented, and on a table view it covers the rightmost COLUMNS — which on
+    the VM instances page are Internal IP and External IP, the two values a
+    screenshot about a VM with no public address exists to show.
+
+    Best-effort: a missing panel is not an error, so every selector is tried and
+    failures are ignored. Refusing to capture because there was nothing to close
+    would be worse than capturing.
+    """
+    for sel in ("button[aria-label*='Close' i]",
+                "button[aria-label*='Dismiss' i]",
+                "cfc-panel button[aria-label*='close' i]"):
+        try:
+            for i in range(page.locator(sel).count()):
+                el = page.locator(sel).nth(i)
+                if el.is_visible():
+                    el.click(timeout=3000)
+                    page.wait_for_timeout(700)
+        except Exception:
+            continue
+    settle(page)
+    page.wait_for_timeout(1200)
+
+
 def click_text(page, text: str, settle_ms: int = 6000) -> None:
     """Click the first visible element whose text contains `text`, then settle.
 
@@ -313,6 +341,11 @@ def main() -> None:
     ap.add_argument("--goto-timeout", type=int, default=60000)
     ap.add_argument("--full-page", action="store_true")
     ap.add_argument(
+        "--dismiss-panels",
+        action="store_true",
+        help="Close console side panels (the Learn drawer) before capturing.",
+    )
+    ap.add_argument(
         "--click-text",
         action="append",
         default=[],
@@ -358,6 +391,9 @@ def main() -> None:
 
             assert_not_a_login_page(page)
             assert_not_an_error_page(page)
+
+            if args.dismiss_panels:
+                dismiss_panels(page)
 
             if args.expand_tree:
                 expand_tree(page)
