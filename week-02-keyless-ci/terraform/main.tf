@@ -446,3 +446,79 @@ resource "google_folder_iam_member" "apply_folder_security_resource_admin" {
   role   = "roles/compute.orgSecurityResourceAdmin"
   member = google_service_account.apply.member
 }
+
+# ---------------------------------------------------------------------------
+# Tag administration, added for Week 05
+#
+# Week 05 creates an organization-level tag key and its permitted values. Tags
+# are IAM-controlled resources — that is the whole difference between a tag and
+# a label, and the reason an organization policy can condition on one and not
+# the other — so creating them needs a role tf-apply did not hold.
+#
+# Granted at the organization because a tag key defined at a folder is not
+# visible above it, and this key is meant to be bindable anywhere in the
+# hierarchy.
+#
+# Here rather than in Week 05 for the reason this file has argued twice before:
+# an identity must not manage its own grants. Week 04 needed the same treatment
+# for compute, and the pattern is now the norm rather than the exception — a new
+# week that CI cannot yet perform is a signal to widen CI deliberately, in the
+# human-run layer, not to quietly add a binding next to the resource that needs
+# it.
+# ---------------------------------------------------------------------------
+
+resource "google_organization_iam_member" "apply_tag_admin" {
+  org_id = var.org_id
+  role   = "roles/resourcemanager.tagAdmin"
+  member = google_service_account.apply.member
+}
+
+# tagAdmin creates tag keys and values. It does NOT bind them to anything —
+# roles/resourcemanager.tagAdmin carries no tagValueBindings.create, and
+# roles/resourcemanager.tagUser does. Confirmed 2026-09-19 by reading both role
+# definitions after the binding was refused with a bare
+# "Error 403: The caller does not have permission", which names neither the
+# permission nor a role.
+#
+# The same split Week 04 hit with firewall policies: creating the thing and
+# attaching the thing are separately authorised, and the role names do not say
+# so. It is defensible — a tag value that is bound to nothing changes no
+# behaviour, so binding is the act with consequences — but it is discovered
+# rather than read.
+resource "google_organization_iam_member" "apply_tag_user" {
+  org_id = var.org_id
+  role   = "roles/resourcemanager.tagUser"
+  member = google_service_account.apply.member
+}
+
+# The read counterpart. A plan that cannot see the tag key reports it as needing
+# creation, which is how a plan proposes to rebuild something that already
+# exists.
+resource "google_organization_iam_member" "plan_tag_viewer" {
+  org_id = var.org_id
+  role   = "roles/resourcemanager.tagViewer"
+  member = google_service_account.plan.member
+}
+
+# Essential Contacts, added for Week 05.
+#
+# The factory sets an essential contact on every project it builds, because
+# Google sends security bulletins, deprecation notices and suspension warnings
+# to Essential Contacts and to nobody else — a project with none is one where
+# the notice that something leaked goes to an address that does not exist.
+#
+# Creating a project does not confer the ability to administer its contacts.
+# That surfaced as a bare "Error 403: The caller does not have permission" on
+# the contact resource, after the project itself had been created successfully
+# by the same identity moments earlier.
+resource "google_organization_iam_member" "apply_essential_contacts" {
+  org_id = var.org_id
+  role   = "roles/essentialcontacts.admin"
+  member = google_service_account.apply.member
+}
+
+resource "google_organization_iam_member" "plan_essential_contacts" {
+  org_id = var.org_id
+  role   = "roles/essentialcontacts.viewer"
+  member = google_service_account.plan.member
+}

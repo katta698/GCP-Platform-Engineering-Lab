@@ -92,7 +92,7 @@ A few things worth knowing if you are doing this yourself:
 | [02](./week-02-keyless-ci) | Keyless CI: the baseline you inherited, and the only path it leaves | Security baseline constraints, Workload Identity Federation, HCP dynamic credentials | ✅ Complete |
 | [03](.\week-03-org-policy-guardrails) | Organization policy: what the platform already decided, and what dry run is for | Organization Policy Service, managed and custom constraints, dry-run specs | ✅ Complete |
 | [04](./week-04-shared-vpc) | Shared VPC hub-and-spoke: the first week anything runs | Shared VPC, Cloud NGFW hierarchical policies, Compute Engine | ✅ Complete |
-| 05 | Project factory | Service Usage, Resource Manager, Cloud Build | 📅 Planned |
+| [05](./week-05-project-factory) | Project factory: a module that makes the right project, and a constraint that refuses the wrong one | Resource Manager tags, custom constraints, Essential Contacts | ✅ Complete |
 | 06 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |
 | 07 | Resource hierarchy audit and drift | Cloud Asset Inventory, asset feeds, BigQuery | 📅 Planned |
 

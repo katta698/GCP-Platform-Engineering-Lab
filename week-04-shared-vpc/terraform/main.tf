@@ -178,6 +178,26 @@ resource "google_project" "service" {
     env        = "dev"
     managed-by = "terraform"
   }
+
+  # Lifted from the provider default of PREVENT on 2026-09-19, deliberately and
+  # with the reason recorded, which is the only way a deletion guard should ever
+  # come off.
+  #
+  # The billing account caps how many projects it will fund, this organization
+  # is at that cap, and Week 05 is a project factory — a week whose entire
+  # subject is creating projects, blocked by having no slot to create one in.
+  # This project's evidence is already permanent: the post is published and its
+  # screenshots are committed to the public lab repo, so deleting the
+  # infrastructure costs the lab nothing it still needs.
+  #
+  # The spoke goes; the hub stays. The VPC, its subnets and the hierarchical
+  # firewall policy live in the host project, occupy no project slot, and are
+  # what Weeks 13-19 build on.
+  #
+  # Note the ID katta698-gcp-dev-app-01 is now permanently spent — Google never
+  # releases a project ID for reuse, which is why every ID in this lab carries
+  # an ordinal rather than a description.
+  deletion_policy = "DELETE"
 }
 
 resource "google_project_service" "service" {
