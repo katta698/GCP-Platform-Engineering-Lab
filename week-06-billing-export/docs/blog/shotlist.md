@@ -62,9 +62,12 @@ and a reader who only hears "we allowed all" will assume the worse one.
 **`04-hcp-apply.png`** — the successful run, and the standing evidence that this
 week ran with no Google Cloud credential on the machine that started it.
 
-**Not yet captured.** The capture profile's HCP session had lapsed and the script
-refused to save the login page, which is the guard working. Needs a sign-in to
-`app.terraform.io` in the capture Chrome.
+Shows `Applied`, 10 resources, Terraform v1.14.8. The run list behind it is worth
+leaving in frame rather than cropping: seven errored runs sit above the
+successful one, and those are the diagnosis — each failed attempt to attach the
+topic before the cause was known. A post that claims the error was hard to read
+is better served by the evidence that it took seven runs than by a clean
+screenshot of the one that worked.
 
 ---
 
