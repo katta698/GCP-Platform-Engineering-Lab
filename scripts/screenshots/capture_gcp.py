@@ -29,12 +29,58 @@ history or in this file:
 
 import argparse
 import os
+import re
 import sys
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 MASK = "█" * 12
+
+# Addresses that are safe to publish, matched on domain suffix.
+#
+# A blanket "mask every email" rule is wrong here and would have destroyed the
+# evidence it was added alongside. Week 06's whole finding is which service agent
+# Cloud Billing grants Publisher to — billing-budget-alert@system.gserviceaccount.com
+# — and that address IS the screenshot. Google-owned service identities are public
+# facts about the platform; a human's address is a personal identifier. The rule
+# is the distinction between those two, not the @ sign.
+PUBLISHABLE_EMAIL_DOMAINS = (
+    ".gserviceaccount.com",
+    ".iam.gserviceaccount.com",
+    "@system.gserviceaccount.com",
+    ".googleapis.com",
+)
+
+EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def is_publishable_email(addr: str) -> bool:
+    low = addr.lower()
+    return any(low.endswith(d) or d in low for d in PUBLISHABLE_EMAIL_DOMAINS)
+
+
+def human_emails_on_page(page) -> list[str]:
+    """Every address rendered on the page that is not a service identity.
+
+    The console puts the signed-in account into an avatar tooltip and an
+    aria-label, neither of which is obvious when framing a shot, which is how a
+    personal address reaches a PNG without anyone deciding to put it there.
+    """
+    visible = page.evaluate(
+        """() => {
+            let s = document.body ? document.body.innerText : '';
+            for (const el of document.querySelectorAll('[title],[aria-label],input,textarea')) {
+                for (const a of ['title', 'aria-label']) {
+                    const v = el.getAttribute && el.getAttribute(a);
+                    if (v) s += '\\n' + v;
+                }
+                if (typeof el.value === 'string' && el.value) s += '\\n' + el.value;
+            }
+            return s;
+        }"""
+    )
+    return sorted({m for m in EMAIL_RE.findall(visible) if not is_publishable_email(m)})
 
 
 def secrets_from_env() -> list[tuple[str, str]]:
@@ -408,8 +454,38 @@ def main() -> None:
             for t in args.click_text:
                 click_text(page, t)
 
+            # Dismissed again, because a panel can open AFTER the clicks and the
+            # pre-click pass cannot know about it. The Cloud Assist drawer opens
+            # on its own on some pages and covers the right-hand third of the
+            # window, which is exactly where the console puts detail panels — a
+            # permissions table photographed behind it shows a Gemini advert and
+            # none of the evidence the shot was taken for.
+            if args.dismiss_panels:
+                dismiss_panels(page)
+
+            # Human addresses are discovered on the page rather than configured,
+            # because they cannot be known in advance. The signed-in account is
+            # rendered in an avatar tooltip and an aria-label on every console
+            # page, and a shot framed around something else carries it anyway.
+            #
+            # Folding them into `secrets` rather than refusing outright is
+            # deliberate: refusing would block every capture this lab takes,
+            # since the console always shows who is signed in. They then go
+            # through the same masking and the same post-hoc assertion as every
+            # other identifier, so there is one code path to trust, not two.
+            secrets = secrets + [(e, "account email") for e in human_emails_on_page(page)]
+
             redact(page, secrets)
             assert_gone(page, secrets)
+
+            # Re-scan for addresses the masking pass could have revealed or
+            # missed. assert_gone only proves the needles it was given are gone;
+            # it cannot notice an address nobody thought to look for.
+            if leftover := human_emails_on_page(page):
+                sys.exit(
+                    "REFUSING TO SAVE: a personal email address is still visible "
+                    f"after redaction: {', '.join(leftover)}"
+                )
 
             # Checked twice on purpose. A session can lapse and redirect between
             # the first check and the save, and the screenshot is what reaches

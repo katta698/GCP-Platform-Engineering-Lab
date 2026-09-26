@@ -522,3 +522,44 @@ resource "google_organization_iam_member" "plan_essential_contacts" {
   role   = "roles/essentialcontacts.viewer"
   member = google_service_account.plan.member
 }
+
+# ---------------------------------------------------------------------------
+# BigQuery in the logging project, added for Week 06
+#
+# Week 06 creates the datasets that Cloud Billing exports into. tf-apply could
+# create the project in Week 01 and could not create a dataset inside it —
+# "User does not have bigquery.datasets.create permission" — which is the same
+# shape as Week 05's essential contacts: creating a container confers nothing
+# over what goes in it.
+#
+# Scoped to the ONE project rather than the platform folder. The logging project
+# is where this lab's analytical data lands by design, and a folder-level grant
+# would also reach the network hub and the security project, neither of which
+# has any reason to hold BigQuery data. Week 07's asset inventory export lands
+# in the same project, so this covers it without widening again.
+# ---------------------------------------------------------------------------
+
+resource "google_project_iam_member" "apply_bigquery_admin" {
+  project = "katta698-gcp-logging"
+  role    = "roles/bigquery.admin"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "plan_bigquery_viewer" {
+  project = "katta698-gcp-logging"
+  role    = "roles/bigquery.metadataViewer"
+  member  = google_service_account.plan.member
+}
+
+# Pub/Sub, same project, same reasoning. The budget publishes into a topic there.
+resource "google_project_iam_member" "apply_pubsub_admin" {
+  project = "katta698-gcp-logging"
+  role    = "roles/pubsub.admin"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "plan_pubsub_viewer" {
+  project = "katta698-gcp-logging"
+  role    = "roles/pubsub.viewer"
+  member  = google_service_account.plan.member
+}
