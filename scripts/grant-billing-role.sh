@@ -65,12 +65,53 @@ echo "  OK - setIamPolicy held."
 echo
 
 echo "== Granting ${ROLE} to ${MEMBER} =="
-gcloud billing accounts add-iam-policy-binding "$BILLING_ACCOUNT" \
-  --account="$ADMIN_ACCOUNT" \
-  --member="$MEMBER" \
-  --role="$ROLE" \
-  >/dev/null
-echo "  done."
+# NOT `gcloud billing accounts add-iam-policy-binding`. That command does a
+# read-modify-write and sends the policy back verbatim - including the
+# "auditConfigs": [] that getIamPolicy returns on this account. The API rejects
+# the empty array, and the whole call dies as:
+#
+#   ERROR: (gcloud.billing.accounts.add-iam-policy-binding) INVALID_ARGUMENT:
+#   Request contains an invalid argument.
+#
+# which names no argument. Observed 2026-09-26. Sending only version, bindings
+# and etag succeeds, so the modify-write is done here by hand.
+python - "$BILLING_ACCOUNT" "$tok" "$ROLE" "$MEMBER" <<'PY'
+import sys, json, urllib.request, urllib.error
+
+bill, tok, role, member = sys.argv[1:5]
+base = f"https://cloudbilling.googleapis.com/v1/billingAccounts/{bill}"
+H = {"Authorization": "Bearer " + tok, "Content-Type": "application/json"}
+
+
+def call(path, body=None, method="GET"):
+    req = urllib.request.Request(
+        base + path,
+        data=json.dumps(body).encode() if body is not None else None,
+        headers=H,
+        method=method,
+    )
+    try:
+        return json.load(urllib.request.urlopen(req))
+    except urllib.error.HTTPError as e:
+        sys.exit("  FAILED: " + json.dumps(json.loads(e.read().decode() or "{}"), indent=2)[:600])
+
+
+pol = call(":getIamPolicy")
+bindings = pol.get("bindings", [])
+
+for b in bindings:
+    if b["role"] == role:
+        if member in b["members"]:
+            print(f"  already present - {member} already has {role}.")
+            sys.exit(0)
+        b["members"].append(member)
+        break
+else:
+    bindings.append({"role": role, "members": [member]})
+
+call(":setIamPolicy", {"policy": {"version": 1, "bindings": bindings, "etag": pol["etag"]}}, "POST")
+print("  done.")
+PY
 echo
 
 echo "== Verifying as the GRANTEE, not as the granter =="
