@@ -1,7 +1,7 @@
 # Week 06 — Billing export and budget alerts
 
-Status: ✅ **Deployed 2026-09-26.** Pricing export blocked on a billing-account
-grant; see Outstanding below.
+Status: ✅ **Complete 2026-09-27.** Deployed 2026-09-26; pricing export linked
+2026-09-27 once the billing-account grant was made.
 
 ## Cost note
 
@@ -151,18 +151,48 @@ No grants were needed in `week-02-keyless-ci` this week, the first time in four
 weeks. `tf-apply` already held `roles/orgpolicy.policyAdmin` from Week 03, which
 turned out to be exactly what the override required.
 
+## The permission split that blocked the pricing export
+
+Configuring any export requires **both** `billing.accounts.getPricing` and
+`billing.accounts.updateUsageExportSpec`, and those two live in different roles:
+
+| role | `getPricing` | `updateUsageExportSpec` |
+| --- | --- | --- |
+| `roles/billing.viewer` | ✅ | |
+| `roles/billing.admin` | ✅ | ✅ |
+| `roles/billing.user` | | ✅ |
+| `roles/billing.costsManager` | | ✅ |
+
+The operating account held `user` and `costsManager` — both halves of the second
+permission and neither of the first — so the console showed the export page
+normally and refused only at the point of configuring it. `roles/billing.viewer`
+is the narrowest role that closes the gap.
+
+Granting it needs `billing.accounts.setIamPolicy`, which sits only in
+`roles/billing.admin`, held by the personal account that created the billing
+account. Billing-account bindings are never Terraform-managed here, so this is
+an out-of-band grant — but not a console one. gcloud holds both identities at
+once, so `scripts/grant-billing-role.sh` does it with `--account`.
+
+**`gcloud billing accounts add-iam-policy-binding` cannot make this grant.** It
+reads the policy and sends it back verbatim, including the `"auditConfigs": []`
+that `getIamPolicy` returns, and the API rejects the empty array:
+
+```
+ERROR: (gcloud.billing.accounts.add-iam-policy-binding) INVALID_ARGUMENT:
+Request contains an invalid argument.
+```
+
+naming no argument. Sending only `version`, `bindings` and `etag` succeeds, so
+the script does the modify-write itself.
+
 ## Outstanding
 
-**The pricing export is not enabled.** The console requires *both*
-`billing.accounts.getPricing` and `billing.accounts.updateUsageExportSpec`. The
-operating account holds `roles/billing.costsManager` and `roles/billing.user`,
-which carry the second and not the first. `roles/billing.viewer` is the narrowest
-role carrying `getPricing`.
-
-Granting it needs `billing.accounts.setIamPolicy`, which sits in
-`roles/billing.admin` — held only by the personal account that created the billing
-account. Billing-account bindings are made by hand and never in Terraform, so this
-is an out-of-band step, not a config change.
+**Nothing blocking.** The pricing export is linked to
+`katta698-gcp-logging.billing_pricing` and its dataset is empty only because
+pricing data is not backfilled — it starts at enablement and takes up to 48
+hours to first appear. `validate.sh` distinguishes that case from a permissions
+failure rather than reporting both and leaving the reader to guess.
 
 ## Evidence
 

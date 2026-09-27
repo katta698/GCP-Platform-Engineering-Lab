@@ -51,9 +51,26 @@ if bq ls --project_id="$DATA_PROJECT" 2>/dev/null | grep -q billing_pricing; the
   if bq ls --project_id="$DATA_PROJECT" billing_pricing 2>/dev/null | grep -q cloud_pricing_export; then
     echo "       and is receiving data."
   else
-    echo "       EMPTY - the console link is not made yet, or is inside the 48h"
-    echo "       first-delivery window. See Outstanding in the README: the"
-    echo "       operating account lacks billing.accounts.getPricing."
+    # An empty dataset has two very different causes and the distinction is
+    # measurable, so measure it rather than printing both and letting the reader
+    # guess. Configuring an export needs getPricing; if that is held, the link
+    # could be made, and an empty dataset is the 48-hour first-delivery window
+    # rather than a permissions problem. This message was wrong for a day
+    # because it asserted a cause that had already been fixed.
+    if curl -s -X POST \
+      -H "Authorization: Bearer $(tok)" \
+      -H "x-goog-user-project: ${SEED_PROJECT}" \
+      -H "Content-Type: application/json" \
+      "https://cloudbilling.googleapis.com/v1/billingAccounts/${BILLING_ACCOUNT}:testIamPermissions" \
+      -d '{"permissions":["billing.accounts.getPricing"]}' | grep -q getPricing; then
+      echo "       EMPTY, but getPricing IS held - so this is the 48-hour"
+      echo "       first-delivery window, not a permissions problem. Pricing data"
+      echo "       is not backfilled; it starts from enablement."
+    else
+      echo "       EMPTY and getPricing is NOT held, so the export cannot have"
+      echo "       been configured. Fix with:"
+      echo "         ./scripts/grant-billing-role.sh roles/billing.viewer"
+    fi
   fi
 else
   echo "  FAIL - pricing dataset missing."

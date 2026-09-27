@@ -44,8 +44,11 @@ The week's plan said the lab had no queryable cost record. This is the evidence
 it already did, and had since July. Without this shot the post's central
 correction is an assertion.
 
-It also shows the pricing export still disabled, which the post has to explain
-rather than hide — see Outstanding in the README.
+Re-captured 2026-09-27, after the pricing export was linked, so the frame now
+reads **Detailed: Enabled, Pricing: Enabled** with Standard, FOCUS and CUD still
+disabled. That is the week's end state in one image: the export that was already
+there, the one genuinely worth adding, and the three deliberately left off —
+Standard most pointedly, because it would duplicate Detailed.
 
 ## 3 — The guardrail, scoped rather than lifted
 
