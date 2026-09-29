@@ -524,6 +524,46 @@ resource "google_organization_iam_member" "plan_essential_contacts" {
 }
 
 # ---------------------------------------------------------------------------
+# Cloud Asset Inventory at the organization, added for Week 07
+#
+# A feed watching the whole organization is created AT the organization, so the
+# permission is org-scoped. The failure names neither a permission nor a role —
+# "Error 403: Request denied by Cloud IAM. Missing required IAM permission on
+# requested scope" — and the two candidate roles were read rather than guessed:
+#
+#   roles/cloudasset.owner    cloudasset.feeds.create  YES
+#   roles/cloudasset.viewer   cloudasset.feeds.create  no
+#
+# tf-plan gets OWNER here, and that is a deliberate compromise rather than an
+# oversight. Every other service in this lab has a read-only role that lets the
+# plan identity refresh what apply created. Cloud Asset Inventory does not:
+#
+#   roles/cloudasset.viewer   cloudasset.feeds.get  no
+#   roles/cloudasset.owner    cloudasset.feeds.get  YES
+#
+# and no other predefined role in the service carries it. A plan cannot read a
+# feed without also being able to create, update and delete feeds. Since every
+# HCP apply runs a plan first as tf-plan, refusing the grant means the resource
+# simply cannot be managed by this pipeline.
+#
+# So the read-only guarantee holds everywhere except asset feeds, and it is
+# written down here rather than discovered later. A custom role is the way out
+# if this ever matters more than it does at six resources.
+# ---------------------------------------------------------------------------
+
+resource "google_organization_iam_member" "apply_asset_owner" {
+  org_id = var.org_id
+  role   = "roles/cloudasset.owner"
+  member = google_service_account.apply.member
+}
+
+resource "google_organization_iam_member" "plan_asset_owner" {
+  org_id = var.org_id
+  role   = "roles/cloudasset.owner"
+  member = google_service_account.plan.member
+}
+
+# ---------------------------------------------------------------------------
 # BigQuery in the logging project, added for Week 06
 #
 # Week 06 creates the datasets that Cloud Billing exports into. tf-apply could
