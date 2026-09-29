@@ -12,9 +12,10 @@ Capture with `scripts/screenshots/capture_gcp.py` over CDP. Export `GCP_ORG_ID`,
 standing evidence that this ran with no Google credential on the machine that
 started it.
 
-**Not captured.** The capture profile's `app.terraform.io` session had lapsed
-again and the script refused to save the login page. Needs a sign-in in the
-capture Chrome.
+Shows `Applied`, 9 resources, Terraform v1.14.8 — and four errored runs above
+it. Those stay in frame on purpose: they are the three permission failures this
+week is largely about, and cropping to the successful run would make the build
+look smoother than it was.
 
 **`02-bq-snapshot.png`** — the `hierarchy` table in BigQuery, showing its schema.
 
