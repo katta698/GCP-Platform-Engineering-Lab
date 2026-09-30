@@ -8,6 +8,19 @@ Capture with `scripts/screenshots/capture_gcp.py` over CDP. Export `GCP_ORG_ID`,
 
 ---
 
+**`00-terraform-files.png`** — the week's `terraform/` directory on GitHub:
+`main.tf`, `variables.tf`, `versions.tf`.
+
+**Standing from Week 07 onward.** A post describes what the Terraform does and
+never shows what was actually written, so a reader cannot tell how much code a
+week really is or how it is laid out. Three files is itself the answer to a
+question people ask. Enforced by `check_lab_post_shape.py` in the blog repo,
+which fails any lab post from Week 07 on that has no image named
+`*terraform-files*`.
+
+Capture the repo path rather than an editor: the public URL is evidence a reader
+can click through to, and an editor screenshot is a picture of a local machine.
+
 **`01-hcp-apply.png`** — the HCP run, applied. The deployment step, and the
 standing evidence that this ran with no Google credential on the machine that
 started it.
