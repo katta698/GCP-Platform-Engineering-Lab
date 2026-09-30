@@ -1,0 +1,22 @@
+week-07-asset-inventory/
+│
+├── terraform/
+│   ├── versions.tf        31   # provider pin and the HCP cloud block
+│   ├── variables.tf       35   # org_id, the two project IDs, dataset location
+│   └── main.tf           174   # 5 resources + 3 grants to Google's OWN service
+│                               # agent, which is what actually makes it work
+│
+└── scripts/
+    ├── snapshot.sh        43   # gcloud asset export - there is no Terraform
+    │                           # resource for it, and there should not be
+    └── validate.sh        93   # 5 checks, incl. "are any projects outside a folder"
+
+# WHY IT IS SPLIT THIS WAY
+#
+# terraform/ is what a plan can reconcile. scripts/ is what it cannot: an export
+# is an operation with a moment attached, so running it twice is not "fixing
+# drift", it is asking the question again.
+#
+# 174 lines is most of the week, but only 9 of them are resource or data blocks.
+# The rest is comments - three of which are the 403s that shaped the build,
+# written where the next person will hit them.
