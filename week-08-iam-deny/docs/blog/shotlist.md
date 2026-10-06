@@ -15,8 +15,14 @@ is the point, since a guardrail nobody tested is a guess.
 **`01-hcp-apply.png`** — the HCP run, applied. The deploy step, and the standing
 evidence that this ran with no Google credential on the machine that started it.
 
-**Not captured.** The capture profile's `app.terraform.io` session had lapsed
-again. Needs a sign-in in the capture Chrome.
+Shows `Applied`, 4 resources, and **four runs: two errored**. Those stay in
+frame deliberately — they are the `denypolicies.create` denial and the invalid
+principal format, which are two of the week's three findings. A cropped
+single-apply shot would make the build look smoother than it was.
+
+Captured only after Jay signed in. The session had lapsed, and the pre-apply
+check now tests HCP as well as Google so that is caught before a week is built
+rather than after it is written up.
 
 **`02-custom-role.png`** — IAM & Admin → Roles → **Custom**, showing
 `Terraform Plan - Asset Reader` / `tfPlanAssetReader`, Enabled.
