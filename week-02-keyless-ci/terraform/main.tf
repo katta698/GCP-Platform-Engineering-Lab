@@ -551,15 +551,68 @@ resource "google_organization_iam_member" "plan_essential_contacts" {
 # if this ever matters more than it does at six resources.
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# IAM deny policies at the organization, added for Week 08
+#
+# Week 08 writes a deny policy, which needs iam.denypolicies.create. Read out of
+# the role definitions rather than guessed, and this time the split IS clean:
+#
+#   roles/iam.denyAdmin      denypolicies.create  YES   denypolicies.get  YES
+#   roles/iam.denyReviewer   denypolicies.create  no    denypolicies.get  YES
+#
+# So unlike Cloud Asset Inventory in Week 07, the read-only plan identity gets a
+# genuinely read-only role here. Worth noting as the counter-example: the gap
+# last week was a gap in that service's role design, not a rule about GCP.
+# ---------------------------------------------------------------------------
+
+# Custom organization roles, added for Week 08.
+#
+# The failure was not "cannot create" but "cannot verify whether it already
+# exists and must be undeleted" - the provider reads before it writes, so a
+# create needs the get too. Deleted custom roles linger for 7 days and can be
+# undeleted, which is why that read exists at all.
+
+resource "google_organization_iam_member" "apply_role_admin" {
+  org_id = var.org_id
+  role   = "roles/iam.organizationRoleAdmin"
+  member = google_service_account.apply.member
+}
+
+resource "google_organization_iam_member" "plan_role_viewer" {
+  org_id = var.org_id
+  role   = "roles/iam.organizationRoleViewer"
+  member = google_service_account.plan.member
+}
+
+resource "google_organization_iam_member" "apply_deny_admin" {
+  org_id = var.org_id
+  role   = "roles/iam.denyAdmin"
+  member = google_service_account.apply.member
+}
+
+resource "google_organization_iam_member" "plan_deny_reviewer" {
+  org_id = var.org_id
+  role   = "roles/iam.denyReviewer"
+  member = google_service_account.plan.member
+}
+
 resource "google_organization_iam_member" "apply_asset_owner" {
   org_id = var.org_id
   role   = "roles/cloudasset.owner"
   member = google_service_account.apply.member
 }
 
-resource "google_organization_iam_member" "plan_asset_owner" {
+# Week 08 replaced this. It was roles/cloudasset.owner, which was the only
+# predefined role carrying cloudasset.feeds.get and therefore also handed the
+# read-only identity create, update and delete. The custom role created in
+# week-08-iam-deny carries the two permissions a plan actually uses.
+#
+# The cost of this, so nobody is surprised later: a custom role does not track
+# Google. If reading a feed ever needs a third permission, a predefined role
+# would gain it silently and this one will fail a plan until someone adds it.
+resource "google_organization_iam_member" "plan_asset_reader" {
   org_id = var.org_id
-  role   = "roles/cloudasset.owner"
+  role   = "organizations/${var.org_id}/roles/tfPlanAssetReader"
   member = google_service_account.plan.member
 }
 

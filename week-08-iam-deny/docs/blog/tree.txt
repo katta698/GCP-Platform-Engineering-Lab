@@ -1,0 +1,24 @@
+week-08-iam-deny/
+│
+├── terraform/
+│   ├── versions.tf        29   # provider pin and the HCP cloud block
+│   ├── variables.tf       42   # org, the two CI identities, and break-glass
+│   └── main.tf           102   # 3 resources: the custom role (the FIX) and
+│                               # the deny policy (the GUARDRAIL)
+│
+└── scripts/
+    └── validate.sh       103   # asks Troubleshooter v3 what each principal
+                                # can actually do - never v1, see below
+
+# WHAT IS NOT HERE
+#
+# The binding that puts the custom role on tf-plan. An identity must not manage
+# its own grants, so it lives in week-02-keyless-ci and is applied by hand -
+# the same rule every week of this lab has followed.
+#
+# WHY validate.sh IS THE LONGEST FILE
+#
+# Because a guardrail you have not tested is a guess. It checks the fix, the
+# guardrail, the two exceptions, and then asks what three principals can really
+# do. It deliberately calls Policy Troubleshooter v3: v1 evaluates ALLOW
+# policies only and reported GRANTED while the deny was blocking.
