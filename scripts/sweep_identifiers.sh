@@ -90,13 +90,26 @@ done
 # a page is masked unless its domain is a service identity. This applies the same
 # rule to the repo, so a NEW address nobody has thought of is caught on its first
 # commit rather than on the day someone extends a list.
+#
+# `grp-` addresses are allowlisted, added 2026-10-24 after Week 10. The rule the
+# control is actually enforcing is "no identifier belonging to a PERSON or an
+# ACCOUNT", and a group alias following this lab's naming convention is neither -
+# it is a role address on an already-public domain, in the same class as a
+# service account. It is also already published in the Week 10 post, so masking
+# it here would be theatre rather than privacy.
+#
+# Note the inconsistency this exposes: capture_gcp.py masks group addresses in
+# screenshots, which made Week 10's folder-IAM figure show a group icon holding a
+# role with the group's own address redacted - a figure partly defeating its own
+# stated purpose. That file should carry the same allowlist. Not changed here
+# because another session had it open; recorded so it is not forgotten.
 # ---------------------------------------------------------------------------
 echo
 echo "Scanning for any human email address (service identities are publishable)."
 
 mapfile -t email_hits < <(
   git grep --untracked -I -o -E "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" -- "${@:-.}" 2>/dev/null |
-    grep -viE "(gserviceaccount\.com|googleapis\.com|system\.gserviceaccount\.com|noreply@|example\.(com|org)|your-domain|@domain|user@|operator@|admin@your)" |
+    grep -viE "(gserviceaccount\.com|googleapis\.com|system\.gserviceaccount\.com|noreply@|example\.(com|org)|your-domain|@domain|user@|operator@|admin@your|^[^:]*:grp-)" |
     sort -u || true
 )
 
