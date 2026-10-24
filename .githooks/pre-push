@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Pre-push: fail here rather than in CI two minutes later.
+#
+# Installed by scripts/install-hooks.sh, which sets core.hooksPath to this
+# tracked directory. CI runs the same checks and is the actual guarantee; this
+# is only the fast feedback loop.
+#
+# Deliberately NOT run here: scripts/sweep_identifiers.sh. It needs gcloud and a
+# live organization, takes several seconds per pattern, and would make every push
+# slow enough that people start reaching for --no-verify - which is how the blog
+# repo's gates ended up being skipped wholesale. Run it by hand before a push
+# that adds documentation or screenshots.
+set -uo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+fail=0
+run() { # label, command...
+  local label="$1"; shift
+  if "$@" > /tmp/prepush.$$ 2>&1; then
+    echo "  ok   $label"
+  else
+    echo "  FAIL $label"
+    sed 's/^/         /' /tmp/prepush.$$
+    fail=1
+  fi
+  rm -f /tmp/prepush.$$
+}
+
+echo "pre-push checks:"
+
+# Self-test first: a checker that has been broken into always-passing must not
+# get the chance to report a false clean.
+run "roadmap check can detect its defect" python scripts/check_roadmap_status.py --self-test
+run "roadmap status matches the repo"     python scripts/check_roadmap_status.py
+run "terraform formatted"                 terraform fmt -check -recursive
+
+if [[ "$fail" -ne 0 ]]; then
+  echo
+  echo "Push blocked. Fix the above, or --no-verify if you have a reason"
+  echo "(CI runs the same checks, so a bypass only defers the failure)."
+  exit 1
+fi
+
+echo "All pre-push checks passed."

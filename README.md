@@ -90,11 +90,11 @@ A few things worth knowing if you are doing this yourself:
 |------|---------|--------------|--------|
 | [01](./week-01-gcp-landing-zone) | Landing zone: folders, projects, remote state | Resource Manager, Terraform, HCP | ✅ Complete |
 | [02](./week-02-keyless-ci) | Keyless CI: the baseline you inherited, and the only path it leaves | Security baseline constraints, Workload Identity Federation, HCP dynamic credentials | ✅ Complete |
-| [03](.\week-03-org-policy-guardrails) | Organization policy: what the platform already decided, and what dry run is for | Organization Policy Service, managed and custom constraints, dry-run specs | ✅ Complete |
+| [03](./week-03-org-policy-guardrails) | Organization policy: what the platform already decided, and what dry run is for | Organization Policy Service, managed and custom constraints, dry-run specs | ✅ Complete |
 | [04](./week-04-shared-vpc) | Shared VPC hub-and-spoke: the first week anything runs | Shared VPC, Cloud NGFW hierarchical policies, Compute Engine | ✅ Complete |
 | [05](./week-05-project-factory) | Project factory: a module that makes the right project, and a constraint that refuses the wrong one | Resource Manager tags, custom constraints, Essential Contacts | ✅ Complete |
-| 06 | Billing export and budget alerts | Cloud Billing, BigQuery, Budgets, Pub/Sub | 📅 Planned |
-| 07 | Resource hierarchy audit and drift | Cloud Asset Inventory, asset feeds, BigQuery | 📅 Planned |
+| [06](./week-06-billing-export) | Billing export and budget alerts: the cost data that was already there | Cloud Billing, BigQuery, Budgets, Pub/Sub, domain restricted sharing exception | ✅ Complete |
+| [07](./week-07-asset-inventory) | Resource hierarchy audit: what the organization actually contains | Cloud Asset Inventory, asset feeds, BigQuery snapshots | ✅ Complete |
 
 **Why Shared VPC moved from Week 12 to Week 04.** Re-sequenced 2026-09-03, and
 not for variety — for a dependency the original ordering had backwards.
@@ -152,9 +152,9 @@ every grant can be demonstrated against something real rather than described.
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 08 | IAM: roles, conditions, deny policies | Cloud IAM, IAM Conditions, Deny Policies | 📅 Planned |
-| 09 | Service account lifecycle and impersonation | Short-lived tokens, impersonation chains, SA hygiene | 📅 Planned |
-| 10 | Cloud Identity and group-based access | Cloud Identity, Google Groups | 📅 Planned |
+| [08](./week-08-iam-deny) | IAM deny policies: taking back the permission Week 07 had to give away | Deny policies, Policy Troubleshooter v3, custom roles | ✅ Complete |
+| [09](./week-09-sa-lifecycle) | Service account lifecycle: disabling the identities nobody ever used | Activity Analyzer, default service accounts, both constraint generations | ✅ Complete |
+| [10](./week-10-group-access) | Group-based access: a folder role held by a group, not a person | Cloud Identity, Google Groups, folder IAM, Workspace admin roles | ✅ Complete |
 | 11 | Privileged access and just-in-time elevation | Privileged Access Manager, IAM Recommender | 📅 Planned |
 | 12 | Secret management | Secret Manager, Cloud KMS, CMEK, rotation | 📅 Planned |
 

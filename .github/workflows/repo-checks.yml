@@ -1,0 +1,68 @@
+name: Repo checks
+
+# Why this exists
+# ---------------
+# On 2026-10-24 Jay opened this repo on his phone and found Weeks 06 and 07
+# marked "Planned" in the roadmap. Both had been deployed and published a month
+# earlier, and so had 08, 09 and 10 - five consecutive weeks wrong on the first
+# table a visitor sees.
+#
+# The fix was written as step 0 of an end-of-session checklist. That is a note,
+# and a note is what had already failed five times: every one of those sessions
+# followed a checklist and none of them touched the roadmap. A check that only
+# runs when someone remembers to run it has the same failure mode as the
+# convention it is meant to protect.
+#
+# So it runs here instead, on every push, where forgetting is not an option and
+# `--no-verify` cannot reach it.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # A check that cannot demonstrate its own failure is a check nobody should
+      # trust. This runs the self-test FIRST: if the checker has been broken into
+      # something that always passes, this step fails and the real run below
+      # never gets the chance to report a false clean.
+      - name: Roadmap check can still detect the defect
+        run: python scripts/check_roadmap_status.py --self-test
+
+      - name: Roadmap status matches the repo
+        run: python scripts/check_roadmap_status.py
+
+      # Shell scripts in this repo are run by hand on a workstation, so a syntax
+      # error in one is discovered at the worst moment - mid-week, against live
+      # infrastructure. Week 10's validate.sh used an unset variable under
+      # `set -u` and died at the folder check; that one is a runtime fault bash
+      # -n cannot see, but the cheap parse check still belongs here.
+      - name: Shell scripts parse
+        run: |
+          status=0
+          while IFS= read -r f; do
+            if ! bash -n "$f" 2>/dev/null; then
+              echo "FAIL  $f"
+              bash -n "$f" || true
+              status=1
+            fi
+          done < <(find . -name '*.sh' -not -path './.git/*')
+          exit $status
+
+      - name: Terraform is formatted
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: terraform fmt -check
+        run: terraform fmt -check -recursive -diff
