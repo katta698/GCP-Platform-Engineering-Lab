@@ -159,7 +159,7 @@ The probe bucket was deleted immediately after the record was read.
 
 `custom.requireTerraformLabelsOnBuckets` promoted from dry run to enforced on
 2026-09-03, after its dry-run violation had been read. Both requests made as
-`katta698@jayanthkatta.com`, which holds permission to create the bucket — an
+the operator account, which holds permission to create the bucket — an
 attempt by an under-privileged identity fails with a permission error that looks
 identical to the constraint working and proves nothing.
 

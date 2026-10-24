@@ -18,8 +18,16 @@ built, deployed, validated and written up before anyone discovered the HCP
 screenshot could not be taken. The ask then landed at the bottom of a long
 message, which is not really asking.
 
-So this checks what the screenshots actually need: both sessions, by loading a
-page behind each login and seeing where it lands.
+So this checks what the screenshots actually need, by loading a page behind each
+login and seeing where it lands.
+
+The Google ADMIN CONSOLE is a third session, added 2026-10-23. It is NOT covered
+by being signed in to the Google Cloud console: admin.google.com re-challenges
+for a password even with a live Cloud console session on the same account, and
+Week 10 found that out by trying to capture the Groups list and getting a sign-in
+challenge instead. Any week touching Cloud Identity, groups, or Workspace admin
+roles needs it, and those are exactly the weeks where the console is the only
+surface - there is no gcloud for an Admin console page.
 
 Exit code is 1 if anything a week needs is missing, so it can gate an apply.
 """
@@ -33,6 +41,9 @@ CHECKS = [
      ("accounts.google.com", "/enable-mfa", "signin")),
     ("HCP Terraform",        "https://app.terraform.io/app/Katta/workspaces",
      ("/login", "/session")),
+    # Separate from the Cloud console session - see the note above.
+    ("Google Admin console", "https://admin.google.com/ac/groups",
+     ("accounts.google.com", "signin", "challenge")),
 ]
 
 

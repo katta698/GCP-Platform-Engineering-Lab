@@ -22,12 +22,16 @@
 #   gcloud auth list
 #
 # If the admin identity is missing, add it once with:
-#   gcloud auth login katta.jayant@gmail.com
+#   gcloud auth login "$BILLING_ADMIN_ACCOUNT"
 set -euo pipefail
 
 ROLE="${1:?usage: $0 <role> [member]   e.g. $0 roles/billing.viewer}"
-MEMBER="${2:-user:katta698@jayanthkatta.com}"
-ADMIN_ACCOUNT="${BILLING_ADMIN_ACCOUNT:-katta.jayant@gmail.com}"
+MEMBER="${2:-user:$(gcloud config get-value account 2>/dev/null)}"
+# The identity holding roles/billing.admin. It is NOT the Workspace account
+# that runs everything else in this lab, and it is a personal address, so it
+# is required from the environment rather than written here:
+#   export BILLING_ADMIN_ACCOUNT=<the account holding billing.admin>
+ADMIN_ACCOUNT="${BILLING_ADMIN_ACCOUNT:?set BILLING_ADMIN_ACCOUNT (holds roles/billing.admin)}"
 
 # The billing account ID is a secret and is never written into a committed file.
 TFVARS="$(dirname "$0")/../terraform/bootstrap/terraform.tfvars"

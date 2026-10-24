@@ -8,7 +8,7 @@ post cannot be published without**, not by the order the deploy produces them.
 
 Capture with `scripts/screenshots/capture_gcp.py`, attached over CDP to the
 Chrome that `scripts/screenshots/start-capture-chrome.bat` opens, signed in as
-`katta698@jayanthkatta.com`. Set `GCP_ORG_ID`, `GCP_BILLING_ACCOUNT` and
+the operator account. Set `GCP_ORG_ID`, `GCP_BILLING_ACCOUNT` and
 `GCP_PROJECT_NUMBERS` in the environment first so redaction has something to
 match; the script refuses to write the file if any survive.
 
@@ -20,7 +20,7 @@ match; the script refuses to write the file if any survive.
 that constraint is flipped to enforced. This is the week's proof. Everything else
 is context.
 
-Must be attempted as `katta698@jayanthkatta.com`, which holds the permission to
+Must be attempted as the operator account, which holds the permission to
 create the bucket. Week 02's note applies unchanged: an attempt made by an
 identity that lacks permission fails with a permission error, which looks like
 success and proves nothing.

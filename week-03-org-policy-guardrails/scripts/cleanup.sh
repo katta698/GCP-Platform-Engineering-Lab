@@ -28,7 +28,7 @@ terraform destroy -input=false
 #    Remove it by hand if you want the organization back exactly as it was:
 #
 #      gcloud organizations remove-iam-policy-binding "$ORG_ID" \
-#        --member="user:katta698@jayanthkatta.com" --role="roles/logging.viewer"
+#        --member="user:$(gcloud config get-value account)" --role="roles/logging.viewer"
 #
 # 3. The Google security baseline. Untouched by this week and untouched by this
 #    teardown. Those seven constraints were never managed here.

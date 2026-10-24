@@ -1,0 +1,15 @@
+week-10-group-access/
+├── terraform/
+│   ├── main.tf              160 lines, 6 resources  # the group, its one member, the folder grant
+│   ├── variables.tf          63 lines               # customer_id and operator are sensitive
+│   └── versions.tf           37 lines               # why user_project_override is required here
+├── scripts/
+│   ├── validate.sh           96 lines               # asks whether access FOLLOWS membership
+│   └── measure-membership-lag.sh  109 lines         # 3 trials each way; restores in a trap
+└── docs/
+    ├── FIGURE_PLAN.md        61 lines               # written before any capture
+    └── references.md                                # what the docs did NOT settle
+
+6 resources. One is the group, one is the grant. The other four exist so the
+test subject can reach the permission by exactly one path and no other -
+without that, a passing revocation test would prove nothing.

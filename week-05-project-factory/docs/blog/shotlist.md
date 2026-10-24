@@ -14,7 +14,7 @@ moment it is enforced; a paragraph can be moved later.
 
 Capture with `scripts/screenshots/capture_gcp.py` attached over CDP to the
 Chrome that `scripts/screenshots/start-capture-chrome.bat` opens, signed in as
-`katta698@jayanthkatta.com`. Export `GCP_ORG_ID`, `GCP_BILLING_ACCOUNT` and
+the operator account. Export `GCP_ORG_ID`, `GCP_BILLING_ACCOUNT` and
 `GCP_PROJECT_NUMBERS` first — the script refuses to write a file if any survive
 redaction.
 
