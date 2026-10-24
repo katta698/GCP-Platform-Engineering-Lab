@@ -1,0 +1,29 @@
+title:    Access follows membership, both ways
+subtitle: Three trials each direction against the deployed group. The subject holds no role of its own.
+width:    1120
+---
+$ ORG_ID=... ./scripts/measure-membership-lag.sh 3
+
+Measuring membership propagation, 3 trial(s) each direction.
+Subject: group-access-demo@...   Group: grp-gcp-log-readers@...
+Poll 10s, ceiling 600s. A ceiling hit is reported, not retried.
+
+--- trial 1 ---
+  revoke: removing membership... access gone after 30s
+  grant:  adding membership back... access back after 30s
+
+--- trial 2 ---
+  revoke: removing membership... access gone after 20s
+  grant:  adding membership back... access back after 30s
+
+--- trial 3 ---
+  revoke: removing membership... access gone after 10s
+  grant:  adding membership back... access back after 10s
+
+== Result ==
+  revoke   30,20,10s
+  grant    30,30,10s
+  [restore] membership put back
+
+# The subject holds no role of its own. Every one of those six transitions
+# is a membership change and nothing else - no IAM policy was edited.

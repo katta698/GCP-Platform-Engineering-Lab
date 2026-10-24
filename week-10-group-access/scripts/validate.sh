@@ -13,6 +13,11 @@ SEED="${SEED_PROJECT:-katta698-gcp-lab-seed}"
 DOMAIN="${DOMAIN:-jayanthkatta.com}"
 GROUP="${GROUP:-grp-gcp-log-readers@${DOMAIN}}"
 SUBJECT="${SUBJECT:-group-access-demo@${SEED}.iam.gserviceaccount.com}"
+# Derived, never hardcoded: the folder ID is an account-shaped identifier and
+# this script is committed. Unset under `set -u` it killed the run at the
+# folder check - found by running the validator rather than by writing it.
+PLATFORM_FOLDER="${PLATFORM_FOLDER:-folders/$(gcloud resource-manager folders list   --organization="$ORG_ID" --filter='displayName:platform' --format='value(name)' 2>/dev/null)}"
+
 fail=0
 
 # Cloud Identity is a client-based API and ignores the ADC quota project, so
@@ -69,12 +74,17 @@ else
 fi
 echo
 
-echo "== The pipeline holds no Workspace admin role =="
-echo "   WITH_INITIAL_OWNER makes the creating identity the OWNER of the group"
-echo "   it created, which is why tf-apply needs no Groups Admin role. Groups"
-echo "   Admin would let it manage every group in the directory, including ones"
-echo "   it never created - the same shape of over-grant as Editor-for-a-bucket."
-echo "   Reported rather than asserted: this reads the group's owners."
+echo "== Who can administer this group =="
+echo "   This section USED to assert that the pipeline held no Workspace admin"
+echo "   role, because initial_group_config = WITH_INITIAL_OWNER was supposed to"
+echo "   make the creating identity the group's owner. It does not: the group was"
+echo "   created with zero members and no owner, and neither pipeline identity"
+echo "   could read it. tf-apply therefore holds Groups Admin, which can manage"
+echo "   EVERY group in the directory - a real over-grant, recorded rather than"
+echo "   hidden. tf-plan holds a custom role carrying only Groups > Read, because"
+echo "   refresh runs in the plan phase and 403s without it."
+echo "   Measured 2026-10-23. Reported, not asserted - the list below is the"
+echo "   group's actual membership:"
 gcloud identity groups memberships list --group-email="$GROUP" "${CI[@]}" \
   --format="table[no-heading](preferredMemberKey.id, roles[].name)" 2>/dev/null |
   sed 's/^/       /'
