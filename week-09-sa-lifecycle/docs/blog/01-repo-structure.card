@@ -1,0 +1,13 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-09-sa-lifecycle/
+├── LAB.md              reproduction guide: the usage query, commands, cleanup
+├── terraform/          3 resources: two disables and one org policy
+├── scripts/            validate.sh - asserts state against the live org
+└── docs/               figure plan, references, screenshots
+
+# terraform/  google_project_default_service_accounts with restore_policy,
+#             plus the legacy key-creation constraint the baseline missed.
+# scripts/    checks BOTH constraint generations - the week's trap.
