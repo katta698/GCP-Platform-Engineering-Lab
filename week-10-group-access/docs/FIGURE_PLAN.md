@@ -59,3 +59,13 @@ The delay in THIS setup is unmeasured. Measure it the way Week 03 measured org
 policy enforcement lag: three trials each direction, ten-second poll, grant and
 revoke, and publish the range rather than one observation. One success followed
 by one failure is not a measurement.
+
+## Superseded 2026-10-25
+
+Slot 02 was `02-terraform-layout.png` - a full file tree with per-file line
+counts, required of every week from 2026-09-30. The master standard of
+2026-10-25 forbids per-file line counts and exhaustive inventories, and asks
+instead for a compact structure figure showing major directories and what each
+is responsible for. Slot 02 is now that figure. The old card and its `tree.txt`
+source are deleted rather than retired, because keeping a figure the standard
+forbids invites its reuse.

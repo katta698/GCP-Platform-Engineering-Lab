@@ -1,0 +1,16 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-10-group-access/
+├── LAB.md              reproduction guide: commands, outputs, cleanup
+├── terraform/          the deployed infrastructure (6 resources)
+├── scripts/            validation and the propagation measurement
+└── docs/               figure plan, references, screenshots
+
+# terraform/  the group, its membership, and the folder IAM binding.
+#             Provider pinning lives here too - Cloud Identity needs
+#             user_project_override, which is not obvious.
+# scripts/    validate.sh asserts against the live org, not state.
+#             measure-membership-lag.sh is the timed revocation test.
+# docs/       what each figure had to show, declared before capture.
