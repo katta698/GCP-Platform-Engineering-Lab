@@ -41,8 +41,34 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 README = os.path.join(ROOT, "README.md")
 
-# | [06](./week-06-billing-export) | title | services | ✅ Complete |
-ROW_RE = re.compile(r"^\|\s*(?:\[(\d{2})\]\(([^)]*)\)|(\d{2}))\s*\|.*?\|\s*(.*?)\s*\|\s*$", re.M)
+# A roadmap row, split on the pipe rather than matched with one regex:
+# | [06](./week-06-billing-export) | project | services | Status | Blog |
+WEEK_CELL_RE = re.compile(r"^(?:\[(\d{2})\]\(([^)]*)\)|(\d{2}))$")
+
+# A published article lives at this prefix. A week marked Complete with no link
+# is the second half of the 2026-10-24 defect: the Status column was wrong for
+# five weeks, and even once corrected the README pointed at the articles exactly
+# once, in a sentence at the top. The URLs lived only in SESSION_CONTEXT.md,
+# which is gitignored - so they were nowhere public at all.
+BLOG_PREFIX = "https://jayanthkatta.com/blog/"
+
+
+def parse_row(line):
+    """(week, folder_link, status, blog) for a roadmap row, else None."""
+    s = line.strip()
+    if not (s.startswith("|") and s.endswith("|")):
+        return None
+    cells = [c.strip() for c in s.strip("|").split("|")]
+    if len(cells) < 4:
+        return None
+    m = WEEK_CELL_RE.match(cells[0])
+    if not m:
+        return None
+    week = m.group(1) or m.group(3)
+    link = m.group(2) or ""
+    status = cells[3]
+    blog = cells[4] if len(cells) > 4 else ""
+    return week, link, status, blog
 
 
 def deployed_weeks():
@@ -60,10 +86,11 @@ def deployed_weeks():
 def audit(text, deployed):
     """Return a list of problem strings. Pure, so --self-test can prove it."""
     problems = []
-    for m in ROW_RE.finditer(text):
-        num = m.group(1) or m.group(3)
-        link = m.group(2) or ""
-        status = m.group(4)
+    for line in text.split("\n"):
+        parsed = parse_row(line)
+        if not parsed:
+            continue
+        num, link, status, blog = parsed
         complete = "Complete" in status
         if num in deployed:
             if not complete:
@@ -74,6 +101,10 @@ def audit(text, deployed):
                 problems.append(
                     f"week {num}: marked Complete but does not link to "
                     f"./{deployed[num]}")
+            elif BLOG_PREFIX not in blog:
+                problems.append(
+                    f"week {num}: marked Complete but the Blog column carries no "
+                    f"article link ({BLOG_PREFIX}...)")
         elif complete:
             problems.append(
                 f"week {num}: roadmap says Complete but no week-{num}-*/terraform/"
@@ -83,20 +114,21 @@ def audit(text, deployed):
 
 def self_test():
     deployed = {"06": "week-06-billing-export", "07": "week-07-asset-inventory"}
+    ROW06 = ("| [06](./week-06-billing-export) | t | s | ✅ Complete | "
+             "[Read](" + BLOG_PREFIX + "week-06-billing-export/) |\n")
+    ROW07 = ("| [07](./week-07-asset-inventory) | t | s | ✅ Complete | "
+             "[Read](" + BLOG_PREFIX + "week-07-asset-inventory/) |\n")
     cases = [
-        ("| [06](./week-06-billing-export) | t | s | ✅ Complete |\n"
-         "| [07](./week-07-asset-inventory) | t | s | ✅ Complete |\n", 0,
-         "both deployed and both marked Complete with links"),
-        ("| 06 | t | s | 📅 Planned |\n"
-         "| [07](./week-07-asset-inventory) | t | s | ✅ Complete |\n", 1,
+        (ROW06 + ROW07, 0, "both deployed, Complete, with folder and blog links"),
+        (ROW06 + "| [07](./week-07-asset-inventory) | t | s | ✅ Complete | — |\n",
+         1, "Complete but no article link in the Blog column"),
+        ("| 06 | t | s | 📅 Planned | — |\n" + ROW07, 1,
          "a deployed week still marked Planned - the 2026-10-24 defect"),
-        ("| [06](./week-06-billing-export) | t | s | ✅ Complete |\n"
-         "| [07](./week-07-asset-inventory) | t | s | ✅ Complete |\n"
-         "| [11](./week-11-pam) | t | s | ✅ Complete |\n", 1,
+        (ROW06 + ROW07 + "| [11](./week-11-pam) | t | s | ✅ Complete | "
+         "[Read](" + BLOG_PREFIX + "week-11-pam/) |\n", 1,
          "a week claiming Complete with no folder"),
-        ("| 06 | t | s | ✅ Complete |\n"
-         "| [07](./week-07-asset-inventory) | t | s | ✅ Complete |\n", 1,
-         "Complete but no link to the folder"),
+        ("| 06 | t | s | ✅ Complete | [Read](" + BLOG_PREFIX + "x/) |\n" + ROW07,
+         1, "Complete but no link to the folder"),
     ]
     bad = 0
     for text, want, label in cases:
