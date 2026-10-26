@@ -54,7 +54,17 @@ BLOG_PREFIX = "https://jayanthkatta.com/blog/"
 
 
 def parse_row(line):
-    """(week, folder_link, status, blog) for a roadmap row, else None."""
+    """(week, folder_link, status, row) for a roadmap row, else None.
+
+    The article link used to live in its own Blog column. On 2026-10-25 Jay
+    opened the repo on a phone and could not see Status or Blog at all - rows
+    were 279 characters across five columns, so GitHub pushed the trailing ones
+    off-screen and the roadmap looked un-updated when it had been updated hours
+    earlier. The fifth column made an already-too-wide table worse.
+
+    The link now sits on the project title, where it reads naturally and costs
+    no width, so the check looks for it anywhere in the row.
+    """
     s = line.strip()
     if not (s.startswith("|") and s.endswith("|")):
         return None
@@ -66,9 +76,8 @@ def parse_row(line):
         return None
     week = m.group(1) or m.group(3)
     link = m.group(2) or ""
-    status = cells[3]
-    blog = cells[4] if len(cells) > 4 else ""
-    return week, link, status, blog
+    status = cells[3] if len(cells) > 3 else ""
+    return week, link, status, line
 
 
 def deployed_weeks():
@@ -90,7 +99,7 @@ def audit(text, deployed):
         parsed = parse_row(line)
         if not parsed:
             continue
-        num, link, status, blog = parsed
+        num, link, status, row = parsed
         complete = "Complete" in status
         if num in deployed:
             if not complete:
@@ -101,10 +110,10 @@ def audit(text, deployed):
                 problems.append(
                     f"week {num}: marked Complete but does not link to "
                     f"./{deployed[num]}")
-            elif BLOG_PREFIX not in blog:
+            elif BLOG_PREFIX not in row:
                 problems.append(
-                    f"week {num}: marked Complete but the Blog column carries no "
-                    f"article link ({BLOG_PREFIX}...)")
+                    f"week {num}: marked Complete but the row carries no article "
+                    f"link ({BLOG_PREFIX}...)")
         elif complete:
             problems.append(
                 f"week {num}: roadmap says Complete but no week-{num}-*/terraform/"
@@ -114,20 +123,20 @@ def audit(text, deployed):
 
 def self_test():
     deployed = {"06": "week-06-billing-export", "07": "week-07-asset-inventory"}
-    ROW06 = ("| [06](./week-06-billing-export) | t | s | ✅ Complete | "
-             "[Read](" + BLOG_PREFIX + "week-06-billing-export/) |\n")
-    ROW07 = ("| [07](./week-07-asset-inventory) | t | s | ✅ Complete | "
-             "[Read](" + BLOG_PREFIX + "week-07-asset-inventory/) |\n")
+    ROW06 = ("| [06](./week-06-billing-export) | [t](" + BLOG_PREFIX
+             + "week-06-billing-export/) | s | ✅ Complete |\n")
+    ROW07 = ("| [07](./week-07-asset-inventory) | [t](" + BLOG_PREFIX
+             + "week-07-asset-inventory/) | s | ✅ Complete |\n")
     cases = [
         (ROW06 + ROW07, 0, "both deployed, Complete, with folder and blog links"),
-        (ROW06 + "| [07](./week-07-asset-inventory) | t | s | ✅ Complete | — |\n",
-         1, "Complete but no article link in the Blog column"),
-        ("| 06 | t | s | 📅 Planned | — |\n" + ROW07, 1,
+        (ROW06 + "| [07](./week-07-asset-inventory) | t | s | ✅ Complete |\n",
+         1, "Complete but no article link anywhere in the row"),
+        ("| 06 | t | s | 📅 Planned |\n" + ROW07, 1,
          "a deployed week still marked Planned - the 2026-10-24 defect"),
-        (ROW06 + ROW07 + "| [11](./week-11-pam) | t | s | ✅ Complete | "
-         "[Read](" + BLOG_PREFIX + "week-11-pam/) |\n", 1,
+        (ROW06 + ROW07 + "| [11](./week-11-pam) | [t](" + BLOG_PREFIX
+         + "week-11-pam/) | s | ✅ Complete |\n", 1,
          "a week claiming Complete with no folder"),
-        ("| 06 | t | s | ✅ Complete | [Read](" + BLOG_PREFIX + "x/) |\n" + ROW07,
+        ("| 06 | [t](" + BLOG_PREFIX + "x/) | s | ✅ Complete |\n" + ROW07,
          1, "Complete but no link to the folder"),
     ]
     bad = 0
