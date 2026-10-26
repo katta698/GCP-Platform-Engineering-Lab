@@ -1,0 +1,16 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-05-project-factory/
+├── LAB.md              reproduction guide: the four roles, field probing, quota
+├── terraform/
+│   ├── main.tf         tag key, two values, the custom constraint
+│   └── modules/project/ the reusable project: labels, tag, contacts, APIs
+├── scripts/            validate.sh - checks what the factory produced
+└── docs/               figure plan, references, screenshots
+
+# modules/project/  the point of the week: one module that makes a project
+#                   which is correct by construction.
+# main.tf           the constraint that refuses an incorrect one - in dry run,
+#                   and limited to the two fields a Project actually exposes.

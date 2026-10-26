@@ -1,0 +1,14 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-06-billing-export/
+├── LAB.md              reproduction guide: the DRS exception, the console-only step
+├── terraform/          7 resources: dataset, topic, budget, scoped exception
+├── scripts/            validate.sh, grant-billing-role.sh
+└── docs/               figure plan, references, screenshots
+
+# terraform/  the org-policy exception and a 120s time_sleep exist because
+#             Cloud Billing writes its own service agent onto your topic.
+# scripts/    grant-billing-role.sh does the grant over REST - the gcloud
+#             form dies with INVALID_ARGUMENT naming no argument.
