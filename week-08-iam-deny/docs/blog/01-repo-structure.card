@@ -1,0 +1,13 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-08-iam-deny/
+├── LAB.md              reproduction guide: v2 principals, v3 queries, cleanup
+├── terraform/          3 resources: custom role, binding, deny policy
+├── scripts/            validate.sh - asks Troubleshooter v3, never v1
+└── docs/               figure plan, references, screenshots
+
+# terraform/  the deny policy's exception list is the part worth reading.
+# scripts/    v1 answers GRANTED while a deny is blocking. v3 is the
+#             only instrument that can see the control being tested.

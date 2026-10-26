@@ -1,0 +1,14 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-07-asset-inventory/
+├── LAB.md              reproduction guide: the service-agent grants, snapshot, audit
+├── terraform/          7 resources: feed, topic, dataset, service-agent grants
+├── scripts/            validate.sh and snapshot.sh
+└── docs/               figure plan, references, screenshots
+
+# terraform/  three of the seven resources are IAM grants to Google's own
+#             Cloud Asset service agent - it writes as itself, not as you.
+# scripts/    snapshot.sh is separate because an export is an operation
+#             with a moment attached, not a desired state.
