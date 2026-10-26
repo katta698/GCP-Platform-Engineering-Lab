@@ -1,0 +1,28 @@
+title:    The denial this week rests on
+subtitle: Attempted 2026-10-25 against the live organization. No key was created.
+width:    1040
+---
+$ gcloud iam service-accounts keys create /tmp/should-not-exist.json \
+    --iam-account=tf-plan@<SEED>.iam.gserviceaccount.com
+
+ERROR: (gcloud.iam.service-accounts.keys.create) FAILED_PRECONDITION:
+Operation denied by org policy on resource
+'projects/-/serviceAccounts/<SERVICE_ACCOUNT_ID>':
+["constraints/iam.managed.disableServiceAccountKeyCreation":
+ "This constraint, when enforced, blocks service account key creation."]
+
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: iam.googleapis.com
+  metadata:
+    customConstraints: constraints/iam.managed.disableServiceAccountKeyCreation
+    resource: projects/-/serviceAccounts/<SERVICE_ACCOUNT_ID>
+  reason: CUSTOM_ORG_POLICY_VIOLATION
+
+$ gcloud iam service-accounts keys list --managed-by=user \
+    --iam-account=tf-plan@<SEED>.iam.gserviceaccount.com
+(no rows)
+
+# FAILED_PRECONDITION, not PERMISSION_DENIED - and that distinction is the
+# whole point. An under-privileged attempt fails with a permission error that
+# looks identical to the control working and proves nothing. This request
+# passed the IAM check and was refused by the policy, which the error names.

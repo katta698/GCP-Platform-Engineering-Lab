@@ -1,0 +1,14 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-04-shared-vpc/
+├── LAB.md              reproduction guide: the five roles, quota cascade, free-tier shape
+├── terraform/          14 resources: hub VPC, subnets, attachment, firewall policy, spoke
+├── scripts/            validate.sh - asserts all four free-tier conditions
+└── docs/               figure plan, references, screenshots
+
+# terraform/  "created" and "attached" are different things for a hierarchical
+#             firewall policy, and only the second one filters anything.
+# scripts/    four conditions keep this inside Always Free. Changing any one
+#             of them silently starts billing, so all four are asserted.

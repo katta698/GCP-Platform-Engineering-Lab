@@ -1,0 +1,14 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-03-org-policy-guardrails/
+├── LAB.md              reproduction guide: the baseline read, the 409, the lag
+├── terraform/          8 resources: 4 policies, a custom constraint, 1 exception
+├── scripts/            validate.sh, measure-enforcement-lag.py
+└── docs/               figure plan, references, screenshots
+
+# terraform/  the resources are chained with depends_on - the API serializes
+#             per parent and HCP refuses -parallelism=1.
+# scripts/    measure-enforcement-lag.py restores the control in a finally
+#             block, because its first version crashed and left one degraded.
