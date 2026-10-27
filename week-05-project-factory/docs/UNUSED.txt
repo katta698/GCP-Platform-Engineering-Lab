@@ -1,0 +1,7 @@
+Retired figure slots — Week 05
+
+02-hcp-week02-grants.png
+    Shows the Week 02 configuration being amended to add the grants this week
+    needed. It documents a prerequisite rather than this week's idea, and the
+    permission change is stated in prose and in LAB.md where a reader can act
+    on it. Kept on disk as a record of when the grants were widened.

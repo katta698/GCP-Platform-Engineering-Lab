@@ -1,0 +1,6 @@
+Retired figure slots — Week 06
+
+04-hcp-apply.png
+    An HCP run reaching "Applied". Existence proof only — the run itself already
+    proves the resources exist, and by CLAUDE.md's test a picture of it does not
+    earn a figure. Kept on disk; a run page cannot be re-created later.

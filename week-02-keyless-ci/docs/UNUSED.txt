@@ -1,0 +1,9 @@
+Retired figure slots — Week 02
+
+01b-hcp-workspace-variables.png
+    Shows the four TFC_GCP_* variables on the HCP workspace. Dropped during the
+    2026-10-25 restructure to stay inside the standard's figure guidance: it
+    proves configuration exists rather than showing the week's idea, and the
+    variables are listed in LAB.md where someone reproducing the week needs
+    them. The load-bearing figures are 03 (the attribute condition) and 05 (the
+    key-creation denial). Kept on disk.

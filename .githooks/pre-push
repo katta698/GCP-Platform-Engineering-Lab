@@ -35,6 +35,12 @@ run "roadmap check can detect its defect" python scripts/check_roadmap_status.py
 run "roadmap status matches the repo"     python scripts/check_roadmap_status.py
 run "terraform formatted"                 terraform fmt -check -recursive
 
+# Week 10 captured its own perishable "before" figure exactly as planned, then
+# dropped it from the post during a restructure and said nothing. The existing
+# pre-destroy gate passed throughout, because it asks whether a declared slot
+# exists on disk - a different question from whether a reader ever sees it.
+run "declared figures reach the post"     python scripts/check_figures_published.py
+
 if [[ "$fail" -ne 0 ]]; then
   echo
   echo "Push blocked. Fix the above, or --no-verify if you have a reason"

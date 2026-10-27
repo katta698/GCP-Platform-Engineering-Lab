@@ -1,0 +1,16 @@
+Retired figure slots — Week 10
+
+03-hcp-apply.png
+    Declared in FIGURE_PLAN.md, captured, not published. It shows an HCP run
+    reaching "Applied" with six resources — an existence proof, and CLAUDE.md is
+    explicit that the Terraform run already proves a resource exists. The post's
+    load-bearing figure is 05, the revocation sequence, which shows the idea
+    rather than the inventory. Kept on disk because it is cheap and the run
+    cannot be re-created after teardown.
+
+02-terraform-layout.png
+    Retired by the master standard of 2026-10-25, which forbids per-file line
+    counts and exhaustive file inventories. Replaced by 02-repo-structure.png,
+    a compact figure naming major directories only. The card source and its
+    tree.txt were deleted rather than kept, so a forbidden figure cannot be
+    reused by accident.
