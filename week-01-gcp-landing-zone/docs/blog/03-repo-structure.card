@@ -1,0 +1,14 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-01-gcp-landing-zone/
+├── LAB.md                      reproduction guide: the manual first step, the two IAM grants
+├── terraform/
+│   ├── main.tf                 four folders, three platform projects
+│   └── modules/project-factory/  reused by every later week
+├── scripts/                    deploy, validate, and a cleanup that refuses
+└── docs/                       references and screenshots
+
+# project-factory/  auto_create_network = false, activate_apis defaults to []
+# cleanup.sh        exits 1 without --i-really-mean-it; this week is permanent

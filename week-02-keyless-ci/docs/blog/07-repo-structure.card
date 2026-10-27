@@ -1,0 +1,14 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-02-keyless-ci/
+├── LAB.md              reproduction guide: the attribute condition, the phase split
+├── terraform/          the pool, the provider, two identities, their grants
+├── scripts/            validate.sh - including the shortcut, attempted
+└── docs/               figure plan, references, screenshots
+
+# terraform/  main.tf has grown every week since: it is the human-run layer
+#             where CI's permissions are defined, so later weeks add here.
+# scripts/    validate.sh attempts key creation and expects a refusal - the
+#             one check that tests the control rather than the config.
