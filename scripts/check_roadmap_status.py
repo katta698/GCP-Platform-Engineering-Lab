@@ -23,9 +23,15 @@ Jay should not be the thing that notices.
 
 What it asserts
 ---------------
-A week whose folder contains `terraform/main.tf` is DEPLOYED, and the roadmap
-row for that week number must say Complete and must link to the folder. A week
-with no folder must not claim Complete.
+A week whose folder contains `terraform/main.tf` is STARTED, and the roadmap
+row for that week number must say either Complete or In progress, and must link
+to the folder. A week with no folder must not claim either.
+
+Complete additionally requires an article link. In progress must NOT carry one:
+a week that is built but unpublished is a real state, and the 2026-10-28 version
+of this script learned it the hard way - Week 11 was started, the only honest
+status was "In progress", and the checker's two-state model would have forced
+either a lie or a blocked push.
 
 Deliberately NOT checked: whether the blog post is published. That lives in
 another repository, this script runs offline, and conflating "built" with
@@ -101,23 +107,31 @@ def audit(text, deployed):
             continue
         num, link, status, row = parsed
         complete = "Complete" in status
+        started = "In progress" in status
         if num in deployed:
-            if not complete:
+            if not (complete or started):
                 problems.append(
                     f"week {num}: {deployed[num]}/terraform/main.tf exists but the "
                     f"roadmap says {status!r}")
             elif deployed[num] not in link:
                 problems.append(
-                    f"week {num}: marked Complete but does not link to "
+                    f"week {num}: marked {status.strip()} but does not link to "
                     f"./{deployed[num]}")
-            elif BLOG_PREFIX not in row:
+            elif complete and BLOG_PREFIX not in row:
                 problems.append(
                     f"week {num}: marked Complete but the row carries no article "
                     f"link ({BLOG_PREFIX}...)")
-        elif complete:
+            elif started and BLOG_PREFIX in row:
+                # The failure this guards is optimism, not neglect: linking an
+                # article that does not exist yet is how a roadmap starts
+                # promising things. Publish, then mark Complete.
+                problems.append(
+                    f"week {num}: marked In progress but already carries an "
+                    f"article link - mark it Complete once it is published")
+        elif complete or started:
             problems.append(
-                f"week {num}: roadmap says Complete but no week-{num}-*/terraform/"
-                "main.tf exists")
+                f"week {num}: roadmap says {status.strip()} but no "
+                f"week-{num}-*/terraform/main.tf exists")
     return problems
 
 
@@ -138,6 +152,15 @@ def self_test():
          "a week claiming Complete with no folder"),
         ("| 06 | [t](" + BLOG_PREFIX + "x/) | s | ✅ Complete |\n" + ROW07,
          1, "Complete but no link to the folder"),
+        ("| [06](./week-06-billing-export) | t | s | 🚧 In progress |\n" + ROW07,
+         0, "a started but unpublished week, linked to its folder"),
+        ("| [06](./week-06-billing-export) | [t](" + BLOG_PREFIX
+         + "week-06-billing-export/) | s | 🚧 In progress |\n" + ROW07, 1,
+         "In progress but already advertising an article"),
+        (ROW06 + ROW07 + "| [12](./week-12-secrets) | t | s | 🚧 In progress |\n",
+         1, "In progress with no folder on disk"),
+        ("| 06 | t | s | 🚧 In progress |\n" + ROW07, 1,
+         "In progress but not linked to its folder"),
     ]
     bad = 0
     for text, want, label in cases:

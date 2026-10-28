@@ -155,7 +155,7 @@ every grant can be demonstrated against something real rather than described.
 | [08](./week-08-iam-deny) | [IAM deny policies and custom roles](https://jayanthkatta.com/blog/week-08-iam-deny/) | Deny policies, Troubleshooter v3 | ✅ Complete |
 | [09](./week-09-sa-lifecycle) | [Service account lifecycle](https://jayanthkatta.com/blog/week-09-sa-lifecycle/) | Activity Analyzer, Org Policy | ✅ Complete |
 | [10](./week-10-group-access) | [Group-based access control](https://jayanthkatta.com/blog/week-10-group-access/) | Cloud Identity, Google Groups | ✅ Complete |
-| 11 | Privileged access and just-in-time elevation | Privileged Access Manager, IAM Recommender | 📅 Planned |
+| [11](./week-11-jit-access) | Privileged access and just-in-time elevation | Privileged Access Manager | 🚧 In progress |
 | 12 | Secret management | Secret Manager, Cloud KMS, CMEK, rotation | 📅 Planned |
 
 ### Phase 3 — Networking (Weeks 13–19)
