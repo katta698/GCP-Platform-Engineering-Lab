@@ -1,0 +1,16 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    760
+---
+week-11-jit-access/
+├── LAB.md                      reproduction guide: the Week 02 amendment, the 30-minute floor
+├── terraform/                  the API, a subject that holds nothing, one entitlement
+├── scripts/
+│   ├── validate.sh             six checks; the denial is the one that matters
+│   ├── request-grant.sh        runs AS the subject, stops at AWAITING_APPROVAL
+│   └── measure-expiry-lag.py   polls until the binding disappears; read-only
+└── docs/                       figure plan, references, screenshots
+
+# terraform/  nothing here grants access. The entitlement is a template; the
+#             folder's IAM policy stays unchanged until someone requests.
+# scripts/    measure-expiry-lag.py has no write path at all, by design.

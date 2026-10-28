@@ -198,6 +198,13 @@ resource "google_organization_iam_member" "apply" {
     # Week 03 writes organization policy. Granted here so that week does not
     # need a second hand-run apply to grant its own permissions.
     "roles/orgpolicy.policyAdmin",
+    # Week 11 creates Privileged Access Manager entitlements. The entitlement
+    # itself needs this; writing one ALSO needs setIamPolicy on the parent,
+    # which is why Week 11 attaches to a folder rather than the organization -
+    # folderAdmin above carries it, and organizationAdmin is deliberately
+    # absent. An identity that could grant itself anything is the thing this
+    # whole arrangement exists to prevent.
+    "roles/privilegedaccessmanager.admin",
   ])
 
   org_id = var.org_id

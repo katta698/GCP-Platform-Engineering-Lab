@@ -16,7 +16,7 @@ capturing. Retired slots go in `UNUSED.txt` with a reason.
 
 | # | File | Method | Shows | Stated check |
 | --- | --- | --- | --- | --- |
-| 01 | `01-denied-before.png` | terminal card | the subject reading the platform folder's IAM policy and being refused | `PERMISSION_DENIED`, before any entitlement exists |
+| 01 | `01-denied-before.png` | terminal card | the subject reading the platform folder's IAM policy and being refused | `PERMISSION_DENIED`, with the entitlement deployed and **no grant requested** |
 | 02 | `02-repo-structure.png` | rendered card | major directories and what each is responsible for | matches the committed `.card` |
 | 03 | `03-entitlement.png` | GCP console | the entitlement: eligible requester, approver, max duration, the role it grants | access defined as a **template**, with no binding yet in the folder's IAM policy |
 | 04 | `04-grant-pending.png` | GCP console | a grant requested and **waiting on approval** | state is `AWAITING_APPROVAL`, requester ≠ approver |
@@ -34,6 +34,13 @@ their exit states, not a page.
 
 **01 and 06 are the same command.** That is deliberate: the before/after pair is
 what makes 05 mean something. A grant that works proves nothing on its own.
+
+**Corrected 2026-10-28, before capturing anything.** Slot 01 originally said
+"before any entitlement exists". That is impossible: the subject is created by
+this week's apply, so it cannot be refused before the apply that creates it.
+The honest framing is stronger anyway - the entitlement IS deployed and the
+folder's policy still carries nothing, which is the template/instance split
+shown directly rather than asserted.
 
 **04 is the only console figure carrying an idea** rather than an existence
 proof — a request sitting in `AWAITING_APPROVAL` is the two-party control
