@@ -1,0 +1,25 @@
+title:    While the grant is active
+subtitle: A binding appears that nothing in the Terraform created.
+width:    980
+---
+$ gcloud pam grants list --entitlement=folder-security-review \
+    --folder=<FOLDER> --location=global --format="value(state)"
+ACTIVE
+
+$ gcloud resource-manager folders get-iam-policy folders/<FOLDER> \
+    --flatten="bindings[].members" \
+    --filter="bindings.members:jit-access-demo@<SEED>.iam.gserviceaccount.com" \
+    --format="value(bindings.role)"
+roles/iam.securityReviewer
+
+# Nothing in main.tf creates that binding. PAM wrote it into the folder's
+# IAM policy when the grant was approved, and will remove it on expiry.
+
+$ gcloud resource-manager folders get-iam-policy folders/<FOLDER> \
+    --impersonate-service-account=jit-access-demo@<SEED>.iam.gserviceaccount.com \
+    --format="value(bindings.role)"
+roles/compute.networkAdmin;roles/compute.viewer;roles/iam.securityReviewer;
+roles/privilegedaccessmanager.admin;roles/resourcemanager.folderAdmin; ...
+
+# The command refused in figure 01 now returns the policy. Same principal,
+# same command, same folder - the only thing that changed is a 30-minute grant.

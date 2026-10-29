@@ -1,0 +1,28 @@
+title:    Thirty minutes later, with nobody touching anything
+subtitle: Measured, not assumed. Poll every ~14s across the expiry boundary.
+width:    980
+---
+# Grant approved  22:31:54Z      requestedDuration 1800s
+# Documented expiry  23:01:54Z   (approval + 1800s)
+
+  23:01:20Z  still bound: roles/iam.securityReviewer
+  23:01:34Z  still bound: roles/iam.securityReviewer
+  23:01:48Z  still bound: roles/iam.securityReviewer     <- 6s BEFORE expiry
+  23:02:01Z  GONE                                        <- 7s AFTER expiry
+
+# Removal happened inside that 13-second window. No cleanup job, no
+# terraform destroy, no human. The binding left the policy on its own.
+
+$ gcloud pam grants list ... --format="value(state)"
+ENDED
+
+$ gcloud resource-manager folders get-iam-policy folders/<FOLDER> \
+    --impersonate-service-account=jit-access-demo@<SEED>.iam.gserviceaccount.com
+
+ERROR: (gcloud.resource-manager.folders.get-iam-policy)
+  [jit-access-demo@<SEED>.iam.gserviceaccount.com] does not have permission
+  to access folders instance [<FOLDER>:getIamPolicy] (or it may not exist):
+  The caller does not have permission.
+
+# Identical to figure 01. That is the whole week: the denial came back
+# without anybody bringing it back.

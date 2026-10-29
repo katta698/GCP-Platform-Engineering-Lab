@@ -38,7 +38,7 @@ import shutil
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 # subprocess cannot launch a bare `gcloud` on Windows: it is a .CMD shim and
 # CreateProcess does not apply PATHEXT. Week 03 lost a measurement run to this.
@@ -58,19 +58,28 @@ POLL = int(os.environ.get("POLL", "10"))
 PATIENCE = int(os.environ.get("PATIENCE", "900"))
 
 
-def run(args: list[str]) -> tuple[int, str]:
+def run(args: list[str]) -> tuple[int, str, str]:
+    """Returns (rc, stdout, stderr) SEPARATELY.
+
+    They were concatenated once. gcloud writes progress lines like
+    "Parsed [entitlement] resource: ..." to stderr, so every --format=json
+    call came back as JSON with a line of prose stapled to it, and
+    json.loads died with "Extra data". The crash lost a 30-minute
+    measurement window that could only be reopened by asking a human to
+    approve another grant.
+    """
     p = subprocess.run([GCLOUD, *args], capture_output=True, text=True)
-    return p.returncode, (p.stdout or "") + (p.stderr or "")
+    return p.returncode, (p.stdout or ""), (p.stderr or "")
 
 
 def binding_present() -> bool:
     """Is the subject bound to the elevated role on the folder, right now?"""
-    rc, out = run([
+    rc, out, err = run([
         "resource-manager", "folders", "get-iam-policy", FOLDER,
         "--format=json",
     ])
     if rc != 0:
-        raise RuntimeError(f"could not read the folder policy: {out[:200]}")
+        raise RuntimeError(f"could not read the folder policy: {err[:200]}")
     policy = json.loads(out)
     for b in policy.get("bindings", []):
         if b.get("role") == ROLE and f"serviceAccount:{SUBJECT}" in b.get("members", []):
@@ -79,8 +88,14 @@ def binding_present() -> bool:
 
 
 def active_grant_expiry() -> datetime | None:
-    """Expiry of the one ACTIVE grant, if there is one."""
-    rc, out = run([
+    """When the one ACTIVE grant actually ends.
+
+    Computed as accessGrantTime + requestedDuration, NOT read from the
+    timeline. The timeline's `requested.expireTime` is when the REQUEST
+    would lapse if nobody approved it - 24 hours out - and reading that as
+    the grant's expiry puts the reference point most of a day wrong.
+    """
+    rc, out, _ = run([
         "pam", "grants", "list",
         "--entitlement=folder-security-review",
         f"--folder={FOLDER}", "--location=global", "--format=json",
@@ -90,13 +105,12 @@ def active_grant_expiry() -> datetime | None:
     for g in json.loads(out or "[]"):
         if g.get("state") != "ACTIVE":
             continue
-        tl = g.get("timeline", {})
-        for ev in tl.get("events", []):
-            if "expire" in json.dumps(ev).lower():
-                for v in ev.values():
-                    if isinstance(v, dict) and "expireTime" in v:
-                        return datetime.fromisoformat(
-                            v["expireTime"].replace("Z", "+00:00"))
+        started = g.get("auditTrail", {}).get("accessGrantTime")
+        dur = g.get("requestedDuration", "")
+        if not started or not dur.endswith("s"):
+            continue
+        t0 = datetime.fromisoformat(started.replace("Z", "+00:00"))
+        return t0 + timedelta(seconds=int(dur[:-1]))
     return None
 
 
