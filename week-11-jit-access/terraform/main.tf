@@ -78,6 +78,44 @@ resource "google_service_account_iam_member" "operator_can_impersonate" {
 }
 
 # ---------------------------------------------------------------------------
+# Onboarding the folder — the step that is not the API
+#
+# Enabling privilegedaccessmanager.googleapis.com is NOT the same as enabling
+# PAM for a resource. The first apply got past the API and failed on:
+#
+#   Error 400: PAM has not been enabled for this resource "folders/NNN".
+#   Complete the PAM setup process for this resource and retry.
+#
+# `gcloud pam check-onboarding-status` says exactly what is missing, and is
+# worth running before writing any of this:
+#
+#   serviceAccount: service-org-<ORG>@gcp-sa-pam.iam.gserviceaccount.com
+#   missingPermissions:
+#     resourcemanager.folders.get
+#     resourcemanager.folders.getIamPolicy
+#     resourcemanager.folders.setIamPolicy
+#
+# Two things worth saying out loud about that list.
+#
+# The service agent is ORG-scoped even though the entitlement is attached to a
+# FOLDER - one agent for the whole organization, addressed by org number.
+#
+# And the permission it needs is setIamPolicy. PAM adds and removes grant
+# bindings by rewriting the folder's IAM policy, so turning PAM on for a
+# resource means handing a Google service agent the ability to change who can
+# do what there. That is the actual trade, and it is invisible if you enable
+# PAM by clicking a button in the console.
+# ---------------------------------------------------------------------------
+
+resource "google_folder_iam_member" "pam_service_agent" {
+  folder = var.platform_folder_id
+  role   = "roles/privilegedaccessmanager.folderServiceAgent"
+  member = "serviceAccount:service-org-${var.org_id}@gcp-sa-pam.iam.gserviceaccount.com"
+
+  depends_on = [google_project_service.pam]
+}
+
+# ---------------------------------------------------------------------------
 # The entitlement
 #
 # Read this as four separate decisions rather than one block:
@@ -98,7 +136,12 @@ resource "google_service_account_iam_member" "operator_can_impersonate" {
 resource "google_privileged_access_manager_entitlement" "folder_security_review" {
   entitlement_id = "folder-security-review"
   location       = "global"
-  parent         = "folders/${var.platform_folder_id}"
+
+  # Used as-is. The variable already carries the `folders/` prefix, matching
+  # every other week in this lab, and prefixing it again here produced a request
+  # to /v1/folders/folders/NNN/... which Google answered with an HTML 404 rather
+  # than an API error - no field named, no hint that the path was malformed.
+  parent = var.platform_folder_id
 
   max_request_duration = var.max_request_duration
 
@@ -108,7 +151,7 @@ resource "google_privileged_access_manager_entitlement" "folder_security_review"
 
   privileged_access {
     gcp_iam_access {
-      resource      = "//cloudresourcemanager.googleapis.com/folders/${var.platform_folder_id}"
+      resource      = "//cloudresourcemanager.googleapis.com/${var.platform_folder_id}"
       resource_type = "cloudresourcemanager.googleapis.com/Folder"
 
       role_bindings {
@@ -139,5 +182,8 @@ resource "google_privileged_access_manager_entitlement" "folder_security_review"
     }
   }
 
-  depends_on = [google_project_service.pam]
+  depends_on = [
+    google_project_service.pam,
+    google_folder_iam_member.pam_service_agent,
+  ]
 }

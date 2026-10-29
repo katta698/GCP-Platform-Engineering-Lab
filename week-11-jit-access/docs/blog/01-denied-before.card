@@ -1,0 +1,29 @@
+title:    The subject, before any grant
+subtitle: Entitlement deployed. Folder policy untouched. Access refused.
+width:    980
+---
+$ gcloud resource-manager folders get-iam-policy folders/<FOLDER> \
+    --flatten="bindings[].members" \
+    --filter="bindings.members:jit-access-demo@<SEED>.iam.gserviceaccount.com"
+# (no rows - the subject holds nothing on this folder)
+
+$ gcloud pam entitlements describe folder-security-review \
+    --folder=<FOLDER> --location=global \
+    --format="value(maxRequestDuration, privilegedAccess.gcpIamAccess.roleBindings[0].role)"
+1800s   roles/iam.securityReviewer
+
+# The entitlement EXISTS. The folder's IAM policy still carries nothing.
+# An entitlement is a template for access, not access.
+
+$ gcloud resource-manager folders get-iam-policy folders/<FOLDER> \
+    --impersonate-service-account=jit-access-demo@<SEED>.iam.gserviceaccount.com
+
+WARNING: This command is using service account impersonation.
+ERROR: (gcloud.resource-manager.folders.get-iam-policy)
+  [jit-access-demo@<SEED>.iam.gserviceaccount.com] does not have permission
+  to access folders instance [<FOLDER>:getIamPolicy] (or it may not exist):
+  The caller does not have permission.
+
+# Run as the SUBJECT, not as the operator. The operator holds
+# organizationAdmin, so this command would succeed for them whatever the
+# entitlement says - and would prove nothing at all.

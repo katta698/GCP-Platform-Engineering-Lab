@@ -5,7 +5,9 @@ variable "seed_project_id" {
 
 variable "platform_folder_id" {
   description = <<-EOT
-    Folder the entitlement grants access on, as the bare numeric ID.
+    Folder the entitlement grants access on, in `folders/NNNN` form - the same
+    shape every other week in this lab uses, and the shape the provider
+    documents for `parent`. Do NOT add the prefix again at the use site.
 
     FOLDER rather than organization, for the same reason as Week 10 and not as a
     preference. Creating an entitlement requires setIamPolicy on its parent:
@@ -81,4 +83,16 @@ variable "region" {
   description = "Default region. This week creates nothing regional; it is here so the provider block matches every other week."
   type        = string
   default     = "us-central1"
+}
+
+variable "org_id" {
+  description = <<-EOT
+    Organization number. Needed only to address the Privileged Access Manager
+    service agent, which is ORG-scoped even when the entitlement is attached to
+    a folder: service-org-<ORG>@gcp-sa-pam.iam.gserviceaccount.com.
+
+    An account identifier, so it lives in terraform.tfvars and never in git.
+  EOT
+  type        = string
+  sensitive   = true
 }
