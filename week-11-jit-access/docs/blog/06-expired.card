@@ -1,17 +1,22 @@
 title:    Thirty minutes later, with nobody touching anything
-subtitle: Measured, not assumed. Poll every ~14s across the expiry boundary.
-width:    980
+subtitle: Three trials. Poll every ~13s across each expiry boundary.
+width:    1000
 ---
-# Grant approved  22:31:54Z      requestedDuration 1800s
-# Documented expiry  23:01:54Z   (approval + 1800s)
+# Each trial: approve a grant, then poll the folder's IAM policy until the
+# binding disappears. Times are relative to accessGrantTime + 1800s.
 
-  23:01:20Z  still bound: roles/iam.securityReviewer
-  23:01:34Z  still bound: roles/iam.securityReviewer
-  23:01:48Z  still bound: roles/iam.securityReviewer     <- 6s BEFORE expiry
-  23:02:01Z  GONE                                        <- 7s AFTER expiry
+  trial 1   last seen bound  -6s      first seen gone  +7s
+  trial 2   last seen bound  -6s      first seen gone  +7s
+  trial 3   last seen bound  -7s      first seen gone  +6s
 
-# Removal happened inside that 13-second window. No cleanup job, no
-# terraform destroy, no human. The binding left the policy on its own.
+# Removal lands inside a ~13-second window around the documented expiry,
+# in all three runs. There is no meaningful period where the grant has
+# ended and the access has not.
+#
+# The window is the POLL INTERVAL, not the precision of the result. Two
+# pollers watching the same trial-2 expiry reported 7s and 13s purely
+# because their polls landed at different moments. "Within ~13 seconds"
+# is what this method supports; a single-second figure is not.
 
 $ gcloud pam grants list ... --format="value(state)"
 ENDED
@@ -24,5 +29,5 @@ ERROR: (gcloud.resource-manager.folders.get-iam-policy)
   to access folders instance [<FOLDER>:getIamPolicy] (or it may not exist):
   The caller does not have permission.
 
-# Identical to figure 01. That is the whole week: the denial came back
-# without anybody bringing it back.
+# Byte-for-byte the error from figure 01. No cleanup job, no destroy,
+# no human. The denial came back on its own.
