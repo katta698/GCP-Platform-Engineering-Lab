@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A service account that holds no roles requests a grant against a Privileged Access Manager entitlement on the platform folder. A human approver, who is a different principal, approves. PAM writes a temporary role binding into the folder IAM policy and removes it about thirteen seconds after the thirty minute grant expires, at which point the original permission denial returns.">
+<defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b  { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="312" cy="295" rx="180" ry="29" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="157" cy="413" rx="116" ry="45" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="452" cy="546" rx="151" ry="37" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1175" cy="171" rx="128" ry="19" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="615" cy="297" rx="134" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="797" cy="473" rx="225" ry="45" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="198" cy="481" rx="92" ry="27" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="970" cy="772" rx="124" ry="19" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="96" cy="162" rx="173" ry="39" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">Access that expires on its own</text>
+<path d="M64,96 Q381,99 690,96" fill="none" stroke="#f1eee4" stroke-width="2.6" stroke-linecap="round" opacity="0.4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab &#183; Week 11</text>
+<path d="M200.1,273.3 L197.6,285.8 L191.7,297.1 L183.0,306.1 L173.0,313.6 L162.2,320.1 L149.6,321.3 L137.0,321.2 L124.9,317.6 L114.1,311.2 L104.8,302.7 L98.4,291.9 L92.0,280.7 L91.4,267.8 L94.7,255.6 L97.6,243.3 L104.3,232.4 L113.7,223.7 L125.3,218.5 L137.3,214.3 L149.9,215.3 L162.6,215.7 L174.6,220.4 L184.1,229.2 L190.6,240.0 L197.2,250.7 L200.1,263.1" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(118,240) scale(2.333)"><defs><style>.acls-1{fill:#669df6;}.acls-1,.acls-2{fill-rule:evenodd;}.acls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="acls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="acls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g>
+<text x="146" y="356" text-anchor="middle" class="hand h2">the subject</text>
+<text x="146" y="388" text-anchor="middle" class="hand b">a service account</text>
+<text x="146" y="414" text-anchor="middle" class="hand b" fill="#f0ad92">holding no roles</text>
+<path d="M214,262 Q282,255 348,248" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="232" y="232" class="hand s">may ASK</text>
+<path d="M360,175 Q526,176 692,176" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/><path d="M688,175 Q689,256 689,335" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/><path d="M691,335 Q524,335 359,336" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/><path d="M359,335 Q359,254 359,175" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="384" y="216" class="hand h2">entitlement</text>
+<text x="384" y="250" class="hand b">a template, not a grant</text>
+<text x="384" y="282" class="hand b">roles/iam.securityReviewer</text>
+<text x="384" y="314" class="hand b">max 30 min &#183; needs approval</text>
+<text x="676" y="166" text-anchor="end" class="hand s" opacity=".6">PAM</text>
+<path d="M700,230 Q769,228 840,230" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M916.4,194.3 L915.0,196.4 L914.7,199.1 L913.5,201.8 L910.8,203.0 L907.7,201.5 L905.4,203.4 L903.1,201.9 L900.3,201.9 L898.6,199.8 L897.4,197.6 L894.7,196.1 L895.9,193.1 L894.9,190.6 L895.5,188.1 L895.7,185.1 L898.1,183.4 L901.3,183.6 L903.2,182.1 L905.5,180.4 L908.4,179.7 L911.2,180.6 L912.5,183.7 L914.7,185.0 L916.4,187.1 L915.5,190.0 L916.9,192.3" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/><path d="M906,204.0 L906,230.0 M891.0,216.0 L921.0,216.0 M906,230.0 L895.0,250.0 M906,230.0 L917.0,250.0" fill="none" stroke="#f1eee4" stroke-width="2.6" stroke-linecap="round" opacity=".9"/>
+<text x="906" y="300" text-anchor="middle" class="hand h2">a human</text>
+<text x="906" y="330" text-anchor="middle" class="hand b" fill="#a6d2ae">a DIFFERENT principal</text>
+<text x="906" y="356" text-anchor="middle" class="hand b">or it proves nothing</text>
+<path d="M906,376 Q903,417 906,452" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="922" y="420" class="hand s">approves</text>
+<path d="M360,480 L364,470 L626.0,470 L668.0,480" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linejoin="round" opacity=".85"/><path d="M361,478 Q708,480 1061,482" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.85"/><path d="M1060,479 Q1061,542 1060,604" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.85"/><path d="M1059,604 Q710,608 359,605" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.85"/><path d="M359,606 Q361,542 361,481" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.85"/>
+<g transform="translate(395,513) scale(1.917)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,5.9 3.7,0.8 9.5,0.8 12.4,5.9 9.5,10.9 3.7,10.9 	"/>
+	<polygon fill-rule="evenodd" fill="#5C85DE" points="11.4,7.7 8.5,2.6 9.5,0.7 12.4,5.9 	"/>
+	<polygon id="Shape-Copy_00000019646383529055310330000009913415011964925323_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,9.3 8.5,9.3 10.5,5.9 11.4,7.7 9.5,10.9 3.7,11 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="11.2,11.9 14.2,6.8 20,6.8 22.9,11.9 20,16.9 14.2,16.9 	"/>
+	<polygon id="Shape-Copy_00000133527958483064390410000012377415375428947900_" fill-rule="evenodd" fill="#5C85DE" points="
+		21.9,13.7 19,8.6 20,6.7 22.9,11.9 	"/>
+	<polygon id="Shape-Copy_00000176019471624316745960000001248137580190207128_" fill-rule="evenodd" fill="#3367D6" points="
+		13.2,15.3 19,15.3 21,11.9 21.9,13.7 20,16.9 14.2,17 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,17.9 3.7,12.8 9.5,12.8 12.4,17.9 9.5,22.9 3.7,22.9 	"/>
+	<polygon id="Shape-Copy_00000096041779745201399360000017167964797373102485_" fill-rule="evenodd" fill="#5C85DE" points="
+		11.4,19.7 8.5,14.6 9.5,12.7 12.4,17.9 	"/>
+	<polygon id="Shape-Copy_00000049204188488742950820000010444321201512143025_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,21.3 8.5,21.3 10.5,17.9 11.4,19.7 9.5,22.9 3.7,23 	"/>
+</g>
+</g>
+<text x="462" y="528" class="hand h2">folder IAM policy</text>
+<text x="462" y="562" class="hand b">a binding appears &#8212; written by PAM,</text>
+<text x="462" y="590" class="hand b">by nothing in the Terraform</text>
+<path d="M560,612 Q557,649 560,690" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M660.6,656.3 L658.4,661.7 L657.7,668.2 L652.7,672.1 L646.8,673.9 L641.8,677.5 L635.7,679.1 L629.5,678.3 L623.8,675.6 L618.2,672.6 L614.7,667.3 L613.1,661.4 L609.4,656.1 L609.5,649.9 L611.9,644.2 L614.6,639.0 L617.3,633.4 L622.8,630.6 L627.5,626.4 L633.8,625.9 L639.7,627.6 L646.2,626.8 L650.2,632.1 L655.0,635.4 L658.8,640.0 L659.6,646.0 L661.7,651.6" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.9"/><path d="M636,652 L636,637.7 M636,652 L646.92,657.2" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
+<text x="678" y="646" class="hand b">30 minutes pass</text>
+<text x="678" y="674" class="hand s">nobody acts</text>
+<path d="M359,700 Q640,699 921,698" fill="none" stroke="#f0ad92" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/><path d="M919,701 Q922,744 918,786" fill="none" stroke="#f0ad92" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/><path d="M919,787 Q642,784 361,787" fill="none" stroke="#f0ad92" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/><path d="M359,785 Q358,742 359,702" fill="none" stroke="#f0ad92" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+<text x="384" y="740" class="hand h2" fill="#f0ad92">the binding is gone</text>
+<text x="384" y="772" class="hand b">within ~13s of expiry, measured 3&#215;</text>
+<path d="M926,744 Q961,744 988,744" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="1000" y="736" class="hand b">the denial</text>
+<text x="1000" y="764" class="hand b">comes back</text>
+<text x="1216" y="796" text-anchor="end" class="hand s" opacity=".45">jayanthkatta.com</text>
+</svg>
