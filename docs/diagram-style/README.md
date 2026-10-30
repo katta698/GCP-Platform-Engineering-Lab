@@ -32,8 +32,26 @@ house style rather than as a gap.
 ## Reproducing it
 
 ```bash
-python docs/diagram-style/render_sketch_diagram.py
+cd docs/diagram-style && python week-11.py
 ```
+
+A diagram is **declared as data** — `week-11.py` is 43 lines against the 220 of
+`render_sketch_diagram.py`, the hand-positioned prototype it replaces. The
+drawing lives in `sketchboard.py`, so a new week is a spec rather than a
+bespoke art project:
+
+```python
+b = Board("Access that expires on its own", eyebrow="GCP Lab - Week 11")
+b.icon_node("subject", 150, 266, "identity_and_access_management.svg",
+            title="the subject", lines=["a service account",
+                                        ("holding no roles", "warn")])
+b.panel("ent", 372, 178, 342, 164, title="entitlement", corner="PAM", lines=[...])
+b.arrow("subject", "ent", "may ASK")
+```
+
+`icon_node` is the only call that places a Google mark, and it only translates
+and scales. `panel`, `person`, `folder` and `clock` are drawn — which is also
+the answer when a product has no official icon.
 
 Self-contained. It downloads Google's official icon library on first run and
 caches it in `.icon-cache/`, which is gitignored — **the library is not
