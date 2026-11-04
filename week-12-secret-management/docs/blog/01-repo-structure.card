@@ -1,0 +1,24 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    780
+---
+week-12-secret-management/
+├── LAB.md                      reproduction guide: the global-key constraint, the teardown chain
+├── terraform/
+│   ├── main.tf                 key, secret, topic, subscription — stage 1
+│   └── rotator.tf              the function, gated on deploy_rotator — stage 2
+├── rotator/main.py             the rotator Secret Manager does not ship
+├── scripts/
+│   ├── measure-rotation.py     the load-bearing measurement; read-only
+│   ├── cmek-killswitch.sh      disables the key, proves the denial, restores in a trap
+│   ├── teardown-kms.sh         staged: can a key ring actually be deleted?
+│   └── validate.sh             every assertion against the cloud, not state
+└── docs/                       figure plan, references, screenshots
+
+# terraform/  two files, two stages, and the split is the experiment: the
+#             central measurement needs one rotation to fire with nothing
+#             subscribed to the topic.
+# rotator/    thirty lines. That its absence looks like an oversight rather
+#             than a design is the week's whole point.
+# scripts/    cmek-killswitch.sh degrades a control, so it restores it in a
+#             trap — a failure midway must not leave the secret dark.

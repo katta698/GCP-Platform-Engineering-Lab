@@ -1,0 +1,12 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is GITIGNORED.
+#
+# Only one value here is an account identifier, and it is the project ID rather
+# than the project NUMBER - but it still stays out of git, for the same reason
+# every other week's does: the repository is public so screenshots can be served
+# from it.
+
+security_project_id = "your-security-project-id"
+
+# RFC3339, and it must be more than five minutes in the future at apply time.
+# Deliberately not a computed timestamp() - see the variable's own description.
+next_rotation_time = "2026-01-01T00:00:00Z"

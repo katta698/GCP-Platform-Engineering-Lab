@@ -663,3 +663,213 @@ resource "google_project_iam_member" "plan_pubsub_viewer" {
   role    = "roles/pubsub.viewer"
   member  = google_service_account.plan.member
 }
+
+# ---------------------------------------------------------------------------
+# Cloud KMS, Secret Manager and Pub/Sub in the security project, added for
+# Week 12
+#
+# Week 01 created katta698-gcp-security and enabled cloudkms and secretmanager
+# on it. Enabling an API is not holding a permission - the same distinction
+# Week 11 hit with Privileged Access Manager - so tf-apply could enable those
+# two services three months ago and still cannot create a key ring today.
+#
+# Scoped to the ONE project, not the platform folder. A folder-level grant would
+# also reach the network hub and the logging project; neither has any reason to
+# hold a key or a secret. The security project exists precisely so that key
+# custody is separable from the workloads that consume it, and a folder grant
+# would undo that in one line.
+#
+# cloudkms.admin is the widest of these and deserves naming: it carries
+# cryptoKeys.setIamPolicy, so tf-apply can decide who may encrypt and decrypt
+# with any key in this project. That is unavoidable for a pipeline that creates
+# CMEK keys - the Secret Manager service agent's grant on the key has to be
+# written by something - but it does mean the key's access list is only as
+# controlled as the pipeline is. It does NOT carry the crypto operations
+# themselves: cloudkms.admin cannot encrypt or decrypt.
+# ---------------------------------------------------------------------------
+
+resource "google_project_iam_member" "apply_kms_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/cloudkms.admin"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "apply_secretmanager_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/secretmanager.admin"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "apply_security_pubsub_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/pubsub.admin"
+  member  = google_service_account.apply.member
+}
+
+# Week 12 enables pubsub.googleapis.com on this project, and creating the Secret
+# Manager service agent is also a Service Usage call
+# (services.generateServiceIdentity) rather than an IAM one.
+resource "google_project_iam_member" "apply_security_serviceusage_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/serviceusage.serviceUsageAdmin"
+  member  = google_service_account.apply.member
+}
+
+# Read access for tf-plan, and this is not symmetry for its own sake. Week 10
+# established that `Refreshing state...` runs as the PLAN identity, so a plan
+# identity that cannot read a key ring makes the whole configuration
+# unmanageable regardless of what tf-apply holds.
+#
+# secretmanager.viewer reads a secret's METADATA - labels, replication, rotation
+# schedule, the list of versions - and deliberately not its payload. Reading the
+# value needs secretmanager.secretAccessor, which neither pipeline identity
+# holds and neither needs: Terraform manages the secret, it never consumes it.
+resource "google_project_iam_member" "plan_kms_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/cloudkms.viewer"
+  member  = google_service_account.plan.member
+}
+
+resource "google_project_iam_member" "plan_secretmanager_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/secretmanager.viewer"
+  member  = google_service_account.plan.member
+}
+
+resource "google_project_iam_member" "plan_security_pubsub_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/pubsub.viewer"
+  member  = google_service_account.plan.member
+}
+
+resource "google_project_iam_member" "plan_security_serviceusage_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/serviceusage.serviceUsageViewer"
+  member  = google_service_account.plan.member
+}
+
+# ---------------------------------------------------------------------------
+# The rotator's deployment surface, added for Week 12 stage 2
+#
+# Week 12 deploys a Cloud Functions gen2 rotator triggered by the secret's
+# rotation topic. Gen2 is Cloud Run plus Eventarc plus a Cloud Build step, so
+# the grants are wider than the function's thirty lines of Python suggest - and
+# that gap between "small function" and "large deployment surface" is worth
+# knowing before choosing the mechanism.
+#
+# projectIamAdmin is the one that deserves an argument rather than a note.
+# Eventarc refuses to create a trigger until the trigger's service account
+# holds roles/eventarc.eventReceiver, and that role is only grantable at the
+# PROJECT level - there is no narrower scope for it. So a pipeline that deploys
+# an Eventarc trigger must be able to write project IAM, which means tf-apply
+# can now grant any role on the security project to any principal.
+#
+# Consistent with the existing posture rather than a departure from it:
+# tf-apply already holds folderAdmin (setIamPolicy on folders) and, above,
+# cloudkms.admin (setIamPolicy on keys). It is still the widest grant this
+# project carries, and the narrower alternative - granting eventReceiver once by
+# hand and keeping it out of Terraform - was rejected because an out-of-band
+# grant that nothing reconciles is how a permission outlives its reason.
+# ---------------------------------------------------------------------------
+
+resource "google_project_iam_member" "apply_security_project_iam_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/resourcemanager.projectIamAdmin"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "apply_security_sa_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/iam.serviceAccountAdmin"
+  member  = google_service_account.apply.member
+}
+
+# Attaching a service account to a function or an Eventarc trigger is
+# actAs, not create - a separate role, and the one most often missing.
+resource "google_project_iam_member" "apply_security_sa_user" {
+  project = "katta698-gcp-security"
+  role    = "roles/iam.serviceAccountUser"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "apply_security_functions_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/cloudfunctions.admin"
+  member  = google_service_account.apply.member
+}
+
+# Gen2 functions ARE Cloud Run services. cloudfunctions.admin manages the
+# function resource; the underlying service is Cloud Run's.
+resource "google_project_iam_member" "apply_security_run_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/run.admin"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "apply_security_eventarc_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/eventarc.admin"
+  member  = google_service_account.apply.member
+}
+
+# The source bucket for the function's code.
+resource "google_project_iam_member" "apply_security_storage_admin" {
+  project = "katta698-gcp-security"
+  role    = "roles/storage.admin"
+  member  = google_service_account.apply.member
+}
+
+# Deliberately NOT granted: artifactregistry. Cloud Build creates the function's
+# image repository as its own service agent, not as the caller. If the apply
+# fails asking for it, that is a finding to record rather than a grant to
+# pre-emptively add - the lab's standing habit of granting what is actually
+# needed instead of what might be.
+
+# Read side for tf-plan. Refresh runs as the plan identity (Week 10), so every
+# resource above needs a corresponding read or the configuration becomes
+# unmanageable regardless of what tf-apply holds.
+resource "google_project_iam_member" "plan_security_functions_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/cloudfunctions.viewer"
+  member  = google_service_account.plan.member
+}
+
+resource "google_project_iam_member" "plan_security_run_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/run.viewer"
+  member  = google_service_account.plan.member
+}
+
+resource "google_project_iam_member" "plan_security_eventarc_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/eventarc.viewer"
+  member  = google_service_account.plan.member
+}
+
+resource "google_project_iam_member" "plan_security_sa_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/iam.serviceAccountViewer"
+  member  = google_service_account.plan.member
+}
+
+# legacyBucketReader rather than objectViewer: refreshing a bucket needs
+# storage.buckets.get, which objectViewer does not carry.
+resource "google_project_iam_member" "plan_security_bucket_reader" {
+  project = "katta698-gcp-security"
+  role    = "roles/storage.legacyBucketReader"
+  member  = google_service_account.plan.member
+}
+
+resource "google_project_iam_member" "plan_security_object_viewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/storage.objectViewer"
+  member  = google_service_account.plan.member
+}
+
+# Reading the project's own IAM policy, which the eventReceiver binding's
+# refresh requires. securityReviewer is read-only by construction.
+resource "google_project_iam_member" "plan_security_reviewer" {
+  project = "katta698-gcp-security"
+  role    = "roles/iam.securityReviewer"
+  member  = google_service_account.plan.member
+}
