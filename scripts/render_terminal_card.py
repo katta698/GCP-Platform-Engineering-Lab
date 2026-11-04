@@ -146,9 +146,73 @@ def main():
                           device_scale_factor=args.scale)
         page.goto(tmp.as_uri())
         page.wait_for_timeout(400)
-        # full_page so the frame is never clipped: these cards vary in height
-        # with their content, and a fixed viewport would silently cut the last
-        # lines off the longest ones.
+
+        # Fit the page to its content, in both directions.
+        #
+        # `width:` in a .card header is the BODY width, and the <pre> inside it
+        # is `white-space: pre; overflow: visible`. So a line longer than the
+        # frame does not wrap and does not clip -- it spills out of the dark box
+        # onto the white page, where it renders as pale grey text on white and
+        # is effectively invisible. Nothing failed, the exit code was zero, and
+        # the PNG looked fine unless you read the right-hand edge.
+        #
+        # That shipped: week-11's structure card lost "the 30-minute floor" and
+        # "one entitlement" off its right edge, in a published post. Declaring a
+        # width wide enough is not a fix, because the next card is written by
+        # someone who does not know the rule.
+        #
+        # So the width is MEASURED here and the declared one is treated as a
+        # minimum. The overflow assertion below then makes a regression
+        # impossible rather than merely unlikely.
+        fitted = page.evaluate(
+            """() => {
+                const pre = document.querySelector('pre');
+                const wrap = document.querySelector('.wrap');
+                const cs = getComputedStyle(pre);
+                const wcs = getComputedStyle(wrap);
+                // Chromium's scrollWidth on an overflowing element includes
+                // padding-LEFT but not padding-RIGHT, so the right padding has
+                // to be added back or the longest line ends up flush against
+                // the frame edge. Adding BOTH paddings is the other error: it
+                // double-counts the left one and pads every card with 26px of
+                // dead frame.
+                const need = pre.scrollWidth + parseFloat(cs.paddingRight)
+                    + parseFloat(wcs.paddingLeft) + parseFloat(wcs.paddingRight);
+                return Math.ceil(need);
+            }"""
+        )
+        if fitted > width:
+            width = fitted
+            page.set_viewport_size({"width": width, "height": 800})
+            page.evaluate("w => document.body.style.width = w + 'px'", width)
+            page.wait_for_timeout(200)
+
+        # Height: full_page screenshots the document, but the document is at
+        # least as tall as the viewport, so a short card was padded to 800px of
+        # white. Measure and shrink.
+        height = page.evaluate(
+            "() => Math.ceil(document.querySelector('.wrap').getBoundingClientRect().bottom)"
+        )
+        page.set_viewport_size({"width": width, "height": max(height, 50)})
+        page.wait_for_timeout(200)
+
+        # Blocking check, not a warning. A warning that prints and does not stop
+        # is a warning nobody reads.
+        overflow = page.evaluate(
+            """() => {
+                const pre = document.querySelector('pre');
+                return pre.scrollWidth - pre.clientWidth;
+            }"""
+        )
+        if overflow > 1:
+            b.close()
+            sys.exit(
+                "%s: %dpx of body text overflows the frame after fitting.\n"
+                "The card would render with text spilling onto the white page.\n"
+                "Shorten the longest body line, or raise 'width:' in the header."
+                % (src.name, overflow)
+            )
+
         page.screenshot(path=str(out), full_page=True)
         b.close()
 

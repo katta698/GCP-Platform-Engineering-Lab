@@ -65,3 +65,8 @@ playwright_profile/
 # `terraform apply` without a prompt, on a repo whose whole point is showing
 # people how to run infrastructure carefully.
 .claude/settings.local.json
+
+# Rendered card artifacts sit beside their .card source; the PUBLISHED copy
+# lives in docs/blog/screenshots/ and is what the blog embeds. Committing both
+# stores every figure twice and makes it ambiguous which one a post uses.
+week-*/docs/blog/*.png
