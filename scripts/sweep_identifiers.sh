@@ -37,8 +37,30 @@ BILL=$(sed -n 's/^billing_account *= *"\([^"]*\)".*/\1/p' "$TFVARS")
 
 # Derived from the cloud rather than stored: a customer ID or project number
 # typed into this file would be the leak it is checking for.
-CUST=$(gcloud organizations describe "$ORG" --format="value(owner.directoryCustomerId)" 2>/dev/null || true)
-NUM=$(gcloud projects describe katta698-gcp-lab-seed --format="value(projectNumber)" 2>/dev/null || true)
+CUST=$(gcloud organizations describe "$ORG" --format="value(owner.directoryCustomerId)" 2>/dev/null | tr -d '\r' || true)
+# EVERY project's number, not just the seed's.
+#
+# This line used to name one project as a literal:
+#   NUM=$(gcloud projects describe katta698-gcp-lab-seed ...)
+#
+# So the sweep checked the seed project's number and was blind to every other
+# project in the organization. On 2026-11-05 a wider grep found the SECURITY and
+# LOGGING project numbers in week-09-sa-lifecycle/README.md and its main.tf,
+# committed and public since October, with the sweep reporting "clean" on every
+# run in between. A check that only looks where you remembered to point it is
+# not a check.
+#
+# Enumerated from the cloud, so a project created by a future week is covered on
+# the day it exists without anyone editing this file.
+#
+# `tr -d` of the carriage return is LOAD-BEARING on Windows, not tidying.
+# gcloud emits CRLF here, so `mapfile -t` strips the newline and KEEPS the
+# carriage return - every pattern becomes "<number><CR>", which cannot match
+# anything in a file. The sweep then prints a confident "ok" per number while
+# searching for a string that does not exist. Found by planting a known leak and
+# watching the widened sweep report clean; without that self-test, the fix for
+# the first bug would have shipped looking like it worked.
+mapfile -t NUMS < <(gcloud projects list --format="value(projectNumber)" 2>/dev/null | tr -d '\r' || true)
 
 # The operator address. Masked in every screenshot by capture_gcp.py, which
 # publishes service-account domains and nothing else - so prose must hold it to
@@ -49,14 +71,24 @@ NUM=$(gcloud projects describe katta698-gcp-lab-seed --format="value(projectNumb
 # run - the identical failure its header describes two paragraphs up. Writing
 # the warning down did not prevent committing the thing it warned about; the
 # check did.
-OPERATOR=$(gcloud config get-value account 2>/dev/null | grep -v '^$' || true)
+OPERATOR=$(gcloud config get-value account 2>/dev/null | tr -d '\r' | grep -v '^$' || true)
 
 declare -a PATTERNS=() NAMES=()
 add() { [[ -n "${2:-}" ]] && { NAMES+=("$1"); PATTERNS+=("$2"); }; }
 add ORG_ID          "$ORG"
 add BILLING_ACCOUNT "$BILL"
 add CUSTOMER_ID     "$CUST"
-add PROJECT_NUMBER  "$NUM"
+# Labelled by INDEX, never by value. Interpolating the number into the label
+# would print the identifier into the terminal, the CI log and the pre-push
+# output on every run - publishing the thing being swept for, in the output of
+# the sweep.
+#
+# The first version of this comment illustrated the point with a real project
+# number, and the sweep immediately flagged this file. That is the failure its
+# own header describes: a control that matches its own documentation. Caught by
+# the very widening it was written to explain.
+_i=0
+for n in "${NUMS[@]:-}"; do _i=$((_i + 1)); add "PROJECT_NUMBER #${_i}" "$n"; done
 add OPERATOR_EMAIL  "$OPERATOR"
 add GMAIL_IDENTITY  "${PERSONAL_GMAIL:-}"
 

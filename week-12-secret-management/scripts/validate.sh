@@ -84,8 +84,19 @@ fi
 echo
 echo "== The secret is encrypted with OUR key, not Google's"
 
+# `replication.automatic`, NOT `replication.auto`.
+#
+# Terraform's schema names this block `auto`; the API returns it as
+# `automatic`. The first version of this check used the Terraform spelling
+# against gcloud, got an empty string, and reported a correctly-configured CMEK
+# secret as FAIL. The control was working the whole time.
+#
+# Worth more than the one-word fix: a check written in the CONFIG's vocabulary
+# and run against the API is not checking what it claims to. The whole reason
+# validation reads the cloud instead of Terraform state is to be independent of
+# the config - and borrowing the config's field names quietly gives that up.
 KMS_ON_SECRET="$(gcloud secrets describe "$SECRET" --project="$PROJECT" \
-  --format='value(replication.auto.customerManagedEncryption.kmsKeyName)')"
+  --format='value(replication.automatic.customerManagedEncryption.kmsKeyName)')"
 if [[ "$KMS_ON_SECRET" == *"/keyRings/${KEYRING}/cryptoKeys/${KEY}" ]]; then
   printf '  PASS  secret names our key: %s\n' "$KMS_ON_SECRET"; PASS=$((PASS + 1))
 else

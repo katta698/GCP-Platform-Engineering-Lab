@@ -22,6 +22,11 @@ resource "google_project_service" "rotator" {
     # Cloud Functions gen2 stages its source in GCS and its image in Artifact
     # Registry; both are created by Google but the APIs are ours to enable.
     "storage.googleapis.com",
+    # Creating a service account IN this project needs the IAM API enabled HERE.
+    # Week 02 enabled it on the seed project, which is where the pipeline's own
+    # identities live - and that does nothing for a service account created
+    # anywhere else. Enabling an API is per-project, every time.
+    "iam.googleapis.com",
   ]) : toset([])
 
   project            = var.security_project_id
@@ -53,11 +58,63 @@ resource "google_storage_bucket" "source" {
   depends_on = [google_project_service.rotator]
 }
 
+# source_dir is INSIDE the Terraform directory, and that is forced by HCP rather
+# than chosen. With remote execution the CLI uploads the configuration rooted at
+# the Terraform working directory, so a path outside it simply does not exist on
+# the agent:
+#
+#   error archiving directory: could not archive missing directory: ./../rotator
+#
+# The apply that found this ran fine as a local plan, because locally the
+# directory is right there. Anything archive_file reads has to live under the
+# uploaded root.
 data "archive_file" "rotator" {
   count       = local.rotator
   type        = "zip"
-  source_dir  = "${path.module}/../rotator"
+  source_dir  = "${path.module}/rotator"
   output_path = "${path.module}/.rotator.zip"
+}
+
+# Cloud Functions gen2 stages every build in a bucket it creates ITSELF, named
+# gcf-v2-sources-<project number>-<region>. Week 03's custom constraint refused
+# it:
+#
+#   Could not create bucket gcf-v2-sources-...-us-central1.
+#   orgpolicy:... violates customConstraints/custom.requireTerraformLabelsOnBuckets
+#
+# A guardrail written three months ago, to stop humans creating unlabelled
+# buckets in the console, blocked a Google service from creating its own
+# internal one. That is the control working exactly as specified and costing
+# something real.
+#
+# Week 06 met the same shape - the baseline blocking a Google service agent -
+# and answered it with a scoped org-policy exception. The better answer here is
+# to not weaken the constraint at all: the bucket name is deterministic, so
+# create it FIRST, with the labels the constraint demands. Cloud Functions then
+# finds it already present and uses it.
+#
+# The project NUMBER is an account identifier and never appears in a .tf file;
+# it is read at apply time instead.
+data "google_project" "this" {
+  count      = local.rotator
+  project_id = var.security_project_id
+}
+
+resource "google_storage_bucket" "gcf_source_staging" {
+  count = local.rotator
+
+  name     = "gcf-v2-sources-${data.google_project.this[0].number}-${var.region}"
+  location = upper(var.region)
+  project  = var.security_project_id
+
+  uniform_bucket_level_access = true
+  force_destroy               = true
+
+  # The three labels the constraint requires. This is the whole point of the
+  # resource - satisfying the guardrail rather than carving a hole in it.
+  labels = local.labels
+
+  depends_on = [google_project_service.rotator]
 }
 
 resource "google_storage_bucket_object" "rotator" {
@@ -120,6 +177,44 @@ resource "google_project_iam_member" "rotator_event_receiver" {
   member  = google_service_account.rotator[0].member
 }
 
+# A DEDICATED build identity, and the reason is Week 09.
+#
+#   Could not build the function due to disabled service account used by
+#   Cloud Build. Please make sure that the service account is active.
+#
+# Cloud Functions gen2 builds with the project's DEFAULT Compute Engine service
+# account unless told otherwise. Week 09 disabled exactly that account in this
+# project, deliberately, because it had never authenticated and held no role -
+# a dormant identity with a well-known name is a standing invitation.
+#
+# So the second of this lab's own guardrails has now blocked this week, and the
+# answer is the same as the first: satisfy it rather than undo it. Re-enabling
+# the default account would retire a control that is doing its job, to run one
+# build.
+#
+# Separate from the rotator's identity on purpose. Building the function and
+# rotating the secret are unrelated jobs, and an identity that does both can be
+# used for either. The rotator holds no build permission; this holds no secret
+# permission.
+resource "google_service_account" "builder" {
+  count = local.rotator
+
+  account_id   = "wk12-rotator-builder"
+  display_name = "Week 12 rotator build identity"
+  description  = "Builds the rotator function. Replaces the default Compute SA, which Week 09 disabled. Holds no access to any secret."
+  project      = var.security_project_id
+}
+
+# cloudbuild.builds.builder is what a build identity needs: push the image to
+# Artifact Registry, read the source from GCS, write build logs.
+resource "google_project_iam_member" "builder" {
+  count = local.rotator
+
+  project = var.security_project_id
+  role    = "roles/cloudbuild.builds.builder"
+  member  = google_service_account.builder[0].member
+}
+
 # ---------------------------------------------------------------------------
 # The function
 # ---------------------------------------------------------------------------
@@ -132,8 +227,9 @@ resource "google_cloudfunctions2_function" "rotator" {
   project  = var.security_project_id
 
   build_config {
-    runtime     = "python312"
-    entry_point = "rotate"
+    runtime         = "python312"
+    entry_point     = "rotate"
+    service_account = google_service_account.builder[0].id
 
     source {
       storage_source {
@@ -178,10 +274,42 @@ resource "google_cloudfunctions2_function" "rotator" {
 
   depends_on = [
     google_project_service.rotator,
+    google_storage_bucket.gcf_source_staging,
+    google_project_iam_member.builder,
     google_project_iam_member.rotator_event_receiver,
     google_secret_manager_secret_iam_member.rotator_adder,
     google_secret_manager_secret_iam_member.rotator_manager,
   ]
+}
+
+# eventarc.eventReceiver is NOT enough, and the log says why:
+#
+#   The request was not authenticated. The IAM principal lacks
+#   {run.routes.invoke} permission.
+#
+# A gen2 Cloud Function IS a Cloud Run service. eventReceiver lets the identity
+# receive events from Eventarc; actually delivering one is an authenticated
+# HTTP call to the service, which needs run.invoker ON THE SERVICE. Two roles
+# for one delivery path - the same create-versus-use split this lab met in
+# Week 04 (create a firewall policy vs attach it) and Week 05 (tagAdmin vs
+# tagUser).
+#
+# Granted on the service rather than the project: the rotator's identity should
+# be able to invoke this one function and nothing else that happens to run on
+# Cloud Run here.
+#
+# Visible in the logs as a retry storm rather than a failure, because the
+# trigger is RETRY_POLICY_RETRY - so the notification was never lost, just
+# never delivered. Worth knowing: a misconfigured trigger looks like silence at
+# the secret and noise in the logs.
+resource "google_cloud_run_service_iam_member" "rotator_invoker" {
+  count = local.rotator
+
+  project  = var.security_project_id
+  location = var.region
+  service  = google_cloudfunctions2_function.rotator[0].name
+  role     = "roles/run.invoker"
+  member   = google_service_account.rotator[0].member
 }
 
 output "rotator_function" {

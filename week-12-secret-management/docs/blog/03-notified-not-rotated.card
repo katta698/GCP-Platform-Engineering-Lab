@@ -1,0 +1,31 @@
+title:    The rotation fired. The secret did not change.
+subtitle: measure-rotation.py, watching the observer subscription across the scheduled rotation time
+width:    900
+---
+$ python scripts/measure-rotation.py --until 2026-11-05T05:06:19Z
+
+[04:53:02] before:  1 versions, 1 enabled, latest=.../wk12-app-db-password/versions/1
+[04:53:02] notification due at 2026-11-05T05:06:19Z; 797s from now
+[05:06:59] SECRET_ROTATE received. published=2026-11-05T05:06:19.207Z
+[05:06:59] waiting 60s before re-reading, so 'unchanged' cannot mean 'too early'
+[05:08:01] after:   1 versions, 1 enabled, latest=.../wk12-app-db-password/versions/1
+
+RESULT: notification delivered, secret UNCHANGED.
+  The rotation schedule published a message and did nothing else.
+
+$ gcloud secrets describe wk12-app-db-password \
+    --format='value(rotation.nextRotationTime)'
+2026-11-05T06:06:19Z
+
+# The schedule DID fire, and this is the independent proof: nextRotationTime
+# advanced from 05:06:19Z to 06:06:19Z, exactly one rotation_period. Secret
+# Manager only reschedules after the event. So the notification is not in
+# doubt - what it changed is.
+#
+# Version 1 is still version 1, still enabled, still holding the same value.
+# Every consumer of this secret reads the same credential it read yesterday.
+#
+# +41s is not a delivery measurement. gcloud's pull does not ack, but a
+# pulled message is invisible for the ack deadline (60s), so arrival is
+# bounded below by the poll interval and above by that. The message was
+# PUBLISHED at 05:06:19.207Z - 207ms after schedule.

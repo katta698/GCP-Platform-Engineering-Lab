@@ -852,11 +852,17 @@ resource "google_project_iam_member" "plan_security_sa_viewer" {
   member  = google_service_account.plan.member
 }
 
-# legacyBucketReader rather than objectViewer: refreshing a bucket needs
+# bucketViewer rather than objectViewer: refreshing a bucket needs
 # storage.buckets.get, which objectViewer does not carry.
+#
+# NOT legacyBucketReader, which was the first attempt and failed the apply with
+# "Role roles/storage.legacyBucketReader is not supported for this resource."
+# The legacy* storage roles are BUCKET-scoped and cannot be granted on a
+# project at all. bucketViewer is the project-grantable role, and it carries
+# exactly storage.buckets.get and storage.buckets.list - nothing about objects.
 resource "google_project_iam_member" "plan_security_bucket_reader" {
   project = "katta698-gcp-security"
-  role    = "roles/storage.legacyBucketReader"
+  role    = "roles/storage.bucketViewer"
   member  = google_service_account.plan.member
 }
 
@@ -871,5 +877,36 @@ resource "google_project_iam_member" "plan_security_object_viewer" {
 resource "google_project_iam_member" "plan_security_reviewer" {
   project = "katta698-gcp-security"
   role    = "roles/iam.securityReviewer"
+  member  = google_service_account.plan.member
+}
+
+# The quota-project cascade, added for Week 12 — and this is Week 04 repeating
+# itself almost exactly.
+#
+# Week 12 sets user_project_override + billing_project on its provider, because
+# without an explicit quota project Google attributes every call to the project
+# owning the CREDENTIALS (the seed project) rather than the project the resource
+# lives in. Naming a quota project then requires permission to USE that project:
+#
+#   Caller does not have required permission to use project
+#   katta698-gcp-security. Grant the caller the
+#   roles/serviceusage.serviceUsageConsumer role
+#
+# Both identities, not just tf-apply. The failure above arrived during the PLAN
+# phase, which runs as tf-plan — and serviceUsageViewer does not carry
+# serviceusage.services.use. Week 10's lesson again: refresh runs as the plan
+# identity, so every quota project needs the plan identity to be able to use it.
+#
+# Week 04 granted exactly this pair on katta698-gcp-net-hub for the same reason.
+# Expect one of these per project that ever becomes a quota project.
+resource "google_project_iam_member" "apply_security_serviceusage_consumer" {
+  project = "katta698-gcp-security"
+  role    = "roles/serviceusage.serviceUsageConsumer"
+  member  = google_service_account.apply.member
+}
+
+resource "google_project_iam_member" "plan_security_serviceusage_consumer" {
+  project = "katta698-gcp-security"
+  role    = "roles/serviceusage.serviceUsageConsumer"
   member  = google_service_account.plan.member
 }

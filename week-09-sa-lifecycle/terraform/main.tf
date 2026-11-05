@@ -10,8 +10,8 @@
  *   finops-reader@…        last authenticated 2026-10-09
  *   tf-plan@…              last authenticated 2026-10-05
  *   tf-apply@…             last authenticated 2026-10-05
- *   398884169348-compute@  NEVER AUTHENTICATED
- *   851623897121-compute@  NEVER AUTHENTICATED
+ *   <LOGGING-PROJECT-NUMBER>-compute@  NEVER AUTHENTICATED
+ *   <SECURITY-PROJECT-NUMBER>-compute@  NEVER AUTHENTICATED
  *
  * The last two are default Compute Engine service accounts. Nobody created
  * them, nobody has ever used them, and they hold no role anywhere — this

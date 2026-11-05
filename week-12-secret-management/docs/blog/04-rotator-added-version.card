@@ -1,0 +1,35 @@
+title:    Same schedule, with a rotator subscribed. Now the version moves.
+subtitle: Cloud Functions logs and the secret's version list, after stage 2
+width:    980
+---
+$ gcloud functions logs read wk12-secret-rotator --limit 30
+
+13:26:20  ignoring 'SECRET_UPDATE': only SECRET_ROTATE triggers a rotation
+13:33:36  added    .../wk12-app-db-password/versions/2
+13:33:36  disabled .../wk12-app-db-password/versions/1
+13:33:36  ignoring 'SECRET_VERSION_ADD': only SECRET_ROTATE triggers a rotation
+13:33:37  ignoring 'SECRET_VERSION_DISABLE': only SECRET_ROTATE triggers a rotation
+13:33:53  added    .../wk12-app-db-password/versions/3
+13:33:53  disabled .../wk12-app-db-password/versions/2
+13:33:53  ignoring 'SECRET_VERSION_ADD': only SECRET_ROTATE triggers a rotation
+13:33:53  ignoring 'SECRET_VERSION_DISABLE': only SECRET_ROTATE triggers a rotation
+
+$ gcloud secrets versions list wk12-app-db-password
+
+NAME  STATE     CREATED
+3     enabled   2026-11-05T13:33:52
+2     disabled  2026-11-05T13:33:36
+1     disabled  2026-11-05T04:52:32
+
+# Nothing about the SCHEDULE changed between this and the previous figure.
+# Same secret, same one-hour period, same topic. The only new thing in the
+# project is thirty lines of Python subscribed to it - and that is the entire
+# difference between a secret that rotates and one that does not.
+#
+# The four "ignoring" lines are the loop guard working, and they are not
+# defensive clutter. Adding a version PUBLISHES SECRET_VERSION_ADD to the same
+# topic, and disabling one publishes SECRET_VERSION_DISABLE. A rotator that
+# acted on every message would rotate because it had just rotated, forever.
+#
+# Version 1 is the value this secret held before any of this. It is disabled,
+# not destroyed - a rotation that breaks a consumer has to be reversible.

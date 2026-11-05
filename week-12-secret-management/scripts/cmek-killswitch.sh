@@ -74,22 +74,43 @@ say "disabling key version ${VERSION} - the secret itself is not touched"
 gcloud kms keys versions disable "$VERSION" \
   --key="$KEY" --keyring="$KEYRING" --location="$LOCATION" --project="$PROJECT"
 
-# KMS key state changes are not instant at the consuming service.
-say "waiting 30s for the disable to take effect at Secret Manager"
-sleep 30
+# POLL, do not wait a fixed interval.
+#
+# The first version of this script slept 30s and then read once. The read
+# succeeded, and the script correctly reported that the CMEK claim was wrong -
+# because on that attempt it WAS wrong, as measured.
+#
+# measure-cmek-revocation.py then timed it across three trials: reads stopped
+# working 70s, 2s and 27s after the disable. The spread is the finding. A
+# disable reaches Secret Manager somewhere between near-instantly and over a
+# minute, so ANY fixed wait under ~70s will sometimes report a working control
+# as broken - and a test that is only sometimes right is not a test.
+say "polling the read until it is denied (up to 180s) - the lag is 2-70s and varies"
+DEADLINE=$(( SECONDS + 180 ))
+RC=0
+while (( SECONDS < DEADLINE )); do
+  set +e
+  OUT="$(gcloud secrets versions access latest --secret="$SECRET" --project="$PROJECT" 2>&1)"
+  RC=$?
+  set -e
+  [[ $RC -ne 0 ]] && break
+  sleep 10
+done
 
-say "attempting the read again, same identity, same permissions"
-set +e
-OUT="$(gcloud secrets versions access latest --secret="$SECRET" --project="$PROJECT" 2>&1)"
-RC=$?
-set -e
-
-printf '%s\n' "$OUT"
+# Print the ERROR, never the value. On success $OUT holds the decrypted secret,
+# and this output is read in a terminal, pasted into notes, and rendered into
+# figures. A lab about handling credentials carefully does not echo one.
+if [[ $RC -ne 0 ]]; then
+  printf '%s\n' "$OUT"
+else
+  echo "(read succeeded; value withheld - this script never prints a secret)"
+fi
 echo "exit code: ${RC}"
 
 say "secret metadata is still intact - only the ability to decrypt is gone"
+# replication.AUTOMATIC is the API's spelling; Terraform's schema says `auto`.
 gcloud secrets describe "$SECRET" --project="$PROJECT" \
-  --format='value(name,createTime,replication.auto.customerManagedEncryption.kmsKeyName)'
+  --format='value(name,createTime,replication.automatic.customerManagedEncryption.kmsKeyName)'
 
 if [[ $RC -eq 0 ]]; then
   echo

@@ -70,3 +70,12 @@ playwright_profile/
 # lives in docs/blog/screenshots/ and is what the blog embeds. Committing both
 # stores every figure twice and makes it ambiguous which one a post uses.
 week-*/docs/blog/*.png
+
+# Build artifact from data.archive_file.rotator
+week-12-secret-management/terraform/.rotator.zip
+
+# Measurement JSON holds full resource names, which embed the project NUMBER.
+# The findings they support are published in the figures and the post, with
+# identifiers redacted; the raw files stay local.
+week-*/docs/*-measurement*.json
+week-*/docs/cmek-revocation*.json

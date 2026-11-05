@@ -1,0 +1,35 @@
+title:    Disable the key, and the secret stops being readable
+subtitle: measure-cmek-revocation.py — same identity, same permissions, secret untouched
+width:    980
+---
+$ python scripts/measure-cmek-revocation.py --timeout 900 --poll 20
+
+[05:13:22] control: secret IS readable with the key enabled
+[05:13:27] key version 1 disabled (state=DISABLED); polling the read every 20s
+[05:13:29] +   2s  read STILL SUCCEEDS
+[05:13:52] +  25s  read STILL SUCCEEDS
+[05:14:14] +  47s  read STILL SUCCEEDS
+[05:14:37] +  70s  read DENIED
+    ERROR: (gcloud.secrets.versions.access) FAILED_PRECONDITION:
+    Failed precondition on Cloud KMS resource
+    [.../keyRings/wk12-secrets/cryptoKeys/wk12-app-db-password]
+
+[05:14:39] key version re-enabled (state=ENABLED)
+[05:14:59] secret readable again: True
+
+# THREE TRIALS, because one is not a measurement: denied after 70s, 2s, 27s.
+#
+# The SPREAD is the finding, not the number. A disable reaches Secret Manager
+# somewhere between near-instantly and over a minute, so any fixed wait under
+# ~70s will sometimes report a working control as broken. The first version of
+# this test slept 30 seconds, read once, saw it succeed, and concluded the
+# control did not exist.
+#
+# FAILED_PRECONDITION, not PERMISSION_DENIED. The caller still holds
+# secretmanager.versions.access and the secret's own IAM policy was never
+# touched. Nothing about WHO is asking changed - only whether Secret Manager
+# can still decrypt, which it does as its own service agent using a key it no
+# longer may use.
+#
+# Disable is not destroy: re-enabling restored the read. And a DISABLED key
+# version is still a BILLED key version.
