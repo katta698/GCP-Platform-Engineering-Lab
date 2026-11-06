@@ -3,14 +3,6 @@ Week 12 — figure slots not yet in the post.
 PENDING — declared, not captured, and NOT retired. These are outstanding
 work, not dropped slots, and the post is a draft until they land.
 
-  06-key-survives-destroy.png
-      The teardown experiment: does `terraform destroy` leave the key in
-      the project, and can a key ring actually be deleted? Cannot be
-      captured until the destroy runs, and the deletion half cannot be
-      answered for a further 24 hours, because destroyed key versions sit
-      in DESTROY_SCHEDULED for destroy_scheduled_duration (86400s here)
-      before the question can even be asked.
-
   07-cost.png
       The cost slot. Exempt from the pre-destroy check by design: charges
       do not post until roughly a day after teardown, so this cannot exist

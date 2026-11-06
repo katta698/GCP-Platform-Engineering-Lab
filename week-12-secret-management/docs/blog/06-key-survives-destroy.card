@@ -1,0 +1,42 @@
+title:    terraform destroy succeeded. The key is still there.
+subtitle: Exit code zero, empty state, and a key ring the provider said could not be deleted
+width:    1000
+---
+$ terraform destroy -auto-approve
+Destroy complete!
+
+$ terraform state list | wc -l
+0
+
+$ gcloud kms keys list --keyring wk12-secrets --location global
+
+NAME                  PURPOSE          ROTATION_PERIOD  DESTROY_SCHEDULED_DURATION
+wk12-app-db-password  ENCRYPT_DECRYPT                   86400s
+
+$ gcloud kms keys versions list --key wk12-app-db-password
+
+NAME  STATE              CREATE_TIME                 DESTROY_TIME
+1     DESTROY_SCHEDULED  2026-11-05T04:50:51Z        2026-11-07T19:52:07Z
+
+$ gcloud kms keys delete wk12-app-db-password --keyring wk12-secrets
+ERROR: (gcloud.kms.keys.delete) INVALID_ARGUMENT: CryptoKeys can only be
+deleted if all associated CryptoKeyVersions have already been deleted.
+  reason: CRYPTOKEY_HAS_NON_DELETED_KEY_VERSIONS
+exit code: 1
+
+# Everything else really did go: 0 secrets, 0 topics, 0 subscriptions,
+# 0 functions, 0 service accounts, 0 buckets. Terraform removed them and
+# emptied its state. The key ring and the key remain, and the provider's own
+# documentation says they will:
+#
+#   "CryptoKeys cannot be deleted from Google Cloud Platform ... will not
+#    delete the resource from the project."
+#
+# Note the ROTATION_PERIOD column is now EMPTY. Terraform removed the
+# automatic rotation schedule on its way out - which is one of Google's own
+# preconditions for deleting a key. Part of the chain ran; the rest cannot.
+#
+# DESTROY_TIME is 24 hours away, not 30 days, only because this key set
+# destroy_scheduled_duration to 86400s. On the default it would read
+# 2026-12-05 - and a DESTROY_SCHEDULED version is a BILLED version the whole
+# time. Teardown reported success; the meter did not stop.

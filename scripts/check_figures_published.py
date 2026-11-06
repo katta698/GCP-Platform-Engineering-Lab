@@ -64,6 +64,26 @@ def referenced_by_posts() -> dict[str, set[str]]:
         print("This check compares declared figures against PUBLISHED posts and")
         print("cannot run without them. It is not a pass. Run it on a workstation.")
         sys.exit(0)
+    # WARN IF THE CHECKOUT IS STALE, because this check reads a sibling
+    # working tree and has no idea how old it is. On 2026-11-06 that checkout
+    # was over a hundred commits behind origin/main - so the check was
+    # confidently comparing declared figures against a months-old copy of the
+    # posts, and would have reported either a pass or a failure about content
+    # nobody is publishing. A check reading the wrong input is worse than no
+    # check, because it is believed.
+    try:
+        import subprocess
+        behind = subprocess.run(
+            ["git", "-C", str(BLOG), "rev-list", "--count", "HEAD..origin/main"],
+            capture_output=True, text=True, timeout=20).stdout.strip()
+        if behind.isdigit() and int(behind) > 0:
+            print(f"  WARNING: the blog checkout at {BLOG.name} is {behind} "
+                  f"commit(s) behind origin/main.")
+            print("  Figures are being compared against posts that may not be "
+                  "what is published.")
+    except Exception:                                           # noqa: BLE001
+        pass
+
     for post in sorted((BLOG / "posts").glob("week-*.html")):
         text = post.read_text(encoding="utf-8", errors="replace")
         if "GCP Weekly Lab" not in text:
