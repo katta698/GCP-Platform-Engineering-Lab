@@ -73,15 +73,37 @@ def referenced_by_posts() -> dict[str, set[str]]:
     return out
 
 
-def retired(week: Path) -> set[str]:
+def retired(week: Path) -> tuple[set[str], set[str]]:
+    """Return (recorded, pending) slot names from docs/UNUSED.txt.
+
+    RETIRED and PENDING are different claims and the file must not blur
+    them. Retired means "this slot will never exist, and here is why".
+    Pending means "this slot is outstanding work" - which is the honest
+    state for a figure that CANNOT be captured yet, such as a teardown
+    result before the teardown, or a cost figure before the charges post.
+
+    Both stop the push being blocked, because both are a RECORD. Only
+    pending is reported back, loudly, every run - so an outstanding slot
+    cannot quietly become a forgotten one. Silence is the defect this
+    check exists for, and a slot filed under the wrong word is a quieter
+    version of the same thing.
+    """
     unused = week / "docs" / "UNUSED.txt"
     if not unused.is_file():
-        return set()
-    names = set()
+        return set(), set()
+    names, pending = set(), set()
+    in_pending = False
     for line in unused.read_text(encoding="utf-8", errors="replace").splitlines():
+        stripped = line.strip().upper()
+        if stripped.startswith("PENDING"):
+            in_pending = True
+        elif stripped.startswith("RETIRED") or stripped.startswith("DROPPED"):
+            in_pending = False
         for token in re.findall(r"[\w.\-]+\.png", line):
             names.add(token)
-    return names
+            if in_pending:
+                pending.add(token)
+    return names, pending
 
 
 def main() -> int:
@@ -96,7 +118,7 @@ def main() -> int:
         checked += 1
         name = week.name
         published = used.get(name, set())
-        skip = retired(week)
+        skip, pending = retired(week)
 
         if not published:
             print(f"  [ -- ] {name}: no published post references it yet")
@@ -111,6 +133,12 @@ def main() -> int:
 
         findings: list[str] = []
         notes: list[str] = []
+
+        # Pending slots do not block, but they are never silent. A figure
+        # that cannot be captured yet is outstanding work; printing it on
+        # every run is what stops it becoming a slot nobody remembers.
+        for slot in sorted(pending):
+            notes.append(f"PENDING, not retired: `{slot}` is still owed")
 
         if plan is None:
             if name in NO_PLAN_BY_AGE:
