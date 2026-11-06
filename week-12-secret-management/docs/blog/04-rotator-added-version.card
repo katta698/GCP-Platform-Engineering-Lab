@@ -23,7 +23,7 @@ NAME  STATE     CREATED
 
 # Nothing about the SCHEDULE changed between this and the previous figure.
 # Same secret, same one-hour period, same topic. The only new thing in the
-# project is thirty lines of Python subscribed to it - and that is the entire
+# project is ~50 lines of Python subscribed to it - and that is the entire
 # difference between a secret that rotates and one that does not.
 #
 # The four "ignoring" lines are the loop guard working, and they are not

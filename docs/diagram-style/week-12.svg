@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A Cloud KMS key encrypts a Secret Manager secret. The key rotates itself on a schedule, creating a new key version with no code involved. The secret's own rotation schedule only publishes a message to a Pub/Sub topic; a Cloud Functions rotator subscribed to that topic is what actually adds a new secret version. Without the function the secret never changes."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="1018" cy="668" rx="94" ry="40" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="476" cy="547" rx="191" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="977" cy="195" rx="120" ry="26" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1161" cy="340" rx="217" ry="32" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="379" cy="351" rx="207" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="800" cy="732" rx="209" ry="41" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="620" cy="754" rx="218" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1164" cy="381" rx="127" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="647" cy="175" rx="169" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">Two things called rotation</text>
+<path d="M64,96 Q335,94 610,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 12</text>
+<path d="M211.4,226.0 L209.6,238.2 L204.4,249.5 L196.5,259.1 L185.1,264.3 L174.2,269.0 L162.5,272.9 L150.4,270.5 L139.2,266.4 L128.9,260.5 L120.2,252.2 L111.9,243.0 L107.8,231.2 L108.7,218.8 L108.4,206.4 L114.8,195.8 L120.9,185.3 L130.1,177.2 L140.9,171.6 L152.6,168.2 L164.7,169.3 L176.7,170.8 L188.4,174.8 L197.7,183.1 L205.8,192.5 L208.7,204.6 L212.8,216.2" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(133,193) scale(2.250)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_KeyManageService_Color</title><g data-name="Product Icons"><path class="i1cls-1" d="M11.32,17.06H10v1.4h1.37v.63h1.43V12.18a3.47,3.47,0,0,0,2.67-3.34,3.42,3.42,0,1,0-4.1,3.36v2.12H9.26v1.4h2.06ZM12,2l8.21,3.42v5.63c0,5.06-3.5,9.8-8.21,11-4.71-1.15-8.21-5.89-8.21-10.95V5.42Zm0,5a1.88,1.88,0,0,1,.72,3.62A1.88,1.88,0,1,1,12,7Z"/><path class="i1cls-2" d="M12,19.09h.75V12.18a3.47,3.47,0,0,0,2.67-3.34A3.42,3.42,0,0,0,12,5.42V2l8.21,3.42v5.63c0,5.06-3.5,9.8-8.21,11V19.09ZM12,7a1.88,1.88,0,0,1,.72,3.62,1.09,1.09,0,0,1-.72.15Z"/></g></g>
+<text x="160" y="308" text-anchor="middle" class="hand h2">our KMS key</text>
+<text x="160" y="348" text-anchor="middle" class="hand b" fill="#a6d2ae">rotates itself</text>
+<path d="M651.7,223.3 L649.8,235.3 L644.3,246.1 L637.3,256.0 L627.4,262.8 L617.6,270.5 L605.4,273.1 L593.1,271.3 L581.7,267.4 L571.3,261.8 L560.4,255.7 L554.7,244.7 L549.8,233.6 L547.7,221.6 L548.3,209.3 L552.4,197.7 L558.4,186.8 L567.5,178.4 L578.5,173.1 L589.9,168.8 L602.1,167.1 L613.8,171.0 L625.1,174.9 L636.0,180.8 L641.8,191.8 L648.9,201.6 L653.2,213.3" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(573,193) scale(2.250)">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(2.000000, 6.000000)" fill="#4285F4" fill-rule="nonzero">
+            <path d="M20,9.41469125e-14 L20,11.8867925 L16.0377358,11.8867925 C15.9335312,11.8867925 15.8490566,11.8023179 15.8490566,11.6981132 L15.8490566,10.5660377 C15.8490566,10.4618331 15.9335312,10.3773585 16.0377358,10.3773585 L18.4900566,10.377 L18.4900566,1.509 L16.0377358,1.50943396 C15.9335312,1.50943396 15.8490566,1.42495939 15.8490566,1.32075472 L15.8490566,0.188679245 C15.8490566,0.0844745755 15.9335312,9.41105434e-14 16.0377358,9.41469125e-14 L20,9.41469125e-14 Z M4.309101,9.41469125e-14 C4.41330567,9.3877869e-14 4.49778024,0.0844745755 4.49778024,0.188679245 L4.49778024,1.32075472 C4.49778024,1.42495939 4.41330567,1.50943396 4.309101,1.50943396 L1.509,1.509 L1.509,10.377 L4.29245283,10.3773585 C4.3966575,10.3773585 4.48113208,10.4618331 4.48113208,10.5660377 L4.48113208,11.6981132 C4.48113208,11.8023179 4.3966575,11.8867925 4.29245283,11.8867925 L2.14050999e-13,11.8867925 L2.14050999e-13,9.41469125e-14 L4.309101,9.41469125e-14 Z M15.4271098,3.86792453 L15.4271098,5.3240566 L15.4879305,5.34852941 L16.8381494,4.87130966 L17.1179245,5.69114872 L15.7555414,6.15613208 L15.719049,6.25402331 L16.6556874,7.51437292 L15.9501676,8.02830189 L15.0378575,6.76795228 L14.9527085,6.76795228 L14.0403984,8.02830189 L13.3348786,7.51437292 L14.2593529,6.25402331 L14.2350246,6.15613208 L12.8726415,5.69114872 L13.1524166,4.87130966 L14.4904714,5.34852941 L14.5634562,5.3240566 L14.5634562,3.86792453 L15.4271098,3.86792453 Z M5.19597773,3.86792453 L5.19597773,5.30963945 L5.2567984,5.33386996 L6.60701735,4.86137515 L6.88679245,5.673097 L5.52440936,6.13347656 L5.48791696,6.23039857 L6.42455533,7.47826947 L5.71903552,7.98711003 L4.80672541,6.73923913 L4.72157647,6.73923913 L3.80926637,7.98711003 L3.10374655,7.47826947 L4.02822079,6.23039857 L4.00389252,6.13347656 L2.64150943,5.673097 L2.92128453,4.86137515 L4.25933935,5.33386996 L4.33232416,5.30963945 L4.33232416,3.86792453 L5.19597773,3.86792453 Z M10.2903173,3.86792453 L10.2903173,5.30963945 L10.351138,5.33386996 L11.701357,4.86137515 L11.9811321,5.673097 L10.618749,6.13347656 L10.5822566,6.23039857 L11.518895,7.47826947 L10.8133751,7.98711003 L9.90106504,6.73923913 L9.81591609,6.73923913 L8.90360599,7.98711003 L8.19808618,7.47826947 L9.12256042,6.23039857 L9.09823215,6.13347656 L7.73584906,5.673097 L8.01562416,4.86137515 L9.35367897,5.33386996 L9.42666378,5.30963945 L9.42666378,3.86792453 L10.2903173,3.86792453 Z" ></path>
+        </g>
+    </g>
+</g>
+<text x="600" y="308" text-anchor="middle" class="hand h2">the secret</text>
+<path d="M1110.6,225.3 L1105.7,236.1 L1102.2,247.2 L1094.0,255.5 L1085.9,264.2 L1074.6,267.9 L1063.0,269.5 L1051.5,268.7 L1040.7,264.6 L1030.9,258.9 L1020.4,252.9 L1014.2,242.7 L1010.1,231.4 L1009.6,219.5 L1012.3,208.1 L1014.9,196.6 L1021.9,187.1 L1031.6,180.6 L1040.5,172.6 L1052.1,169.8 L1064.1,168.7 L1075.9,171.0 L1085.6,178.0 L1094.6,185.2 L1102.6,193.7 L1107.1,204.4 L1108.4,215.9" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(1034,194) scale(2.167)"><defs><style>.i3cls-1{filter:url(#luminosity-noclip);}.i3cls-2{fill:#669df6;}.i3cls-3{mask:url(#mask);}.i3cls-4{fill:#4285f4;}.i3cls-5{fill:#aecbfa;}</style><filter id="luminosity-noclip" x="4.64" y="4.19" width="14.73" height="12.76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-color="#fff" result="bg"/><feBlend in="SourceGraphic" in2="bg"/></filter><mask id="mask" x="4.64" y="4.19" width="14.73" height="12.76" maskUnits="userSpaceOnUse"><circle class="i3cls-1" cx="12" cy="12.23" r="3.58"/></mask></defs><title>Icon_24px_Pub-Sub_Color</title><g data-name="Product Icons"><circle class="i3cls-2" cx="18.97" cy="8.21" r="1.72"/><circle class="i3cls-2" cx="5.03" cy="8.21" r="1.72"/><circle class="i3cls-2" cx="12" cy="20.28" r="1.72"/><g class="i3cls-3"><rect class="i3cls-4" x="14.69" y="10.22" width="1.59" height="8.04" transform="matrix(0.5, -0.87, 0.87, 0.5, -4.59, 20.53)"/><rect class="i3cls-4" x="4.49" y="13.45" width="8.04" height="1.59" transform="translate(-5.98 6.17) rotate(-30)"/><rect class="i3cls-4" x="11.2" y="4.19" width="1.59" height="8.04"/></g><circle class="i3cls-5" cx="12" cy="12.23" r="2.78"/><circle class="i3cls-5" cx="5.03" cy="16.25" r="2.19"/><circle class="i3cls-5" cx="18.97" cy="16.25" r="2.19"/><circle class="i3cls-5" cx="12" cy="4.19" r="2.19"/></g></g>
+<text x="1060" y="306" text-anchor="middle" class="hand h2">a topic</text>
+<text x="1060" y="346" text-anchor="middle" class="hand b" fill="#f0ad92">mandatory</text>
+<path d="M887.9,625.7 L881.7,635.7 L876.1,646.1 L866.7,653.5 L855.8,658.4 L844.1,660.2 L832.5,658.9 L820.6,657.4 L810.3,651.4 L802.1,642.8 L796.6,632.6 L790.8,622.3 L790.6,610.6 L790.7,598.8 L795.7,588.2 L801.9,578.4 L810.6,570.9 L819.9,563.8 L831.5,561.9 L842.9,561.4 L854.0,563.6 L865.0,567.1 L874.7,573.6 L883.0,582.2 L886.0,593.7 L890.4,604.7 L890.4,616.5" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(814,584) scale(2.167)"><defs><style>.i4cls-1{fill:#669df6;}.i4cls-2{fill:#4285f4;}.i4cls-3{fill:#aecbfa;}</style></defs><title>Icon_24px_Functions_Color</title><g data-name="Product Icons"><g data-name="colored-32/functions"><g ><polygon class="i4cls-1" points="2 15.56 5 18 5 6 2 8.43 2 15.56"/><polygon class="i4cls-2" points="2 10 5 8 5 6 2 10"/><polygon class="i4cls-2" points="5 18 5 16 2 14 5 18"/><polygon class="i4cls-3" points="8 20 2 14 2 18 6 22 8 20"/></g></g><polygon class="i4cls-3" points="5.99 2.01 2 6 2.01 10 7.99 4.01 5.99 2.01"/><g data-name="colored-32/functions"><g data-name="Shape"><polygon class="i4cls-1" points="22 8.45 19 6.01 19 18.01 22 15.59 22 8.45"/><polygon class="i4cls-2" points="22 14.01 19 16.01 19 18.01 22 14.01"/><polygon class="i4cls-2" points="19 6.01 19 8.01 22 10.01 19 6.01"/><polygon class="i4cls-3" points="16 4.01 22 10.01 22 6.01 18 2.01 16 4.01"/></g></g><polygon class="i4cls-3" points="18.01 22 22 18.01 21.99 14.01 16.01 20 18.01 22"/><circle id="Oval" class="i4cls-3" cx="8" cy="12" r="1"/><circle id="Oval-2" data-name="Oval" class="i4cls-3" cx="12" cy="12" r="1"/><circle id="Oval-3" data-name="Oval" class="i4cls-3" cx="15.99" cy="12" r="1"/></g></g>
+<text x="840" y="696" text-anchor="middle" class="hand h2">a rotator you write</text>
+<text x="840" y="736" text-anchor="middle" class="hand b" fill="#a6d2ae">~50 lines</text>
+<path d="M218,270 Q376,257 538,237" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="378" y="219" text-anchor="middle" class="hand s alabel">encrypts</text>
+<path d="M658,237 Q829,255 1000,270" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="829" y="219" text-anchor="middle" class="hand s alabel">publishes</text>
+<path d="M1060,376 Q948,465 840,550" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M840,554 Q720,433 600,316" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="709" y="456" text-anchor="middle" class="hand s alabel">adds a version</text>
+<text x="96" y="690" text-anchor="start" class="hand b" fill="#f0ad92">the schedule only notifies —</text>
+<text x="96" y="718" text-anchor="start" class="hand b" fill="#f1eee4">without the function, nothing rotates</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels"></metadata>
+</svg>

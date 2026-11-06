@@ -18,7 +18,7 @@ week-12-secret-management/
 # terraform/  two files, two stages, and the split is the experiment: the
 #             central measurement needs one rotation to fire with nothing
 #             subscribed to the topic.
-# rotator/    thirty lines. That its absence looks like an oversight rather
+# rotator/    ~50 lines. That its absence looks like an oversight rather
 #             than a design is the week's whole point.
 # scripts/    cmek-killswitch.sh degrades a control, so it restores it in a
 #             trap — a failure midway must not leave the secret dark.
