@@ -84,6 +84,38 @@ def referenced_by_posts() -> dict[str, set[str]]:
     except Exception:                                           # noqa: BLE001
         pass
 
+    # Read the posts from origin/main, NOT from the working tree.
+    #
+    # "Do the PUBLISHED posts reference this figure?" is a question about what
+    # is published. A sibling working tree answers a different question, and on
+    # 2026-11-06 it answered it with a checkout over a hundred commits behind -
+    # blocking a push over two figures the live posts had used for hours.
+    # Falling back to the working tree keeps this usable in a fresh clone that
+    # has no remote yet.
+    post_texts = {}
+    try:
+        import subprocess
+        listing = subprocess.run(
+            ["git", "-C", str(BLOG), "ls-tree", "--name-only", "origin/main", "posts/"],
+            capture_output=True, text=True, timeout=30)
+        names = [n for n in listing.stdout.split() if "/week-" in n and n.endswith(".html")]
+        for name in names:
+            blob = subprocess.run(["git", "-C", str(BLOG), "show", f"origin/main:{name}"],
+                                  capture_output=True, text=True, timeout=30,
+                                  encoding="utf-8", errors="replace")
+            if blob.returncode == 0:
+                post_texts[name.split("/")[-1]] = blob.stdout
+    except Exception:                                           # noqa: BLE001
+        post_texts = {}
+
+    if post_texts:
+        for fname, text in sorted(post_texts.items()):
+            for week, filename in RAW.findall(text):
+                out.setdefault(week, set()).add(filename)
+        return out
+
+    print("  NOTE: could not read posts from origin/main; "
+          "falling back to the working tree, which may be stale.")
     for post in sorted((BLOG / "posts").glob("week-*.html")):
         text = post.read_text(encoding="utf-8", errors="replace")
         if "GCP Weekly Lab" not in text:
