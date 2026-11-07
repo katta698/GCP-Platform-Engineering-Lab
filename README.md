@@ -156,7 +156,7 @@ every grant can be demonstrated against something real rather than described.
 | [09](./week-09-sa-lifecycle) | [Service account lifecycle](https://jayanthkatta.com/blog/week-09-sa-lifecycle/) | Activity Analyzer, Org Policy | ✅ Complete |
 | [10](./week-10-group-access) | [Group-based access control](https://jayanthkatta.com/blog/week-10-group-access/) | Cloud Identity, Google Groups | ✅ Complete |
 | [11](./week-11-jit-access) | [Privileged access and just-in-time elevation](https://jayanthkatta.com/blog/week-11-jit-access/) | Privileged Access Manager | ✅ Complete |
-| [12](./week-12-secret-management) | Secret management | Secret Manager, Cloud KMS, CMEK, rotation | 🔨 In progress |
+| [12](./week-12-secret-management) | [Secret management](https://jayanthkatta.com/blog/week-12-secret-management/) | Secret Manager, Cloud KMS, CMEK, rotation | ✅ Complete |
 
 ### Phase 3 — Networking (Weeks 13–19)
 
