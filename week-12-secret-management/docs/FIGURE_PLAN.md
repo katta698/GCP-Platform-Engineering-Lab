@@ -22,7 +22,25 @@ capturing anything. Retired slots go in `UNUSED.txt` with a reason.
 | 04 | `04-rotator-added-version.png` | terminal card | the same schedule firing with the rotator deployed, and a version 2 appearing | the count moves **only** once code we wrote is subscribed |
 | 05 | `05-key-disabled-read-denied.png` | terminal card | the same identity reading the secret successfully, then refused after the key version is disabled | a denial as an identity that **holds** `secretmanager.versions.access`, with the secret's own IAM policy untouched |
 | 06 | `06-key-survives-destroy.png` | terminal card | `terraform destroy` reporting success, then the key still listed in the project | Terraform's own note tested against Google's current documentation |
-| 07 | `07-cost.png` | console / BigQuery | the actual charge for the week | **cost slot — exempt** from the pre-destroy check; cannot be captured until roughly a day after teardown |
+| 07 | `07-key-ring-after-destroy.png` | GCP console | the key ring and key still listed after `terraform destroy`, status Not available, Next rotation Not scheduled, Delete key ring greyed out | the console agreeing with the terminal, plus Google's own **"Introducing KMS resource deletion&nbsp;— New"** banner, which is why the provider's documentation has not caught up |
+| 08 | `08-cost.png` | console / BigQuery | the actual charge for the week | **cost slot — exempt** from the pre-destroy check; cannot be captured until roughly a day after teardown |
+
+## Slot 07 was added after publication, and 08 is the renumbered cost slot
+
+Added 2026-11-06, after Jay asked why a week about two console-visible
+services shipped with ONE console screenshot out of six. He was right. The
+plan had justified each terminal card individually and never asked the
+question the reader asks, which is whether the post shows the services at
+all.
+
+Most of it was already unrecoverable - the secret, topic, subscription and
+function were destroyed. The key ring was not, because it survives the
+destroy, which is the week's finding. So the one still-capturable console
+view is also the most load-bearing one.
+
+The cost slot moved 07 -> 08 rather than this figure taking a later number,
+so the slots still run in the order a reader performs the steps. Nothing is
+recycled: 07 had never been captured.
 
 ## Capture order is NOT figure order
 
