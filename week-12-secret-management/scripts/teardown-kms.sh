@@ -112,7 +112,14 @@ destroy_versions() {
 }
 
 attempt_delete() {
-  say "attempting to delete the key (expect a precondition failure if versions are not DESTROYED)"
+  # DESTROYED is not DELETED. A destroyed version still exists as a resource
+  # and still blocks the key, so each one needs an explicit delete first.
+  say "deleting every DESTROYED version"
+  for V in $(kms keys versions list --key="$KEY" --keyring="$KEYRING"                --filter='state=DESTROYED' --format='value(name.basename())'); do
+    kms keys versions delete "$V" --key="$KEY" --keyring="$KEYRING" --quiet || true
+  done
+
+  say "attempting to delete the key"
   set +e
   OUT="$(kms keys delete "$KEY" --keyring="$KEYRING" --quiet 2>&1)"
   RC=$?
@@ -126,9 +133,11 @@ attempt_delete() {
     return 0
   fi
 
-  say "key deleted. Attempting to delete the key ring"
+  say "deleting the key ring over REST"
+  # gcloud has no `kms keyrings delete`. Its keyrings group is create,
+  # describe, list and the IAM verbs only, so this step is REST or nothing.
   set +e
-  OUT="$(kms keyrings delete "$KEYRING" --quiet 2>&1)"
+  OUT="$(curl -s -X DELETE       -H "Authorization: Bearer $(gcloud auth print-access-token)"       "https://cloudkms.googleapis.com/v1/projects/${PROJECT}/locations/${LOCATION}/keyRings/${KEYRING}" 2>&1)"
   RC=$?
   set -e
   printf '%s\n' "$OUT"
