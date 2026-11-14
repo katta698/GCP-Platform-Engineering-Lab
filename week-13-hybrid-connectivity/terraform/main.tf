@@ -11,6 +11,14 @@ locals {
     managed-by = "terraform"
   }
 
+  # Week 03's constraints are enforced org-wide, so a VM that omits these
+  # cannot be created at all: Error 412 on requireOsLogin and
+  # blockProjectSshKeys. Week 04's VM predates enforcement and carries neither.
+  os_policy_metadata = {
+    enable-oslogin         = "TRUE"
+    block-project-ssh-keys = "TRUE"
+  }
+
   # Link-local /30s for the BGP sessions. These are the router-to-router
   # addresses, not anything a workload uses.
   bgp = {
@@ -228,6 +236,8 @@ resource "google_compute_instance" "hub_probe" {
   network_interface {
     subnetwork = "dev-${var.region}"
   }
+
+  metadata = local.os_policy_metadata
 }
 
 resource "google_compute_instance" "branch_probe" {
@@ -248,4 +258,6 @@ resource "google_compute_instance" "branch_probe" {
   network_interface {
     subnetwork = google_compute_subnetwork.branch.id
   }
+
+  metadata = local.os_policy_metadata
 }

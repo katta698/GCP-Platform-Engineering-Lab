@@ -175,8 +175,13 @@ def assert_not_an_error_page(page) -> None:
     # silently returns to the list underneath it, so the capture looks like a
     # perfectly good screenshot of the wrong page — the failure that produced
     # this line was exactly that.
+    # "You need additional access" is the console's permission-denied page. It
+    # renders inside the normal chrome with a plausible heading and a roles
+    # table, so it photographs like a real view. Week 13 saved one as a figure.
     for marker in ("URL not found", "We couldn't find what you were looking for",
                    "You don't have permission", "Error 404",
+                   "You need additional access", "Missing or blocked permissions",
+                   "Data could not be loaded",
                    "Requested constraint not found", "not found"):
         if marker in body:
             raise SystemExit(f"refusing to save: page shows {marker!r} — {page.url}")

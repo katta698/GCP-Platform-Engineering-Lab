@@ -910,3 +910,18 @@ resource "google_project_iam_member" "plan_security_serviceusage_consumer" {
   role    = "roles/serviceusage.serviceUsageConsumer"
   member  = google_service_account.plan.member
 }
+
+# Week 13 puts firewall rules and probe VMs in the network hub project.
+# networkAdmin covers networks, routers and VPN but not firewall writes or
+# instance creation; Week 04 granted instanceAdmin on workloads, not platform.
+resource "google_folder_iam_member" "apply_platform_security_admin" {
+  folder = local.platform_folder
+  role   = "roles/compute.securityAdmin"
+  member = google_service_account.apply.member
+}
+
+resource "google_folder_iam_member" "apply_platform_instance_admin" {
+  folder = local.platform_folder
+  role   = "roles/compute.instanceAdmin.v1"
+  member = google_service_account.apply.member
+}

@@ -1,0 +1,41 @@
+title:    Break one tunnel. BGP routes around it in three seconds.
+subtitle: measure-failover.py — three trials, routes withdrawn and restored, nobody editing a route table
+width:    980
+---
+$ python scripts/measure-failover.py --trials 3
+
+[12:56:23] baseline: 2 route(s) to 10.30.0.0/24, 2 BGP session(s) Established
+
+--- trial 1 ---
+[12:56:30] hub-peer-t0 disabled
+[12:56:33] route withdrawn after 3.6s
+[12:56:40] hub-peer-t0 re-enabled
+[12:56:43] route restored after 3.1s
+
+--- trial 2 ---
+[12:56:50] hub-peer-t0 disabled
+[12:56:53] route withdrawn after 3.1s
+[12:57:03] route restored after 3.3s
+
+--- trial 3 ---
+[12:57:11] hub-peer-t0 disabled
+[12:57:14] route withdrawn after 3.3s
+[12:57:24] route restored after 3.4s
+
+[12:57:33] restored: 2 route(s), 2 session(s) Established
+
+RESULT: routes withdrawn in 3.1-3.6s across 3 trials.
+
+# TWO routes to one prefix is the whole point. Each tunnel advertises
+# 10.30.0.0/24 independently, so the count is the failover signal: 2 means
+# both paths live, 1 means BGP has withdrawn the dead one and the survivor
+# is carrying the traffic.
+#
+# Nothing in this lab's Terraform contains 10.30.0.0/24 as a route. It is
+# declared once as a SUBNET on the branch side and arrives on the hub side
+# because the two routers told each other about it.
+#
+# A static route cannot do this. It points at a dead tunnel exactly as
+# confidently as a live one, and keeps sending traffic into a hole until a
+# human notices. That is why BGP is not decoration on HA VPN - it is the
+# mechanism that makes the HA real.

@@ -1,0 +1,19 @@
+{
+  "dest": "10.30.0.0/24",
+  "baseline_routes": 2,
+  "trials": [
+    {
+      "withdraw_s": 3.6,
+      "restore_s": 3.1
+    },
+    {
+      "withdraw_s": 3.1,
+      "restore_s": 3.3
+    },
+    {
+      "withdraw_s": 3.3,
+      "restore_s": 3.4
+    }
+  ],
+  "restored": true
+}
