@@ -19,6 +19,7 @@ capturing. Retired slots go in `UNUSED.txt` with a reason.
 | 04 | `04-routes-learned.png` | terminal card | `10.30.0.0/24` learned twice, once per tunnel, and nothing static | the route exists in the table and appears in no `.tf` file |
 | 05 | `05-failover.png` | terminal card | one tunnel disabled, BGP withdrawing its routes, ping unbroken | **the post** — route count halves, traffic continues, measured |
 | 06 | `06-cost.png` | console / BigQuery | the actual charge for the hours it ran | **cost slot — exempt**; charges post about a day later |
+| 07 | `07-hcp-apply.png` | HCP Terraform | the workspace run list: 3 applied, 2 errored | the deployment mechanism, and the two failures that shaped the week |
 
 ## Capture order
 
