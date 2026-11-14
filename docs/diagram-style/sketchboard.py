@@ -64,12 +64,18 @@ def ensure_icons() -> None:
 
 class Board:
     def __init__(self, title: str, eyebrow: str = "", w: int = 1280, h: int = 820,
-                 credit: str = "jayanthkatta.com"):
+                 credit: str = "jayanthkatta.com", type_scale: float = 1.0):
         ensure_icons()
+        # Inline in a post, a diagram is read at the content width - about
+        # 358px on a phone. The plain SVG this style replaces rendered its
+        # labels at 4.1px there. Raising the type scale is what buys that back;
+        # it is not decoration.
+        self.ts = type_scale
         self.w, self.h = w, h
         self.title, self.eyebrow, self.credit = title, eyebrow, credit
         self.parts: list[str] = []
         self.anchors: dict[str, tuple[float, float, float, float]] = {}
+        self.panels: set[str] = set()   # anchors that are drawn boxes
         self._uid = 0
         # Seeded from the title: same diagram, same wobble, every time.
         self.rng = random.Random(sum(ord(c) * (i + 7) for i, c in enumerate(title)))
@@ -110,6 +116,7 @@ class Board:
                           f'stroke-width="{sw}" stroke-linecap="round" opacity="{op}"/>')
 
     def _text(self, x, y, s, cls="b", col=None, anchor="start", op=None):
+        # cls may carry 'alabel' to mark an arrow's own caption.
         c = f' fill="{col}"' if col else ""
         o = f' opacity="{op}"' if op else ""
         self.parts.append(f'<text x="{x:.0f}" y="{y:.0f}" text-anchor="{anchor}" '
@@ -126,8 +133,8 @@ class Board:
         self._circle(cx, cy, r, CHALK, 2.2, .45)
         self.parts.append(self._icon(icon_file, cx, cy, int(r * 1.04)))
         if title:
-            self._text(cx, cy + r + 34, title, "h2", anchor="middle")
-        self._lines(cx, cy + r + 66, lines, anchor="middle")
+            self._text(cx, cy + r + 36, title, "h2", anchor="middle")
+        self._lines(cx, cy + r + 76, lines, anchor="middle")
         # Include the caption: an arrow leaving downward must clear the text,
         # not start on top of it.
         bottom = cy + r + (34 if title else 0) + (66 + (len(lines) - 1) * 30
@@ -141,8 +148,9 @@ class Board:
             self._text(x + w - 8, y - 10, corner, "s", anchor="end", op=".6")
         if title:
             self._text(x + 24, y + 40, title, "h2", col if col != CHALK else None)
-        self._lines(x + 24, y + 76, lines, step=32)
+        self._lines(x + 24, y + 82, lines, step=34)
         self.anchors[key] = (x, y, w, h)
+        self.panels.add(key)
 
     def person(self, key, cx, cy, title="", lines=(), s=1.0):
         self._circle(cx, cy - 22 * s, 11 * s, CHALK, 2.4, .9)
@@ -152,8 +160,8 @@ class Board:
             f'M{cx},{cy+16*s} L{cx+11*s},{cy+36*s}" fill="none" stroke="{CHALK}" '
             f'stroke-width="2.6" stroke-linecap="round" opacity=".9"/>')
         if title:
-            self._text(cx, cy + 86, title, "h2", anchor="middle")
-        self._lines(cx, cy + 116, lines, anchor="middle")
+            self._text(cx, cy + 88, title, "h2", anchor="middle")
+        self._lines(cx, cy + 128, lines, anchor="middle")
         bottom = cy + (86 if title else 40) + (30 + (len(lines) - 1) * 30
                                                if lines else 0)
         self.anchors[key] = (cx - 20, cy - 34, 40, bottom - (cy - 34))
@@ -172,6 +180,7 @@ class Board:
             self._text(tx, y + 54, title, "h2")
         self._lines(tx, y + 90, lines, step=30)
         self.anchors[key] = (x, y, w, h + 10)
+        self.panels.add(key)
 
     def clock(self, cx, cy, r=26, note=(), ):
         self._circle(cx, cy, r, CHALK, 2.4, .9)
@@ -200,10 +209,16 @@ class Board:
                 x1, y1, x2, y2 = acx, ay - 6, bcx, by + bh + 10
         self._line(x1, y1, x2, y2)
         if label:
+            mx, my = (x1 + x2) / 2, (y1 + y2) / 2
             if horizontal:
-                self._text((x1 + x2) / 2, min(y1, y2) - 16, label, "s", anchor="middle")
+                self._text(mx, min(y1, y2) - 18, label, "s alabel", anchor="middle")
             else:
-                self._text((x1 + x2) / 2 + 16, (y1 + y2) / 2, label, "s")
+                # Perpendicular offset. Sitting the label on the midpoint put
+                # the arrow straight through the word.
+                dx, dy = x2 - x1, y2 - y1
+                n = (dx * dx + dy * dy) ** 0.5 or 1
+                self._text(mx + 30 * (dy / n) + 10, my - 30 * (dx / n), label,
+                           "s alabel", anchor="middle")
 
     def note(self, x, y, lines, anchor="start"):
         self._lines(x, y, lines, anchor=anchor, step=28)
@@ -249,13 +264,21 @@ class Board:
                         f'class="hand s" opacity=".55">{self.eyebrow}</text>')
         body += self.parts
         if self.credit:
-            body.append(f'<text x="{self.w-64}" y="{self.h-24}" text-anchor="end" '
-                        f'class="hand s" opacity=".45">{self.credit}</text>')
+            body.append(f'<text x="{self.w-28}" y="{self.h-14}" text-anchor="end" '
+                        f'class="hand s" opacity=".32">{self.credit}</text>')
 
+        defs = DEFS.replace("__H1__", f"{44*self.ts:.0f}").replace("__H2__", f"{30*self.ts:.0f}")
+        defs = defs.replace("__B__", f"{23*self.ts:.0f}").replace("__S__", f"{20*self.ts:.0f}")
+        # Publish the panel rectangles so verify_fits can test text against
+        # the box it belongs to. hand_rect draws four strokes, so no single
+        # path carries the panel's bounds.
+        boxes = ";".join(f"{k}:{int(v[0])},{int(v[1])},{int(v[2])},{int(v[3])}"
+                         for k, v in self.anchors.items() if k in self.panels)
+        body.append(f'<metadata id="panels">{boxes}</metadata>')
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {self.w} {self.h}" '
                f'width="{self.w}" height="{self.h}" role="img" '
                f'aria-label="{alt or self.title}">'
-               + DEFS + "\n" + "\n".join(body) + "\n</svg>\n")
+               + defs + "\n" + "\n".join(body) + "\n</svg>\n")
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write(svg)
         return path
@@ -275,7 +298,7 @@ DEFS = f'''<defs>
   </marker>
   <style>
     .hand {{ font-family: Caveat, 'Segoe Script', cursive; fill: {CHALK}; }}
-    .h1 {{ font-size: 44px; }} .h2 {{ font-size: 30px; }}
-    .b {{ font-size: 23px; fill: {DIM}; }} .s {{ font-size: 20px; fill: {DIM}; }}
+    .h1 {{ font-size: __H1__px; }} .h2 {{ font-size: __H2__px; }}
+    .b {{ font-size: __B__px; fill: {DIM}; }} .s {{ font-size: __S__px; fill: {DIM}; }}
   </style>
 </defs>'''
