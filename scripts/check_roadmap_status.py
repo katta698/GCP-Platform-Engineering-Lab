@@ -49,7 +49,10 @@ README = os.path.join(ROOT, "README.md")
 
 # A roadmap row, split on the pipe rather than matched with one regex:
 # | [06](./week-06-billing-export) | project | services | Status | Blog |
-WEEK_CELL_RE = re.compile(r"^(?:\[(\d{2})\]\(([^)]*)\)|(\d{2}))$")
+# Accepts "[Week 06](path)", "[06](path)", "Week 06" and "06". All three
+# clouds moved to the "Week NN" form; the bare form is still parsed so this
+# does not break on an older row someone has not touched yet.
+WEEK_CELL_RE = re.compile(r"^(?:\[(?:Week\s+)?(\d{2})\]\(([^)]*)\)|(?:Week\s+)?(\d{2}))$")
 
 # A published article lives at this prefix. A week marked Complete with no link
 # is the second half of the 2026-10-24 defect: the Status column was wrong for
@@ -98,6 +101,21 @@ def deployed_weeks():
     return found
 
 
+def has_article(text, num):
+    """True if this week's own README section carries a published article link.
+
+    The link used to sit in the roadmap row. It moved out so the table stays
+    readable on a phone - a long URL in every row is what pushed the Status
+    column off-screen twice.
+    """
+    marker = f"## Week {num} "
+    start = text.find(marker)
+    if start < 0:
+        return False
+    nxt = text.find("\n## ", start + 1)
+    return BLOG_PREFIX in text[start:nxt if nxt > 0 else len(text)]
+
+
 def audit(text, deployed):
     """Return a list of problem strings. Pure, so --self-test can prove it."""
     problems = []
@@ -117,11 +135,12 @@ def audit(text, deployed):
                 problems.append(
                     f"week {num}: marked {status.strip()} but does not link to "
                     f"./{deployed[num]}")
-            elif complete and BLOG_PREFIX not in row:
+            elif complete and not (BLOG_PREFIX in row or has_article(text, num)):
                 problems.append(
-                    f"week {num}: marked Complete but the row carries no article "
-                    f"link ({BLOG_PREFIX}...)")
-            elif started and BLOG_PREFIX in row:
+                    f"week {num}: marked Complete but neither the row nor a "
+                    f"'## Week {num}' section carries an article link "
+                    f"({BLOG_PREFIX}...)")
+            elif started and (BLOG_PREFIX in row or has_article(text, num)):
                 # The failure this guards is optimism, not neglect: linking an
                 # article that does not exist yet is how a roadmap starts
                 # promising things. Publish, then mark Complete.

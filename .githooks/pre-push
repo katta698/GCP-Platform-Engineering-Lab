@@ -33,6 +33,8 @@ echo "pre-push checks:"
 # get the chance to report a false clean.
 run "roadmap check can detect its defect" python scripts/check_roadmap_status.py --self-test
 run "roadmap status matches the repo"     python scripts/check_roadmap_status.py
+run "readme check can detect its defect" python scripts/check_root_readme_current.py --self-test
+run "every week folder has a README row" python scripts/check_root_readme_current.py
 run "terraform formatted"                 terraform fmt -check -recursive
 
 # Week 10 captured its own perishable "before" figure exactly as planned, then

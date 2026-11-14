@@ -376,11 +376,32 @@ def clear_stale(out: Path) -> None:
         pass
 
 
+
+def _refresh_hcp_session(path):
+    """Best-effort: pull a fresh cookie from a running signed-in Chrome.
+
+    HCP rotates _atlas_session_data as the live session is used, so a saved
+    snapshot goes stale within the hour. Refreshing costs one CDP call.
+    """
+    if not path:
+        return
+    try:
+        import sys as _sys, pathlib as _pl
+        _sys.path.insert(0, str(_pl.Path(__file__).parent))
+        from hcp_session import refresh_if_possible
+        refresh_if_possible(path)
+    except Exception:
+        pass
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("url")
     ap.add_argument("output_path")
-    ap.add_argument("--cdp", type=int, required=True, help="Port of the already-signed-in Chrome")
+    ap.add_argument("--cdp", type=int, default=None, help="Port of the already-signed-in Chrome")
+    ap.add_argument("--load-session", default=None, metavar="FILE",
+                    help="Replay cookies exported by save_hcp_session.py. For HCP Terraform this "
+                         "removes the need for --cdp and for signing in by hand.")
     ap.add_argument("--wait-ms", type=int, default=8000, help="Settle time after load")
     ap.add_argument("--height", type=int, default=1000)
     ap.add_argument("--width", type=int, default=1400)
@@ -421,9 +442,47 @@ def main() -> None:
     out = Path(args.output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
 
+    _refresh_hcp_session(args.load_session)
+
+    if not args.cdp and not args.load_session:
+        raise SystemExit(
+            "Give either --cdp <port> (attach to a signed-in Chrome) or "
+            "--load-session <file> (replay a saved session). For HCP Terraform, "
+            "run scripts/screenshots/save_hcp_session.py once and use --load-session.")
+
     with sync_playwright() as pw:
-        browser = pw.chromium.connect_over_cdp(f"http://127.0.0.1:{args.cdp}")
-        context = browser.contexts[0]
+        if args.cdp:
+            browser = pw.chromium.connect_over_cdp(f"http://127.0.0.1:{args.cdp}")
+            context = browser.contexts[0]
+        else:
+            # HCP Terraform needs no --cdp and no manual sign-in.
+            #
+            # It was believed for weeks that HCP auth is a memory-only session
+            # cookie, so captures had to attach to a browser a human had signed
+            # in by hand. Measured 2026-10-23 in the Azure lab: app.terraform.io
+            # sets exactly ONE cookie, _atlas_session_data, and it is
+            # PERSISTENT. Replaying it into a clean headless context loads the
+            # workspace page fully authenticated.
+            #
+            # The session file is a CREDENTIAL: outside every repo, never
+            # committed. Re-export it when a capture lands on the sign-in page.
+            import json as _json
+            from pathlib import Path as _Path
+            _sess = _Path(args.load_session)
+            if not _sess.is_file():
+                raise SystemExit(
+                    "--load-session file not found: %s. "
+                    "Run scripts/screenshots/save_hcp_session.py first." % _sess)
+            _cookies = _json.loads(_sess.read_text(encoding="utf-8")).get("cookies", [])
+            if not _cookies:
+                raise SystemExit("--load-session file has no cookies: %s" % _sess)
+            browser = pw.chromium.launch(headless=True)
+            context = browser.new_context(
+                viewport={"width": args.width, "height": args.height},
+                device_scale_factor=2,
+            )
+            context.add_cookies(_cookies)
+            print("Replayed %d cookies from %s" % (len(_cookies), _sess))
         page = context.new_page()
         page.set_viewport_size({"width": args.width, "height": args.height})
         try:

@@ -89,13 +89,13 @@ A few things worth knowing if you are doing this yourself:
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| [01](./week-01-gcp-landing-zone) | [Landing zone: folders, projects, state](https://jayanthkatta.com/blog/week-01-gcp-landing-zone/) | Resource Manager, HCP | ✅ Complete |
-| [02](./week-02-keyless-ci) | [Keyless CI with Workload Identity](https://jayanthkatta.com/blog/week-02-keyless-ci/) | WIF, HCP dynamic credentials | ✅ Complete |
-| [03](./week-03-org-policy-guardrails) | [Org policy guardrails and dry run](https://jayanthkatta.com/blog/week-03-org-policy-guardrails/) | Org Policy, custom constraints | ✅ Complete |
-| [04](./week-04-shared-vpc) | [Shared VPC hub and spoke](https://jayanthkatta.com/blog/week-04-shared-vpc/) | Shared VPC, Cloud NGFW | ✅ Complete |
-| [05](./week-05-project-factory) | [Project factory and naming constraint](https://jayanthkatta.com/blog/week-05-project-factory/) | Tags, custom constraints | ✅ Complete |
-| [06](./week-06-billing-export) | [Billing export and budget alerts](https://jayanthkatta.com/blog/week-06-billing-export/) | Billing, BigQuery, Budgets | ✅ Complete |
-| [07](./week-07-asset-inventory) | [Resource hierarchy audit](https://jayanthkatta.com/blog/week-07-asset-inventory/) | Asset Inventory, Pub/Sub | ✅ Complete |
+| [Week 01](./week-01-gcp-landing-zone) | Landing zone: folders, projects, state | Resource Manager, HCP | ✅ Complete |
+| [Week 02](./week-02-keyless-ci) | Keyless CI with Workload Identity | WIF, HCP dynamic credentials | ✅ Complete |
+| [Week 03](./week-03-org-policy-guardrails) | Org policy guardrails and dry run | Org Policy, custom constraints | ✅ Complete |
+| [Week 04](./week-04-shared-vpc) | Shared VPC hub and spoke | Shared VPC, Cloud NGFW | ✅ Complete |
+| [Week 05](./week-05-project-factory) | Project factory and naming constraint | Tags, custom constraints | ✅ Complete |
+| [Week 06](./week-06-billing-export) | Billing export and programmatic budget alerts | Billing, BigQuery, Budgets, Pub/Sub | ✅ Complete |
+| [Week 07](./week-07-asset-inventory) | Resource hierarchy audit | Asset Inventory, Pub/Sub, BigQuery | ✅ Complete |
 
 **Why Shared VPC moved from Week 12 to Week 04.** Re-sequenced 2026-09-03, and
 not for variety — for a dependency the original ordering had backwards.
@@ -153,11 +153,11 @@ every grant can be demonstrated against something real rather than described.
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| [08](./week-08-iam-deny) | [IAM deny policies and custom roles](https://jayanthkatta.com/blog/week-08-iam-deny/) | Deny policies, Troubleshooter v3 | ✅ Complete |
-| [09](./week-09-sa-lifecycle) | [Service account lifecycle](https://jayanthkatta.com/blog/week-09-sa-lifecycle/) | Activity Analyzer, Org Policy | ✅ Complete |
-| [10](./week-10-group-access) | [Group-based access control](https://jayanthkatta.com/blog/week-10-group-access/) | Cloud Identity, Google Groups | ✅ Complete |
-| [11](./week-11-jit-access) | [Privileged access and just-in-time elevation](https://jayanthkatta.com/blog/week-11-jit-access/) | Privileged Access Manager | ✅ Complete |
-| [12](./week-12-secret-management) | [Secret management](https://jayanthkatta.com/blog/week-12-secret-management/) | Secret Manager, Cloud KMS, CMEK, rotation | ✅ Complete |
+| [Week 08](./week-08-iam-deny) | IAM deny policies and custom roles | Deny policies, Troubleshooter v3 | ✅ Complete |
+| [Week 09](./week-09-sa-lifecycle) | Service account lifecycle | Activity Analyzer, Org Policy | ✅ Complete |
+| [Week 10](./week-10-group-access) | Group-based access control | Cloud Identity, Google Groups | ✅ Complete |
+| [Week 11](./week-11-jit-access) | Privileged access and just-in-time elevation | Privileged Access Manager | ✅ Complete |
+| [Week 12](./week-12-secret-management) | CMEK, and the rotation that only notifies | Secret Manager, Cloud KMS, Pub/Sub, Cloud Run functions | ✅ Complete |
 
 ### Phase 3 — Networking (Weeks 13–19)
 
@@ -166,87 +166,87 @@ remains here is everything that needs a VPC to already exist.
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| [13](./week-13-hybrid-connectivity) | Hybrid and cross-cloud connectivity | HA VPN, Cloud Router, BGP | 🔨 In progress |
-| 14 | Private Service Connect | PSC endpoints, Private Google Access | 📅 Planned |
-| 15 | Global load balancing | Global external ALB, Cloud CDN, Cloud Armor | 📅 Planned |
-| 16 | Cloud NAT and egress control | Cloud NAT, Secure Web Proxy | 📅 Planned |
-| 17 | Cloud DNS: private and split-horizon | Cloud DNS, peering, forwarding | 📅 Planned |
-| 18 | Network observability | VPC Flow Logs, Network Intelligence Center, Cloud Network Insights | 📅 Planned |
-| 19 | VPC Service Controls perimeter | VPC-SC, Access Context Manager | 📅 Planned |
+| [Week 13](./week-13-hybrid-connectivity) | HA VPN and BGP between two VPCs | HA VPN, Cloud Router, BGP | 🔨 In progress |
+| Week 14 | Private Service Connect | PSC endpoints, Private Google Access | 📅 Planned |
+| Week 15 | Global load balancing | Global external ALB, Cloud CDN, Cloud Armor | 📅 Planned |
+| Week 16 | Cloud NAT and egress control | Cloud NAT, Secure Web Proxy | 📅 Planned |
+| Week 17 | Cloud DNS: private and split-horizon | Cloud DNS, peering, forwarding | 📅 Planned |
+| Week 18 | Network observability | VPC Flow Logs, Network Intelligence Center, Cloud Network Insights | 📅 Planned |
+| Week 19 | VPC Service Controls perimeter | VPC-SC, Access Context Manager | 📅 Planned |
 
 ### Phase 4 — Compute (Weeks 20–25)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 20 | Compute Engine self-service | Compute Engine, MIGs, custom images | 📅 Planned |
-| 21 | Autoscaling and load-balanced fleet | Regional MIGs, autoscaler, health checks | 📅 Planned |
-| 22 | OS patch management at fleet scale | VM Manager, OS Config, OS Inventory | 📅 Planned |
-| 23 | Spot VMs and cost-optimised compute | Spot VMs, CUDs, rightsizing recommender | 📅 Planned |
-| 24 | Confidential and Shielded VMs | Shielded VM, Confidential Computing | 📅 Planned |
-| 25 | Golden image pipeline | Cloud Build, Packer, Artifact Registry | 📅 Planned |
+| Week 20 | Compute Engine self-service | Compute Engine, MIGs, custom images | 📅 Planned |
+| Week 21 | Autoscaling and load-balanced fleet | Regional MIGs, autoscaler, health checks | 📅 Planned |
+| Week 22 | OS patch management at fleet scale | VM Manager, OS Config, OS Inventory | 📅 Planned |
+| Week 23 | Spot VMs and cost-optimised compute | Spot VMs, CUDs, rightsizing recommender | 📅 Planned |
+| Week 24 | Confidential and Shielded VMs | Shielded VM, Confidential Computing | 📅 Planned |
+| Week 25 | Golden image pipeline | Cloud Build, Packer, Artifact Registry | 📅 Planned |
 
 ### Phase 5 — Containers and Kubernetes (Weeks 26–31)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 26 | GKE Autopilot self-service | GKE Autopilot, Workload Identity | 📅 Planned |
-| 27 | GitOps with Config Sync | Config Sync, Policy Controller, fleets | 📅 Planned |
-| 28 | Cloud Run services and jobs | Cloud Run, traffic splitting | 📅 Planned |
-| 29 | Container supply chain security | Artifact Analysis, Binary Authorization | 📅 Planned |
-| 30 | Ambient networking — mesh without sidecars | Ambient data plane for GKE and Cloud Run, zero-trust, mTLS | 📅 Planned |
-| 31 | Multi-cluster Gateway API | GKE fleets, multi-cluster Gateway, GatewayClass | 📅 Planned |
+| Week 26 | GKE Autopilot self-service | GKE Autopilot, Workload Identity | 📅 Planned |
+| Week 27 | GitOps with Config Sync | Config Sync, Policy Controller, fleets | 📅 Planned |
+| Week 28 | Cloud Run services and jobs | Cloud Run, traffic splitting | 📅 Planned |
+| Week 29 | Container supply chain security | Artifact Analysis, Binary Authorization | 📅 Planned |
+| Week 30 | Ambient networking — mesh without sidecars | Ambient data plane for GKE and Cloud Run, zero-trust, mTLS | 📅 Planned |
+| Week 31 | Multi-cluster Gateway API | GKE fleets, multi-cluster Gateway, GatewayClass | 📅 Planned |
 
 ### Phase 6 — Storage (Weeks 32–35)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 32 | Cloud Storage lifecycle and tiering | Storage classes, Autoclass, lifecycle, retention | 📅 Planned |
-| 33 | Block and file: Hyperdisk, Filestore, Managed Lustre | Hyperdisk, Filestore, Managed Lustre, snapshot schedules | 📅 Planned |
-| 34 | Backup and restore automation | Backup and DR Service, snapshot policies | 📅 Planned |
-| 35 | Data transfer and migration | Storage Transfer Service, Transfer Appliance | 📅 Planned |
+| Week 32 | Cloud Storage lifecycle and tiering | Storage classes, Autoclass, lifecycle, retention | 📅 Planned |
+| Week 33 | Block and file: Hyperdisk, Filestore, Managed Lustre | Hyperdisk, Filestore, Managed Lustre, snapshot schedules | 📅 Planned |
+| Week 34 | Backup and restore automation | Backup and DR Service, snapshot policies | 📅 Planned |
+| Week 35 | Data transfer and migration | Storage Transfer Service, Transfer Appliance | 📅 Planned |
 
 ### Phase 7 — Databases and data platform (Weeks 36–42)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 36 | Cloud SQL self-service platform | Cloud SQL, HA, read replicas, Auth Proxy, IAM auth | 📅 Planned |
-| 37 | AlloyDB and the lakehouse boundary | AlloyDB, columnar engine, live Iceberg/BigQuery reads, reverse ETL | 📅 Planned |
-| 38 | Spanner: global consistency and columnar scans | Spanner, multi-region configs, Columnar Engine, TrueTime | 📅 Planned |
-| 39 | BigQuery for variable workloads | Partitioning, clustering, fluid scaling, reservations | 📅 Planned |
-| 40 | Streaming pipelines | Pub/Sub, Dataflow, BigQuery streaming, continuous queries | 📅 Planned |
-| 41 | Database Migration Service | DMS, homogeneous and heterogeneous migration, CDC | 📅 Planned |
-| 42 | Firestore and Memorystore | Firestore, Memorystore for Valkey | 📅 Planned |
+| Week 36 | Cloud SQL self-service platform | Cloud SQL, HA, read replicas, Auth Proxy, IAM auth | 📅 Planned |
+| Week 37 | AlloyDB and the lakehouse boundary | AlloyDB, columnar engine, live Iceberg/BigQuery reads, reverse ETL | 📅 Planned |
+| Week 38 | Spanner: global consistency and columnar scans | Spanner, multi-region configs, Columnar Engine, TrueTime | 📅 Planned |
+| Week 39 | BigQuery for variable workloads | Partitioning, clustering, fluid scaling, reservations | 📅 Planned |
+| Week 40 | Streaming pipelines | Pub/Sub, Dataflow, BigQuery streaming, continuous queries | 📅 Planned |
+| Week 41 | Database Migration Service | DMS, homogeneous and heterogeneous migration, CDC | 📅 Planned |
+| Week 42 | Firestore and Memorystore | Firestore, Memorystore for Valkey | 📅 Planned |
 
 ### Phase 8 — Serverless and integration (Weeks 43–45)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 43 | Event-driven platform | Eventarc, Pub/Sub, Cloud Run functions | 📅 Planned |
-| 44 | Workflows and orchestration | Workflows, Cloud Scheduler, Cloud Tasks | 📅 Planned |
-| 45 | API management | API Gateway, Apigee, Cloud Endpoints | 📅 Planned |
+| Week 43 | Event-driven platform | Eventarc, Pub/Sub, Cloud Run functions | 📅 Planned |
+| Week 44 | Workflows and orchestration | Workflows, Cloud Scheduler, Cloud Tasks | 📅 Planned |
+| Week 45 | API management | API Gateway, Apigee, Cloud Endpoints | 📅 Planned |
 
 ### Phase 9 — Security and compliance (Weeks 46–48)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 46 | Security Command Center | SCC findings, mute rules, auto-remediation | 📅 Planned |
-| 47 | Cloud Armor and edge protection | Cloud Armor policies, rate limiting, adaptive protection | 📅 Planned |
-| 48 | Audit logging, forensics and sovereignty | Cloud Audit Logs, log sinks, Confidential External Key Management | 📅 Planned |
+| Week 46 | Security Command Center | SCC findings, mute rules, auto-remediation | 📅 Planned |
+| Week 47 | Cloud Armor and edge protection | Cloud Armor policies, rate limiting, adaptive protection | 📅 Planned |
+| Week 48 | Audit logging, forensics and sovereignty | Cloud Audit Logs, log sinks, Confidential External Key Management | 📅 Planned |
 
 ### Phase 10 — Observability and operations (Weeks 49–51)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 49 | Cloud Monitoring and SLOs | SLOs, error budgets, alerting policies | 📅 Planned |
-| 50 | Centralised logging | Log Router, sinks, log buckets, Log Analytics | 📅 Planned |
-| 51 | Tracing and profiling | Cloud Trace, Cloud Profiler, OpenTelemetry | 📅 Planned |
+| Week 49 | Cloud Monitoring and SLOs | SLOs, error budgets, alerting policies | 📅 Planned |
+| Week 50 | Centralised logging | Log Router, sinks, log buckets, Log Analytics | 📅 Planned |
+| Week 51 | Tracing and profiling | Cloud Trace, Cloud Profiler, OpenTelemetry | 📅 Planned |
 
 ### Phases 11–12 — FinOps and reliability (Weeks 52–53)
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 52 | FinOps: CUDs, recommender, showback | Billing BigQuery export, Recommender, Looker Studio | 📅 Planned |
-| 53 | Disaster recovery and chaos | Multi-region failover, Backup and DR, fault injection | 📅 Planned |
+| Week 52 | FinOps: CUDs, recommender, showback | Billing BigQuery export, Recommender, Looker Studio | 📅 Planned |
+| Week 53 | Disaster recovery and chaos | Multi-region failover, Backup and DR, fault injection | 📅 Planned |
 
 ### Phase 13 — AI and agent platform (Weeks 54–58)
 
@@ -262,16 +262,57 @@ Treated as infrastructure, not as model demos.
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| 54 | Agent platform foundations | Gemini Enterprise Agent Platform, Agent Runtime, IAM for agents | 📅 Planned |
-| 55 | Agent Gateway: governing agent traffic | Agent Gateway, MCP and A2A protocols, egress policy | 📅 Planned |
-| 56 | Isolating untrusted agent workloads | GKE Agent Sandbox, Workload Identity, network policy | 📅 Planned |
-| 57 | Grounding agents in governed data | BigQuery Graph, AI.PARSE_DOCUMENT, VPC-SC around the data plane | 📅 Planned |
-| 58 | Agent observability and cost control | Per-second billing exposure, tracing, budget guardrails | 📅 Planned |
+| Week 54 | Agent platform foundations | Gemini Enterprise Agent Platform, Agent Runtime, IAM for agents | 📅 Planned |
+| Week 55 | Agent Gateway: governing agent traffic | Agent Gateway, MCP and A2A protocols, egress policy | 📅 Planned |
+| Week 56 | Isolating untrusted agent workloads | GKE Agent Sandbox, Workload Identity, network policy | 📅 Planned |
+| Week 57 | Grounding agents in governed data | BigQuery Graph, AI.PARSE_DOCUMENT, VPC-SC around the data plane | 📅 Planned |
+| Week 58 | Agent observability and cost control | Per-second billing exposure, tracing, budget guardrails | 📅 Planned |
 
 Week 55 is the direct counterpart to Week 17 of the AWS lab, which builds an MCP
 server over that lab's own operational data. Same problem — making a platform
 agent-consumable — approached from the governance side rather than the server
 side.
+
+---
+
+## Beyond week 58 — optional, not committed
+
+The roadmap above runs to 58 because Phase 13 was added after the original plan
+was checked against live sources and the whole agent platform turned out to be
+missing. Everything below is a list, not a commitment.
+
+### Carried forward — displaced from Year 1, not dropped on merit
+
+| Topic | Why it moved |
+|---|---|
+| Cross-cloud networking to AWS | Week 13 builds HA VPN and BGP against a second VPC. The AWS peer needs the other lab's side built in step, so it waits for a week both windows can run together. |
+| Autokey for CMEK | Week 12 named it and did not build it. Autokey creates key rings on demand, which is a different governance story from holding one key, and it deserves its own week rather than a paragraph. |
+| Multi-party approval for PAM | Week 11 used a single human approver because multi-party approval needs Security Command Center Premium. The control is real; the tier is not activated here. |
+| IAM Recommender | Week 11 found it needs SCC Premium for anything beyond basic roles. Every grant in this lab is predefined, so the free tier reports nothing. |
+
+### Candidate themes for Weeks 59+
+
+- Config Connector and Crossplane — managing Google Cloud from inside Kubernetes
+- Backup and DR orchestration across regions, measured rather than assumed
+- Sovereign and assured workloads controls
+- Chaos engineering against the hierarchy: what actually breaks when a folder's policy changes
+- Cost attribution for shared infrastructure, which Week 06's export makes answerable
+
+---
+
+## What Gets Built Each Week
+
+Every week produces three things: a deployed lab, a published write-up, and a
+runbook. The lab is real infrastructure in a real organization, built with
+Terraform and applied through HCP Terraform with no stored credentials. The
+write-up goes to jayanthkatta.com and carries measured results rather than
+documentation summaries — if a number appears in a post it came from this
+deployment. The runbook is `LAB.md` in the week's folder, so the post does not
+have to be one.
+
+Most weeks are destroyed the same day. The cost note at the top of each week's
+README says what runs continuously, what teardown removes, and the monthly
+figure if it were left up.
 
 ---
 
@@ -562,3 +603,44 @@ Workload Identity Federation from Week 05.
 ## Licence
 
 MIT. Take what is useful.
+
+---
+
+## Cost Philosophy
+
+Build it, measure it, destroy it. Almost every week in this lab exists for
+hours, not months, and the figure that matters is what it cost while it ran —
+not the monthly rate a pricing page quotes.
+
+Three rules follow from that:
+
+- **Read cost from the bill, never from a rate card.** Week 06 built a BigQuery
+  pricing export for exactly this, and later weeks query it rather than quoting
+  published prices.
+- **The teardown is part of the week.** `scripts/cleanup.sh` in each folder, and
+  a figure check that refuses to destroy anything while a declared screenshot is
+  still uncaptured.
+- **Name what keeps charging.** Week 12 found that a Cloud KMS key version is
+  billed while disabled *and* while scheduled for destruction — teardown reported
+  success and the meter kept running. That kind of thing goes in the week's cost
+  note, not in a footnote.
+
+A $25/month budget alert covers the whole billing account. It alerts; it does
+not cap.
+
+---
+
+## About
+
+14 years as a DBA, moving into cloud architecture. This lab is the Google Cloud
+half of that — the AWS and Azure labs run the same discipline on their own
+clouds, and the three are deliberately consistent in structure so they read as
+one body of work.
+
+Every week is built from Google Cloud's own primitives rather than translated
+from another cloud service-by-service. Where a week finds something the
+documentation does not say, or says wrongly, that goes in the write-up with the
+evidence attached.
+
+- **Blog:** https://jayanthkatta.com
+- **AWS lab:** https://github.com/katta698/AWS-Platform-Engineering-Lab
