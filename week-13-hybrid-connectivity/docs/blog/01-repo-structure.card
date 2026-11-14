@@ -1,0 +1,20 @@
+title:    How the implementation is organised
+subtitle: Major directories only. Full source on GitHub.
+width:    820
+---
+week-13-hybrid-connectivity/
+├── LAB.md                      reproduction guide: ASNs, the /30s, teardown
+├── terraform/
+│   ├── main.tf                 gateways, routers, tunnels, BGP, probes
+│   └── variables.tf            ASNs and the branch CIDR, with why each matters
+├── scripts/
+│   ├── measure-failover.py     the load-bearing measurement; restores in a trap
+│   ├── gen-psk.sh              random IKE pre-shared key into gitignored tfvars
+│   └── validate.sh             every assertion against the cloud, not state
+└── docs/                       figure plan, references, screenshots
+
+# terraform/  two VPCs, two gateways, two routers, four tunnels. The second
+#             VPC stands in for a remote site - the protocols do not care
+#             whether the peer is a VPC, on-prem hardware or another cloud.
+# scripts/    measure-failover.py disables a BGP peer, so it re-enables it on
+#             every path out including the failure path.

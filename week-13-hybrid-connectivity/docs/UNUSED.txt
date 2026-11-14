@@ -1,0 +1,21 @@
+Week 13 — figure slots not captured as planned.
+
+RETIRED — console views, replaced by terminal equivalents.
+
+  03-bgp-established.png
+      Planned as a Cloud Router console page showing both BGP sessions
+      Established. The console refused: "You need additional access",
+      listing compute.*.list permissions the operator was then granted
+      (compute.networkViewer, then compute.viewer, on the platform folder).
+      It still refused after both, while the same reads succeeded from the
+      CLI as the same identity. The content is in slot 04, which shows both
+      sessions Established with their learned-route counts.
+
+      Slot 02 was planned as a console view for the same reason and is now a
+      terminal card. A terminal is the honest surface when the console will
+      not render the data.
+
+PENDING — cannot be captured yet.
+
+  06-cost.png
+      Charges post about a day after teardown.

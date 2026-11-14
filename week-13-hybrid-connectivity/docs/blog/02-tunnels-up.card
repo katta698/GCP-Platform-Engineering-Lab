@@ -1,0 +1,26 @@
+title:    Four tunnels, two gateways, both sessions up
+subtitle: Two logical tunnels — and four tunnel resources, because each side declares its own
+width:    940
+---
+$ gcloud compute vpn-tunnels list
+
+NAME              REGION       STATUS       DETAILED_STATUS
+branch-to-hub-t0  us-central1  ESTABLISHED  Tunnel is up and running.
+branch-to-hub-t1  us-central1  ESTABLISHED  Tunnel is up and running.
+hub-to-branch-t0  us-central1  ESTABLISHED  Tunnel is up and running.
+hub-to-branch-t1  us-central1  ESTABLISHED  Tunnel is up and running.
+
+$ gcloud compute vpn-gateways list
+
+NAME       NETWORK
+branch-gw  branch
+hub-gw     hub
+
+# FOUR tunnel resources for TWO logical tunnels, and this is what bills.
+# Each side declares its own end, so $0.05/hour becomes $0.20/hour - the
+# number to plan around is four, not two.
+#
+# Each gateway has two interfaces with their own public IPs, and the tunnels
+# pair interface 0 to interface 0 and 1 to 1. Using only one interface carries
+# NO availability SLA - not a reduced one. That is why there are two of
+# everything here.

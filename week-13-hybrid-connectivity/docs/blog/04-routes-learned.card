@@ -1,0 +1,31 @@
+title:    The route nobody wrote
+subtitle: The hub learned 10.30.0.0/24 twice — once per tunnel — and it appears in no route resource
+width:    960
+---
+$ gcloud compute routers get-status hub-router --region us-central1
+
+bgpPeerStatus:
+  name                 state         numLearnedRoutes  peerIpAddress
+  hub-peer-t0          Established   1                 169.254.0.2
+  hub-peer-t1          Established   1                 169.254.1.2
+
+bestRoutes:
+  destRange       nextHopIp       priority
+  10.30.0.0/24    169.254.0.2     100
+  10.30.0.0/24    169.254.1.2     100
+
+$ grep -rn "10.30.0.0/24" terraform/*.tf
+
+terraform/variables.tf:15:  default = "10.30.0.0/24"
+
+# ONE match, and it is a SUBNET definition on the branch side. There is no
+# google_compute_route anywhere in this week, and no static route was typed
+# on either end.
+#
+# The hub knows how to reach the branch because the two Cloud Routers opened
+# BGP sessions over the tunnels and told each other what they could reach.
+# Two sessions, two advertisements, two entries at equal priority - so traffic
+# can use either, and losing one leaves the other.
+#
+# 169.254.x.x are the link-local /30s the BGP sessions run over. No workload
+# ever uses them; they exist so the routers have somewhere to talk.
