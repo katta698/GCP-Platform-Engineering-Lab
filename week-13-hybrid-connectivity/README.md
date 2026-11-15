@@ -16,9 +16,10 @@ to keep moving.
 | 2 e2-micro probes, no external IP | free tier | `us-central1`, within the monthly allowance |
 | Egress between the two VPCs | per GB | Negligible at ping volume |
 
-**Measured cost for this week: $2.02 gross, $1.99 after credits**, read from
-the billing export at 23:20 on 2026-11-14. The tunnels billed 06:00–17:00 and
-are $1.99 of it; the two probes carry an offsetting free-tier discount.
+**Measured cost for this week: $1.99**, from the billing export. The tunnels
+billed 06:00–17:00 and are the whole of it: the two probes are charged $0.17
+and discounted $0.17, and Network Intelligence Center's $0.03 is fully
+credited.
 
 Read the export AFTER it has settled. A read at 22:40 the same evening showed
 $1.76, because the day's rows were still being written — a partially loaded
