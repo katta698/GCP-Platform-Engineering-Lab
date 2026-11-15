@@ -67,9 +67,10 @@ the teardown.
 
 - **A single active interface carries no availability SLA**, not a reduced one.
   99.99% requires two interfaces, two tunnels and two peer addresses.
-- **Classic VPN is not deprecated.** The docs recommend HA VPN and carry no
-  deprecation notice; Classic VPN still has its own 99.9% SLA. Recommended-
-  against is not deprecated.
+- **Classic VPN is not deprecated, but BGP on it is.** Dynamic routing for
+  Classic VPN tunnels was deprecated 2025-08-01: new BGP tunnels cannot be
+  created and existing ones run without an SLA. Static routing keeps its
+  99.9% SLA. So this week cannot be built on Classic VPN at all.
 - **The two ASNs must differ.** Identical ASNs on both ends make this an iBGP
   session, which does not re-advertise learned routes the way this topology
   needs.
