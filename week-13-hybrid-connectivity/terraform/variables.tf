@@ -16,7 +16,7 @@ variable "branch_cidr" {
 }
 
 variable "hub_asn" {
-  description = "BGP ASN for the hub Cloud Router. Private range is 64512-65534."
+  description = "BGP ASN for the hub Cloud Router. Must be a private ASN: 64512-65534 or 4200000000-4294967294."
   type        = number
   default     = 64512
 }
