@@ -32,6 +32,8 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -171,6 +173,25 @@ def main():
         print("  Teardown is the only irreversible step in a week. Every one of")
         print("  these becomes permanently uncapturable the moment it applies.")
         print("  Capture them, or retire them in UNUSED.txt with a reason.")
+        return 1
+
+    # Existence is not enough for a view the plan called perishable: a batch
+    # taken minutes before the destroy satisfies this check and is still a
+    # reconstruction. Week 13 passed here having captured its perishable slot
+    # nine hours after the deploy.
+    try:
+        from check_capture_timing import check as timing_check
+        late = timing_check(week)
+    except Exception as exc:                                   # noqa: BLE001
+        print("  WARNING: capture-timing check could not run: %s" % exc)
+        late = []
+    if late:
+        print("  %d PERISHABLE VIEW(S) NOT TAKEN AT THE DEPLOY:" % len(late))
+        for f in late:
+            print("        %s" % f)
+        print()
+        print("  A perishable view is evidence only while its state is live.")
+        print("  Capture at the apply, or retire the slot in UNUSED.txt.")
         return 1
 
     print("  every declared figure is captured or retired -- safe to destroy.")
