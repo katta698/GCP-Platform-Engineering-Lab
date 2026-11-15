@@ -15,7 +15,13 @@ RETIRED — console views, replaced by terminal equivalents.
       terminal card. A terminal is the honest surface when the console will
       not render the data.
 
-PENDING — cannot be captured yet.
+RETIRED — the cost slot, closed 2026-11-14 rather than captured.
 
   06-cost.png
-      Charges post about a day after teardown.
+      Declared as the cost slot, exempt from the pre-destroy check because
+      charges post about a day after teardown. They have now posted: $1.76
+      gross, $1.72 after credits, of which $1.72 is the tunnel SKU.
+
+      Retired rather than captured for the same reason as Week 12's cost
+      slot — an image of a query result proves less than the figure and the
+      query do. The number is in the post's Cost table.

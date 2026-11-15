@@ -565,7 +565,7 @@ find week-NN-* -name '*.tf' -not -path '*/.terraform/*' | xargs grep -h '^resour
 **Key lessons:**
 - **BGP is what makes the HA real.** Routes learned through a dead tunnel were withdrawn in 3.1–3.6s across three trials, and the surviving tunnel carried the prefix throughout. A static route points at a dead tunnel as confidently as a live one.
 - **A single active interface carries no SLA.** 99.99% requires two interfaces, two tunnels and two peer addresses; one of each is a supported configuration with no availability promise attached.
-- A GCP-to-GCP pair needs **four** tunnel resources for two logical tunnels, and each one bills separately at $0.05/hr. The week cost $1.99.
+- A GCP-to-GCP pair needs **four** tunnel resources for two logical tunnels, and each one bills separately at $0.05/hr. The week cost $1.76, of which $1.72 was tunnels.
 - HA VPN tunnels have no enable/disable verb. Disabling the BGP peer is the closest reversible equivalent and exercises the same withdrawal path.
 - Classic VPN is **not** deprecated, which is worth saying because every comparison implies it is.
 

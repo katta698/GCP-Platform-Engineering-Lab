@@ -1,14 +1,19 @@
-Week 12 — figure slots not yet in the post.
+Week 12 — figure slots not in the post, and why.
 
-PENDING — declared, not captured, and NOT retired. These are outstanding
-work, not dropped slots, and the post is a draft until they land.
+RETIRED — the cost slot, closed 2026-11-14 rather than captured.
 
   08-cost.png
-      The cost slot. Exempt from the pre-destroy check by design: charges
-      do not post until roughly a day after teardown, so this cannot exist
-      before the week is torn down.
+      Declared as the cost slot and exempt from the pre-destroy check by
+      design, because charges do not post until roughly a day after teardown.
+      The charges have now posted and the measured figure is in the post's
+      Cost section: $1.86, of which $1.85 is Secret rotate operations and a
+      cent is the key versions.
 
-Nothing here is retired. If either slot is ever abandoned rather than
-captured, this file must say so explicitly and give the reason — a slot
-that quietly changes from "pending" to "gone" is the exact defect
+      Retired rather than captured because a screenshot of a BigQuery result
+      is weaker evidence than the number and the query. A reader cannot check
+      an image; the query is reproducible from the post.
+
+Nothing else here is retired. If a slot is ever abandoned rather than
+captured, this file must say so explicitly and give the reason — a slot that
+quietly changes from "pending" to "gone" is the exact defect
 check_figures_published.py was written for.
