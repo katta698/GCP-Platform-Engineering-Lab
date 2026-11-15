@@ -21,6 +21,26 @@ capturing. Retired slots go in `UNUSED.txt` with a reason.
 | 06 | `06-cost.png` | console / BigQuery | the actual charge for the hours it ran | **cost slot — exempt**; charges post about a day later |
 | 07 | `07-hcp-apply.png` | HCP Terraform | the workspace run list: 3 applied, 2 errored | the deployment mechanism, and the two failures that shaped the week |
 
+## Reader order in the published post
+
+Corrected 2026-11-15 after Jay asked why the deploy screenshot sat at Step 4
+while Steps 2 and 3 already showed established tunnels and learned routes.
+They did, and nothing in the narrative had created them yet.
+
+| Post step | Shows | Slot |
+| --- | --- | --- |
+| 1-3 | the Terraform, written | *(code, no figure)* |
+| 4 | the apply that made it real | 07 |
+| 5 | four tunnels, established | 02 |
+| 6 | the route nobody wrote | 04 |
+
+**Slot numbers are now out of step with reader order**, and they stay that way:
+numbers are never recycled. The cause is on the record - slot 07 was added
+after the plan was written, in the commit "add the HCP run figure that should
+have been planned". A deploy figure belongs near the start of the sequence and
+was not planned at all, which is the same omission that put it after its own
+evidence in the post.
+
 ## Capture order
 
 **02 and 03 first, before anything is broken.** They are the only views of a
