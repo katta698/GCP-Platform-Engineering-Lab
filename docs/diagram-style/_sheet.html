@@ -1,0 +1,736 @@
+<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="https://jayanthkatta.com/blog/assets/fonts.css"><style>body{margin:0;background:#15171a;padding:14px}svg{width:100%;height:auto}</style><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-01</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="GCP landing zone: organization with platform and workloads folders, platform projects, and HCP Terraform managing state"><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="977" cy="191" rx="96" ry="38" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="433" cy="230" rx="162" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="404" cy="294" rx="228" ry="38" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="550" cy="706" rx="216" ry="37" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="457" cy="614" rx="206" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="132" cy="123" rx="218" ry="37" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="174" cy="635" rx="118" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="596" cy="771" rx="225" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="721" cy="474" rx="98" ry="39" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">One hierarchy, built once</text>
+<path d="M64,96 Q328,98 589,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 1</text>
+<path d="M95,151 Q286,151 476,148" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M474,151 Q474,202 474,258" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M476,256 Q288,258 97,259" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M94,260 Q97,204 97,151" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="120" y="190" text-anchor="start" class="hand h2">organization</text>
+<text x="120" y="232" text-anchor="start" class="hand b" fill="#f1eee4">from a domain you own</text>
+<path d="M96,357 Q285,356 477,355" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M474,356 Q478,429 476,505" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M474,508 Q284,504 97,505" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M96,505 Q96,431 94,354" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="468" y="346" text-anchor="end" class="hand s" opacity=".6">folder</text>
+<text x="120" y="396" text-anchor="start" class="hand h2">platform</text>
+<text x="120" y="438" text-anchor="start" class="hand b" fill="#f1eee4">network · logging</text>
+<text x="120" y="472" text-anchor="start" class="hand b" fill="#f1eee4">security</text>
+<path d="M97,585 Q287,583 475,582" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M476,582 Q477,656 474,735" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M476,733 Q285,732 94,732" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M98,736 Q97,657 97,582" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="468" y="574" text-anchor="end" class="hand s" opacity=".6">folder</text>
+<text x="120" y="624" text-anchor="start" class="hand h2">workloads</text>
+<text x="120" y="666" text-anchor="start" class="hand b" fill="#f1eee4">dev · prod</text>
+<text x="120" y="700" text-anchor="start" class="hand b" fill="#f1eee4">where policy attaches</text>
+<path d="M809.2,271.2 L802.5,281.8 L794.4,291.2 L784.5,299.4 L772.0,302.0 L759.6,304.4 L747.2,301.6 L734.5,299.3 L723.8,292.0 L716.1,281.7 L711.5,270.0 L705.9,258.5 L706.1,245.8 L708.9,233.5 L714.6,222.3 L721.3,211.6 L731.0,203.1 L743.1,199.2 L755.3,195.6 L767.9,196.9 L780.3,199.5 L791.7,205.3 L799.8,215.1 L807.8,224.8 L812.2,236.6 L812.5,249.2 L813.5,261.9" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(732,222) scale(2.333)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,5.9 3.7,0.8 9.5,0.8 12.4,5.9 9.5,10.9 3.7,10.9 	"/>
+	<polygon fill-rule="evenodd" fill="#5C85DE" points="11.4,7.7 8.5,2.6 9.5,0.7 12.4,5.9 	"/>
+	<polygon id="Shape-Copy_00000019646383529055310330000009913415011964925323_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,9.3 8.5,9.3 10.5,5.9 11.4,7.7 9.5,10.9 3.7,11 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="11.2,11.9 14.2,6.8 20,6.8 22.9,11.9 20,16.9 14.2,16.9 	"/>
+	<polygon id="Shape-Copy_00000133527958483064390410000012377415375428947900_" fill-rule="evenodd" fill="#5C85DE" points="
+		21.9,13.7 19,8.6 20,6.7 22.9,11.9 	"/>
+	<polygon id="Shape-Copy_00000176019471624316745960000001248137580190207128_" fill-rule="evenodd" fill="#3367D6" points="
+		13.2,15.3 19,15.3 21,11.9 21.9,13.7 20,16.9 14.2,17 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,17.9 3.7,12.8 9.5,12.8 12.4,17.9 9.5,22.9 3.7,22.9 	"/>
+	<polygon id="Shape-Copy_00000096041779745201399360000017167964797373102485_" fill-rule="evenodd" fill="#5C85DE" points="
+		11.4,19.7 8.5,14.6 9.5,12.7 12.4,17.9 	"/>
+	<polygon id="Shape-Copy_00000049204188488742950820000010444321201512143025_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,21.3 8.5,21.3 10.5,17.9 11.4,19.7 9.5,22.9 3.7,23 	"/>
+</g>
+</g>
+<text x="760" y="340" text-anchor="middle" class="hand h2">projects</text>
+<text x="760" y="380" text-anchor="middle" class="hand b" fill="#f1eee4">IAM, quota, billing</text>
+<text x="760" y="410" text-anchor="middle" class="hand b" fill="#f1eee4">free, so separate freely</text>
+<path d="M859,600 Q1027,600 1191,600" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1190,598 Q1192,672 1192,741" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1190,738 Q1025,740 860,739" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M861,739 Q860,669 859,599" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="884" y="640" text-anchor="start" class="hand h2">HCP Terraform</text>
+<text x="884" y="682" text-anchor="start" class="hand b" fill="#f1eee4">state lives outside</text>
+<text x="884" y="716" text-anchor="start" class="hand b" fill="#f1eee4">Google Cloud</text>
+<path d="M286,264 Q290,302 286,346" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M286,512 Q282,540 286,574" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M482,431 Q588,375 696,315" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="589" y="297" text-anchor="middle" class="hand s alabel">contains</text>
+<path d="M1025,594 Q892,517 760,444" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="888" y="545" text-anchor="middle" class="hand s alabel">builds</text>
+<text x="96" y="770" text-anchor="start" class="hand b" fill="#f0ad92">no API creates an organization — that step is a web form</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">org:96,150,380,108;plat:96,356,380,150;work:96,584,380,150;hcp:860,600,330,140</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-02</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="Token flow: HCP Terraform mints an OIDC token, the attribute condition gates it, Google STS exchanges it for a federated token, which impersonates a plan or apply service account"><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="999" cy="543" rx="116" ry="43" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="596" cy="131" rx="205" ry="48" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1103" cy="643" rx="165" ry="30" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1112" cy="446" rx="199" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="219" cy="244" rx="195" ry="40" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="797" cy="658" rx="180" ry="35" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1177" cy="455" rx="131" ry="34" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="298" cy="370" rx="206" ry="46" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="756" cy="449" rx="102" ry="39" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">The issuer is public</text>
+<path d="M64,96 Q277,97 484,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 2</text>
+<path d="M86,188 Q232,189 375,188" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M376,188 Q376,256 375,318" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M378,322 Q233,322 87,322" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M87,320 Q87,255 88,190" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="110" y="230" text-anchor="start" class="hand h2">HCP Terraform</text>
+<text x="110" y="272" text-anchor="start" class="hand b" fill="#f1eee4">mints one OIDC token</text>
+<text x="110" y="306" text-anchor="start" class="hand b" fill="#f1eee4">per run</text>
+<path d="M453,171 Q644,169 832,170" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M831,169 Q832,267 833,360" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M832,362 Q640,362 451,359" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M451,358 Q453,266 453,168" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="824" y="160" text-anchor="end" class="hand s" opacity=".6">the boundary</text>
+<text x="476" y="210" text-anchor="start" class="hand h2">attribute condition</text>
+<text x="476" y="252" text-anchor="start" class="hand b" fill="#f1eee4">organization name</text>
+<text x="476" y="286" text-anchor="start" class="hand b" fill="#f1eee4">project name</text>
+<text x="476" y="320" text-anchor="start" class="hand b" fill="#f1eee4">workspace prefix</text>
+<path d="M1110.4,267.0 L1103.2,277.0 L1095.5,286.1 L1087.0,294.7 L1075.3,298.2 L1063.8,302.1 L1051.6,302.1 L1040.0,298.0 L1029.7,291.6 L1019.8,284.3 L1012.6,274.2 L1010.0,262.1 L1008.2,250.2 L1010.2,238.3 L1012.6,226.2 L1020.7,216.9 L1030.0,209.5 L1039.7,202.3 L1051.3,198.7 L1063.4,199.5 L1075.3,200.7 L1087.0,204.5 L1096.1,212.7 L1104.1,221.9 L1110.6,232.5 L1112.2,244.9 L1110.4,256.9" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(1033,223) scale(2.250)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g>
+<text x="1060" y="338" text-anchor="middle" class="hand h2">STS</text>
+<text x="1060" y="378" text-anchor="middle" class="hand b" fill="#f1eee4">exchanges the token</text>
+<path d="M328,580 Q482,581 632,579" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M632,579 Q631,647 629,708" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M629,709 Q480,712 328,712" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M331,709 Q328,645 328,582" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="354" y="620" text-anchor="start" class="hand h2">tf-plan</text>
+<text x="354" y="662" text-anchor="start" class="hand b" fill="#f1eee4">read-only roles</text>
+<path d="M762,581 Q912,582 1060,581" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1059,582 Q1062,646 1061,709" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1060,711 Q911,710 759,710" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M760,712 Q762,647 759,579" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="784" y="620" text-anchor="start" class="hand h2" fill="#f2d08a">tf-apply</text>
+<text x="784" y="662" text-anchor="start" class="hand b" fill="#f1eee4">write roles</text>
+<path d="M382,255 Q414,263 442,265" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="412" y="237" text-anchor="middle" class="hand s alabel">signed by a</text>
+<path d="M838,265 Q920,284 998,300" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M1060,408 Q983,487 910,570" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="1017" y="509" text-anchor="middle" class="hand s alabel">phase = apply</text>
+<path d="M642,366 Q563,468 480,570" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="594" y="487" text-anchor="middle" class="hand s alabel">phase = plan</text>
+<text x="86" y="744" text-anchor="start" class="hand b" fill="#f0ad92">app.terraform.io signs tokens for EVERY customer</text>
+<text x="86" y="772" text-anchor="start" class="hand b" fill="#a6d2ae">no key exists — org policy refuses to create one</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">hcp:86,190,290,130;cond:452,170,380,190;plan:330,580,300,130;apply:760,580,300,130</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-03</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="Four policies are set at the organization in dry run: three managed Compute constraints and one custom bucket-label constraint. The workloads/dev folder carries a deliberate exception that disables the serial port constraint. Violations are logged to the project audit log, not the organization's."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="609" cy="706" rx="125" ry="21" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="818" cy="269" rx="212" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="353" cy="177" rx="150" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="548" cy="496" rx="134" ry="20" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1153" cy="233" rx="184" ry="21" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="663" cy="698" rx="168" ry="25" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1186" cy="243" rx="126" ry="19" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="983" cy="398" rx="223" ry="45" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="399" cy="310" rx="160" ry="41" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">Report before you refuse</text>
+<path d="M64,96 Q314,94 568,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 3</text>
+<path d="M96,161 Q308,160 514,158" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M516,160 Q517,270 514,379" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M518,380 Q307,381 95,379" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M95,379 Q97,271 96,161" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="508" y="150" text-anchor="end" class="hand s" opacity=".6">all DRY RUN</text>
+<text x="120" y="200" text-anchor="start" class="hand h2">organization</text>
+<text x="120" y="242" text-anchor="start" class="hand b" fill="#f1eee4">requireOsLogin</text>
+<text x="120" y="276" text-anchor="start" class="hand b" fill="#f1eee4">blockProjectSshKeys</text>
+<text x="120" y="310" text-anchor="start" class="hand b" fill="#f1eee4">disableSerialPortAccess</text>
+<text x="120" y="344" text-anchor="start" class="hand b" fill="#f1eee4">requireTerraformLabels</text>
+<path d="M95,470 Q306,471 516,472" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M515,470 Q517,533 518,600" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M515,601 Q304,600 97,600" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M97,599 Q96,533 94,471" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="120" y="510" text-anchor="start" class="hand h2" fill="#f2d08a">workloads / dev</text>
+<text x="120" y="552" text-anchor="start" class="hand b" fill="#f1eee4">one exception, scoped</text>
+<path d="M974.1,259.4 L968.3,270.8 L962.7,281.9 L955.0,292.0 L943.8,298.0 L932.3,303.5 L919.5,303.0 L907.0,302.2 L894.6,299.1 L885.5,290.0 L876.3,281.5 L870.9,270.2 L867.9,258.2 L864.9,245.7 L869.1,233.5 L873.1,221.4 L881.2,211.5 L891.4,203.8 L903.1,199.0 L915.4,196.9 L927.9,197.0 L940.2,199.9 L951.3,205.9 L961.5,213.7 L968.0,224.7 L973.0,236.5 L974.3,249.2" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(892,222) scale(2.333)"><defs><style>.i1cls-1{fill:#4285f4;}.i1cls-2{fill:none;}.i1cls-3{fill:#669df6;}.i1cls-4{fill:#aecbfa;}</style></defs><title>Icon_24px_Logging_Color</title><g data-name="Product Icons"><rect class="i1cls-1" x="6" y="11" width="4" height="2"/><rect class="i1cls-1" x="4" y="18" width="6" height="2"/><g data-name="colored-32/logs"><rect class="i1cls-2" width="24" height="24"/><g ><polygon id="Fill-3" class="i1cls-1" points="4 18 6 18 6 6 4 6 4 18"/><polygon id="Fill-4" class="i1cls-3" points="9 7 22 7 22 3 9 3 9 7"/><polygon id="Fill-4-2" data-name="Fill-4" class="i1cls-3" points="9 14 22 14 22 10 9 10 9 14"/><polygon id="Fill-4-3" data-name="Fill-4" class="i1cls-3" points="9 21 22 21 22 17 9 17 9 21"/><polygon id="Fill-7" class="i1cls-4" points="2 8 8 8 8 2 2 2 2 8"/></g></g></g></g>
+<text x="920" y="340" text-anchor="middle" class="hand h2">the PROJECT log</text>
+<text x="920" y="380" text-anchor="middle" class="hand b" fill="#f1eee4">where violations land</text>
+<path d="M682,518 Q931,521 1182,521" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1179,520 Q1180,601 1181,681" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1182,680 Q928,682 681,680" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M681,679 Q681,601 678,520" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="704" y="560" text-anchor="start" class="hand h2" fill="#f0ad92">not the organization log</text>
+<text x="704" y="602" text-anchor="start" class="hand b" fill="#f1eee4">that stream does not exist,</text>
+<text x="704" y="636" text-anchor="start" class="hand b" fill="#f1eee4">and querying it returns empty</text>
+<text x="704" y="670" text-anchor="start" class="hand b" fill="#f1eee4">with no error at all</text>
+<path d="M306,386 Q308,422 306,460" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="346" y="423" text-anchor="middle" class="hand s alabel">inherits down</text>
+<path d="M522,270 Q686,286 856,300" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="689" y="252" text-anchor="middle" class="hand s alabel">logs to</text>
+<text x="96" y="700" text-anchor="start" class="hand b" fill="#f0ad92">7 constraints were already enforced before any of this</text>
+<text x="96" y="728" text-anchor="start" class="hand b" fill="#f1eee4">list shows what is SET, --effective shows what is ENFORCED</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">org:96,160,420,220;exc:96,470,420,130;note:680,520,500,160</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-04</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A host project owns a custom-mode VPC with two subnets. A service project in the workloads folder attaches to it, and its virtual machine draws an address from the host's dev subnet with no external IP. A hierarchical firewall policy attached to the workloads folder allows IAP ingress on port 22."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="402" cy="241" rx="128" ry="20" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="678" cy="322" rx="197" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1134" cy="274" rx="125" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1191" cy="404" rx="155" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="556" cy="135" rx="213" ry="39" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="200" cy="629" rx="108" ry="20" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="451" cy="321" rx="227" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="726" cy="99" rx="105" ry="37" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="708" cy="92" rx="190" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">One network, two projects</text>
+<path d="M64,96 Q324,95 589,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 4</text>
+<path d="M96,172 Q310,173 525,171" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M525,172 Q524,270 527,369" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M525,368 Q313,371 95,369" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M96,368 Q98,270 95,168" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="518" y="160" text-anchor="end" class="hand s" opacity=".6">Shared VPC</text>
+<text x="120" y="210" text-anchor="start" class="hand h2">host project</text>
+<text x="120" y="252" text-anchor="start" class="hand b" fill="#f1eee4">custom-mode VPC</text>
+<text x="120" y="286" text-anchor="start" class="hand b" fill="#f1eee4">dev + prod subnets</text>
+<path d="M949.5,491.6 L942.3,501.9 L933.7,510.7 L923.7,518.2 L911.9,522.9 L899.4,522.6 L886.4,523.9 L875.1,517.7 L863.8,511.6 L856.0,501.4 L850.8,490.0 L848.2,477.9 L846.8,465.6 L847.3,452.7 L852.7,440.9 L861.1,431.1 L871.1,422.9 L882.9,417.7 L895.7,417.2 L908.1,417.5 L920.1,420.8 L930.6,427.2 L941.4,434.1 L947.9,445.0 L951.8,457.0 L953.3,469.4 L952.5,481.9" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(872,442) scale(2.333)"><defs><style>.i1cls-1{fill:#aecbfa;}.i1cls-2{fill:#669df6;}.i1cls-3{fill:#4285f4;}</style></defs><title>Icon_24px_ComputeEngine_Color</title><g data-name="Product Icons"><rect class="i1cls-1" x="9" y="9" width="6" height="6"/><rect class="i1cls-2" x="11" y="2" width="2" height="4"/><rect class="i1cls-2" x="7" y="2" width="2" height="4"/><rect class="i1cls-2" x="15" y="2" width="2" height="4"/><rect class="i1cls-3" x="11" y="18" width="2" height="4"/><rect class="i1cls-3" x="7" y="18" width="2" height="4"/><rect class="i1cls-3" x="15" y="18" width="2" height="4"/><rect class="i1cls-3" x="19" y="10" width="2" height="4" transform="translate(8 32) rotate(-90)"/><rect class="i1cls-3" x="19" y="14" width="2" height="4" transform="translate(4 36) rotate(-90)"/><rect class="i1cls-3" x="19" y="6" width="2" height="4" transform="translate(12 28) rotate(-90)"/><rect class="i1cls-2" x="3" y="10" width="2" height="4" transform="translate(-8 16) rotate(-90)"/><rect class="i1cls-2" x="3" y="14" width="2" height="4" transform="translate(-12 20) rotate(-90)"/><rect class="i1cls-2" x="3" y="6" width="2" height="4" transform="translate(-4 12) rotate(-90)"/><path class="i1cls-1" d="M5,5V19H19V5ZM17,17H7V7H17Z"/><polygon class="i1cls-2" points="9 15 15 15 12 12 9 15"/><polygon class="i1cls-3" points="12 12 15 15 15 9 12 12"/></g></g>
+<text x="900" y="560" text-anchor="middle" class="hand h2">one e2-micro</text>
+<text x="900" y="600" text-anchor="middle" class="hand b" fill="#a6d2ae">no external IP</text>
+<path d="M98,471 Q310,470 524,470" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M526,470 Q528,545 524,618" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M524,621 Q309,620 97,619" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M98,618 Q96,547 96,468" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="120" y="510" text-anchor="start" class="hand h2">service project</text>
+<text x="120" y="552" text-anchor="start" class="hand b" fill="#f1eee4">attached to the host</text>
+<path d="M661,650 Q908,648 1159,648" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1160,652 Q1162,719 1159,791" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1159,788 Q912,791 660,791" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M660,788 Q662,719 658,651" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="684" y="690" text-anchor="start" class="hand h2" fill="#f2d08a">firewall policy</text>
+<text x="684" y="732" text-anchor="start" class="hand b" fill="#f1eee4">on the workloads folder</text>
+<text x="684" y="766" text-anchor="start" class="hand b" fill="#f1eee4">IAP in, everything else out</text>
+<path d="M311,376 Q315,418 311,460" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="351" y="418" text-anchor="middle" class="hand s alabel">attaches</text>
+<path d="M532,545 Q687,529 836,520" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="684" y="502" text-anchor="middle" class="hand s alabel">runs</text>
+<text x="96" y="680" text-anchor="start" class="hand b" fill="#f0ad92">created and attached are</text>
+<text x="96" y="708" text-anchor="start" class="hand b" fill="#f1eee4">different things — only the</text>
+<text x="96" y="736" text-anchor="start" class="hand b" fill="#f1eee4">association does anything</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">host:96,170,430,200;svc:96,470,430,150;fw:660,650,500,140</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-05</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A module produces a project inside a folder, carrying labels, an environment tag from a closed set, essential contacts and no default network. Separately a custom organization policy constraint evaluates project creation against the project id prefix and parent, in dry run."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="340" cy="677" rx="178" ry="35" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1054" cy="159" rx="170" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="462" cy="515" rx="111" ry="19" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="482" cy="447" rx="114" ry="26" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="178" cy="401" rx="175" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="183" cy="387" rx="104" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="592" cy="445" rx="207" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="927" cy="43" rx="138" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="428" cy="601" rx="182" ry="34" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">Projects from a template</text>
+<path d="M64,96 Q319,94 568,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 5</text>
+<path d="M97,189 Q275,190 455,189" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M456,191 Q458,283 457,371" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M457,371 Q274,372 97,370" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M94,368 Q97,282 97,192" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="448" y="180" text-anchor="end" class="hand s" opacity=".6">Terraform</text>
+<text x="120" y="230" text-anchor="start" class="hand h2">the module</text>
+<text x="120" y="272" text-anchor="start" class="hand b" fill="#f1eee4">labels · env tag</text>
+<text x="120" y="306" text-anchor="start" class="hand b" fill="#f1eee4">essential contacts</text>
+<text x="120" y="340" text-anchor="start" class="hand b" fill="#f1eee4">no default network</text>
+<path d="M812.6,267.0 L806.8,278.5 L799.7,289.4 L788.8,296.5 L777.7,303.3 L764.6,304.2 L751.6,305.7 L739.1,301.7 L728.5,294.4 L719.0,285.9 L711.2,275.7 L706.9,263.5 L704.8,250.8 L706.1,238.0 L708.4,224.9 L717.0,214.7 L726.4,205.7 L737.1,198.0 L749.8,193.7 L763.0,194.7 L775.7,197.1 L788.0,201.6 L797.8,210.1 L806.9,219.3 L812.6,231.1 L814.4,244.0 L816.4,257.1" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(731,221) scale(2.417)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,5.9 3.7,0.8 9.5,0.8 12.4,5.9 9.5,10.9 3.7,10.9 	"/>
+	<polygon fill-rule="evenodd" fill="#5C85DE" points="11.4,7.7 8.5,2.6 9.5,0.7 12.4,5.9 	"/>
+	<polygon id="Shape-Copy_00000019646383529055310330000009913415011964925323_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,9.3 8.5,9.3 10.5,5.9 11.4,7.7 9.5,10.9 3.7,11 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="11.2,11.9 14.2,6.8 20,6.8 22.9,11.9 20,16.9 14.2,16.9 	"/>
+	<polygon id="Shape-Copy_00000133527958483064390410000012377415375428947900_" fill-rule="evenodd" fill="#5C85DE" points="
+		21.9,13.7 19,8.6 20,6.7 22.9,11.9 	"/>
+	<polygon id="Shape-Copy_00000176019471624316745960000001248137580190207128_" fill-rule="evenodd" fill="#3367D6" points="
+		13.2,15.3 19,15.3 21,11.9 21.9,13.7 20,16.9 14.2,17 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,17.9 3.7,12.8 9.5,12.8 12.4,17.9 9.5,22.9 3.7,22.9 	"/>
+	<polygon id="Shape-Copy_00000096041779745201399360000017167964797373102485_" fill-rule="evenodd" fill="#5C85DE" points="
+		11.4,19.7 8.5,14.6 9.5,12.7 12.4,17.9 	"/>
+	<polygon id="Shape-Copy_00000049204188488742950820000010444321201512143025_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,21.3 8.5,21.3 10.5,17.9 11.4,19.7 9.5,22.9 3.7,23 	"/>
+</g>
+</g>
+<text x="760" y="342" text-anchor="middle" class="hand h2">a project</text>
+<text x="760" y="382" text-anchor="middle" class="hand b" fill="#f1eee4">same shape every time</text>
+<path d="M422,522 Q649,518 882,518" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M879,520 Q879,608 879,701" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M882,700 Q652,698 420,700" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M419,699 Q419,608 421,518" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="444" y="560" text-anchor="start" class="hand h2" fill="#f2d08a">custom constraint</text>
+<text x="444" y="602" text-anchor="start" class="hand b" fill="#f1eee4">checks the id prefix</text>
+<text x="444" y="636" text-anchor="start" class="hand b" fill="#f1eee4">and the parent folder</text>
+<text x="444" y="670" text-anchor="start" class="hand b" fill="#f1eee4">in DRY RUN</text>
+<path d="M462,280 Q574,294 694,300" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="578" y="262" text-anchor="middle" class="hand s alabel">produces</text>
+<path d="M760,412 Q707,459 650,510" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="735" y="483" text-anchor="middle" class="hand s alabel">evaluated by</text>
+<text x="96" y="560" text-anchor="start" class="hand b" fill="#f0ad92">a tag is not a label</text>
+<text x="96" y="588" text-anchor="start" class="hand b" fill="#f1eee4">one is a value from a</text>
+<text x="96" y="616" text-anchor="start" class="hand b" fill="#f1eee4">closed set; policy reads it</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">mod:96,190,360,180;con:420,520,460,180</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-06</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="The billing account exports usage rows to BigQuery, where cost questions are answered as SQL. Separately a budget watches spend and publishes threshold events to a Pub/Sub topic. Attaching the topic requires a project-scoped exception to the domain restricted sharing constraint."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="303" cy="760" rx="149" ry="23" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1101" cy="531" rx="171" ry="45" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1058" cy="101" rx="149" ry="39" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="267" cy="691" rx="111" ry="46" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="127" cy="742" rx="137" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="102" cy="628" rx="91" ry="30" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1145" cy="489" rx="144" ry="29" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="649" cy="693" rx="116" ry="31" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="256" cy="90" rx="154" ry="34" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">Cost as a table you can query</text>
+<path d="M64,96 Q370,96 673,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 6</text>
+<path d="M198.0,272.8 L192.5,284.2 L183.0,292.6 L172.2,299.1 L160.2,302.8 L147.6,303.8 L135.6,300.5 L123.4,297.2 L114.3,288.5 L105.2,280.0 L98.7,269.0 L95.8,256.5 L96.9,243.9 L99.8,231.8 L103.9,219.6 L113.4,211.0 L122.8,202.4 L135.1,199.1 L147.4,197.4 L159.9,196.7 L171.5,201.8 L183.6,206.1 L190.9,216.7 L197.3,227.2 L203.5,238.4 L204.6,251.1 L200.9,263.2" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(122,222) scale(2.333)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<g transform="translate(0.000000, 5.000000)">
+		<path fill-rule="evenodd" fill="#85A4E6" d="M22.5,15.2h-21c-0.8,0-1.5-0.7-1.5-1.5V0.2c0-0.8,0.7-1.5,1.5-1.5h21
+			c0.8,0,1.5,0.7,1.5,1.5v13.5C24,14.6,23.3,15.2,22.5,15.2L22.5,15.2z"/>
+		<path fill-rule="evenodd" fill="#5C85DE" d="M22.5,15.2H12V-1.2h10.5c0.8,0,1.5,0.7,1.5,1.5v13.5C24,14.6,23.3,15.2,22.5,15.2
+			L22.5,15.2z"/>
+		<rect y="1" fill-rule="evenodd" fill="#5C85DE" width="24" height="3"/>
+			<rect id="Rectangle-path_00000135674211772856346760000002730362558129152162_" x="12" y="1" fill-rule="evenodd" fill="#3367D6" width="12" height="3"/>
+			<rect id="Rectangle-path_00000127732411686421387230000005866310280904328323_" x="2.2" y="5.5" fill-rule="evenodd" fill="#FFFFFF" width="19.5" height="2.2"/>
+			<rect id="Rectangle-path_00000144336547962367256270000004601864478366739619_" x="2.2" y="10" fill-rule="evenodd" fill="#5C85DE" width="4.5" height="3"/>
+			<rect id="Rectangle-path_00000167372342969776731770000010922900929549315211_" x="13.5" y="10.8" fill-rule="evenodd" fill="#FFFFFF" width="1.5" height="1.5"/>
+			<rect id="Rectangle-path_00000026865061745408398040000018034195747439422142_" x="16.5" y="10.8" fill-rule="evenodd" fill="#FFFFFF" width="1.5" height="1.5"/>
+			<rect id="Rectangle-path_00000169543108220145060960000001220724486439157930_" x="19.5" y="10.8" fill-rule="evenodd" fill="#FFFFFF" width="1.5" height="1.5"/>
+	</g>
+</g>
+</g>
+<text x="150" y="340" text-anchor="middle" class="hand h2">billing account</text>
+<text x="150" y="380" text-anchor="middle" class="hand b" fill="#f1eee4">the thing that pays</text>
+<path d="M748.8,231.8 L741.8,242.1 L734.2,252.2 L723.9,259.9 L711.5,263.2 L698.8,262.8 L686.1,262.9 L675.2,256.4 L665.1,249.4 L654.9,241.6 L648.5,230.4 L646.3,217.7 L645.3,205.0 L650.1,193.1 L654.9,181.7 L662.6,171.8 L671.5,162.5 L683.3,157.2 L696.0,154.5 L708.7,156.6 L721.1,159.5 L732.3,165.8 L741.7,174.5 L747.0,186.1 L751.6,197.6 L752.6,209.9 L751.2,222.1" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(672,182) scale(2.333)"><defs><style>.i2cls-1{fill:#aecbfa;}.i2cls-1,.i2cls-2,.i2cls-3{fill-rule:evenodd;}.i2cls-2{fill:#669df6;}.i2cls-3{fill:#4285f4;}</style></defs><title>Icon_24px_BigQuery_Color</title><g data-name="Product Icons"><g ><path class="i2cls-1" d="M6.73,10.83v2.63A4.91,4.91,0,0,0,8.44,15.2V10.83Z"/><path class="i2cls-2" d="M9.89,8.41v7.53A7.62,7.62,0,0,0,11,16,8,8,0,0,0,12,16V8.41Z"/><path class="i2cls-1" d="M13.64,11.86v3.29a5,5,0,0,0,1.7-1.82V11.86Z"/><path class="i2cls-3" d="M17.74,16.32l-1.42,1.42a.42.42,0,0,0,0,.6l3.54,3.54a.42.42,0,0,0,.59,0l1.43-1.43a.42.42,0,0,0,0-.59l-3.54-3.54a.42.42,0,0,0-.6,0"/><path class="i2cls-2" d="M11,2a9,9,0,1,0,9,9,9,9,0,0,0-9-9m0,15.69A6.68,6.68,0,1,1,17.69,11,6.68,6.68,0,0,1,11,17.69"/></g></g></g>
+<text x="700" y="300" text-anchor="middle" class="hand h2">BigQuery</text>
+<text x="700" y="340" text-anchor="middle" class="hand b" fill="#f1eee4">usage rows, asked in SQL</text>
+<path d="M97,520 Q288,522 476,520" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M476,518 Q475,598 478,680" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M478,679 Q288,682 97,681" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M97,681 Q97,598 97,519" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="120" y="560" text-anchor="start" class="hand h2" fill="#f2d08a">a budget</text>
+<text x="120" y="602" text-anchor="start" class="hand b" fill="#f1eee4">watches spend</text>
+<text x="120" y="636" text-anchor="start" class="hand b" fill="#f1eee4">publishes thresholds</text>
+<path d="M950.8,588.6 L949.2,601.0 L943.0,611.8 L933.3,619.6 L923.6,627.1 L912.1,631.7 L899.8,631.7 L887.3,632.1 L876.8,625.3 L867.1,618.4 L857.0,611.3 L850.9,600.5 L848.0,588.4 L848.8,576.2 L849.3,563.9 L855.6,553.2 L862.4,543.0 L872.1,535.4 L883.9,532.2 L895.2,526.9 L907.2,530.1 L919.2,531.8 L929.7,537.7 L938.2,546.3 L946.9,555.0 L951.7,566.6 L951.8,579.0" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(873,553) scale(2.250)"><defs><style>.i3cls-1{filter:url(#luminosity-noclip);}.i3cls-2{fill:#669df6;}.i3cls-3{mask:url(#mask);}.i3cls-4{fill:#4285f4;}.i3cls-5{fill:#aecbfa;}</style><filter id="luminosity-noclip" x="4.64" y="4.19" width="14.73" height="12.76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-color="#fff" result="bg"/><feBlend in="SourceGraphic" in2="bg"/></filter><mask id="mask" x="4.64" y="4.19" width="14.73" height="12.76" maskUnits="userSpaceOnUse"><circle class="i3cls-1" cx="12" cy="12.23" r="3.58"/></mask></defs><title>Icon_24px_Pub-Sub_Color</title><g data-name="Product Icons"><circle class="i3cls-2" cx="18.97" cy="8.21" r="1.72"/><circle class="i3cls-2" cx="5.03" cy="8.21" r="1.72"/><circle class="i3cls-2" cx="12" cy="20.28" r="1.72"/><g class="i3cls-3"><rect class="i3cls-4" x="14.69" y="10.22" width="1.59" height="8.04" transform="matrix(0.5, -0.87, 0.87, 0.5, -4.59, 20.53)"/><rect class="i3cls-4" x="4.49" y="13.45" width="8.04" height="1.59" transform="translate(-5.98 6.17) rotate(-30)"/><rect class="i3cls-4" x="11.2" y="4.19" width="1.59" height="8.04"/></g><circle class="i3cls-5" cx="12" cy="12.23" r="2.78"/><circle class="i3cls-5" cx="5.03" cy="16.25" r="2.19"/><circle class="i3cls-5" cx="18.97" cy="16.25" r="2.19"/><circle class="i3cls-5" cx="12" cy="4.19" r="2.19"/></g></g>
+<text x="900" y="668" text-anchor="middle" class="hand h2">Pub/Sub</text>
+<text x="900" y="708" text-anchor="middle" class="hand b" fill="#f1eee4">threshold events</text>
+<path d="M210,300 Q423,282 636,260" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="423" y="242" text-anchor="middle" class="hand s alabel">exports to</text>
+<path d="M150,410 Q214,458 286,510" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M482,600 Q663,615 838,630" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="660" y="582" text-anchor="middle" class="hand s alabel">notifies</text>
+<text x="96" y="712" text-anchor="start" class="hand b" fill="#f0ad92">attaching the topic needed a project-scoped</text>
+<text x="96" y="740" text-anchor="start" class="hand b" fill="#f1eee4">exception to domain restricted sharing</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">budget:96,520,380,160</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-07</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="The organization's assets feed two destinations. A feed publishes change notifications to a Pub/Sub topic. A snapshot export writes the full inventory to BigQuery, where the audit runs as SQL. Both destinations are written by Google's Cloud Asset service agent, not by the caller."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="1182" cy="97" rx="220" ry="24" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="489" cy="682" rx="206" ry="35" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1149" cy="74" rx="111" ry="29" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="813" cy="618" rx="163" ry="45" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="359" cy="747" rx="225" ry="30" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="831" cy="583" rx="229" ry="27" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="882" cy="741" rx="149" ry="41" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1214" cy="519" rx="185" ry="48" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="120" cy="317" rx="194" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">What exists, and what changed</text>
+<path d="M64,96 Q366,98 673,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 7</text>
+<path d="M304.6,291.9 L304.8,305.1 L298.8,316.9 L290.9,327.2 L282.3,337.3 L270.3,343.4 L257.4,347.1 L244.1,346.4 L231.2,343.1 L220.0,336.4 L210.3,327.9 L200.8,318.7 L197.3,305.9 L194.4,293.3 L195.7,280.4 L199.4,268.0 L206.0,256.9 L215.3,248.1 L224.6,238.5 L237.4,234.7 L250.6,235.0 L263.6,235.7 L275.4,241.1 L286.7,247.6 L295.1,257.7 L302.7,268.5 L306.5,281.3" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(221,261) scale(2.417)">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(2.000000, 4.000000)" fill="#4285F4">
+            <polygon id="Fill-1" points="12.114144 0 11.139744 0.9744 18.228504 8.04552 12.114144 14.15988 6.000624 8.04552 8.920464 5.124 7.955304 4.15968 4.069464 8.04552 12.114144 16.09104 20.160504 8.04552"></polygon>
+            <polygon id="Fill-2" points="10.122672 9.813216 8.355312 8.045856 10.122672 6.277656 11.890032 8.045856"></polygon>
+            <polygon id="Fill-3" points="8.045352 0 -0.000168 8.04552 8.045352 16.09104 9.008832 15.12672 1.930992 8.04552 8.045352 1.93116 14.158872 8.04552 11.239032 10.9662 12.205032 11.9322 16.090872 8.04552"></polygon>
+        </g>
+    </g>
+</g>
+<text x="250" y="382" text-anchor="middle" class="hand h2">the assets</text>
+<text x="250" y="422" text-anchor="middle" class="hand b" fill="#f1eee4">every resource, every policy</text>
+<path d="M870.2,192.8 L864.7,203.5 L858.4,213.5 L850.1,222.3 L839.4,228.1 L827.5,230.1 L815.6,231.8 L803.8,229.1 L792.5,224.4 L784.0,215.8 L776.8,206.4 L770.0,196.2 L767.2,184.2 L769.0,172.0 L771.2,159.9 L776.7,148.8 L786.9,141.7 L795.5,132.6 L807.3,128.8 L819.5,128.0 L831.3,130.8 L843.1,133.3 L852.5,141.0 L861.3,149.1 L868.3,159.1 L871.4,171.0 L870.3,183.1" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(793,153) scale(2.250)"><defs><style>.i2cls-1{filter:url(#luminosity-noclip);}.i2cls-2{fill:#669df6;}.i2cls-3{mask:url(#mask);}.i2cls-4{fill:#4285f4;}.i2cls-5{fill:#aecbfa;}</style><filter id="luminosity-noclip" x="4.64" y="4.19" width="14.73" height="12.76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-color="#fff" result="bg"/><feBlend in="SourceGraphic" in2="bg"/></filter><mask id="mask" x="4.64" y="4.19" width="14.73" height="12.76" maskUnits="userSpaceOnUse"><circle class="i2cls-1" cx="12" cy="12.23" r="3.58"/></mask></defs><title>Icon_24px_Pub-Sub_Color</title><g data-name="Product Icons"><circle class="i2cls-2" cx="18.97" cy="8.21" r="1.72"/><circle class="i2cls-2" cx="5.03" cy="8.21" r="1.72"/><circle class="i2cls-2" cx="12" cy="20.28" r="1.72"/><g class="i2cls-3"><rect class="i2cls-4" x="14.69" y="10.22" width="1.59" height="8.04" transform="matrix(0.5, -0.87, 0.87, 0.5, -4.59, 20.53)"/><rect class="i2cls-4" x="4.49" y="13.45" width="8.04" height="1.59" transform="translate(-5.98 6.17) rotate(-30)"/><rect class="i2cls-4" x="11.2" y="4.19" width="1.59" height="8.04"/></g><circle class="i2cls-5" cx="12" cy="12.23" r="2.78"/><circle class="i2cls-5" cx="5.03" cy="16.25" r="2.19"/><circle class="i2cls-5" cx="18.97" cy="16.25" r="2.19"/><circle class="i2cls-5" cx="12" cy="4.19" r="2.19"/></g></g>
+<text x="820" y="268" text-anchor="middle" class="hand h2">a feed</text>
+<text x="820" y="308" text-anchor="middle" class="hand b" fill="#f1eee4">changes, as they happen</text>
+<path d="M867.0,545.1 L859.4,554.8 L850.5,563.4 L838.9,567.8 L827.2,569.9 L815.3,571.9 L803.3,569.6 L791.5,565.4 L782.1,557.2 L775.2,547.0 L769.5,536.0 L768.9,523.7 L767.6,511.5 L773.5,500.6 L777.5,489.0 L786.1,480.3 L796.8,474.5 L807.6,468.7 L819.8,467.2 L831.8,470.0 L843.3,473.7 L853.9,479.8 L862.6,488.5 L869.2,499.1 L871.2,511.4 L871.3,523.4 L869.7,535.5" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(793,493) scale(2.250)"><defs><style>.i3cls-1{fill:#aecbfa;}.i3cls-1,.i3cls-2,.i3cls-3{fill-rule:evenodd;}.i3cls-2{fill:#669df6;}.i3cls-3{fill:#4285f4;}</style></defs><title>Icon_24px_BigQuery_Color</title><g data-name="Product Icons"><g ><path class="i3cls-1" d="M6.73,10.83v2.63A4.91,4.91,0,0,0,8.44,15.2V10.83Z"/><path class="i3cls-2" d="M9.89,8.41v7.53A7.62,7.62,0,0,0,11,16,8,8,0,0,0,12,16V8.41Z"/><path class="i3cls-1" d="M13.64,11.86v3.29a5,5,0,0,0,1.7-1.82V11.86Z"/><path class="i3cls-3" d="M17.74,16.32l-1.42,1.42a.42.42,0,0,0,0,.6l3.54,3.54a.42.42,0,0,0,.59,0l1.43-1.43a.42.42,0,0,0,0-.59l-3.54-3.54a.42.42,0,0,0-.6,0"/><path class="i3cls-2" d="M11,2a9,9,0,1,0,9,9,9,9,0,0,0-9-9m0,15.69A6.68,6.68,0,1,1,17.69,11,6.68,6.68,0,0,1,11,17.69"/></g></g></g>
+<text x="820" y="608" text-anchor="middle" class="hand h2">a snapshot</text>
+<text x="820" y="648" text-anchor="middle" class="hand b" fill="#f1eee4">the whole inventory, in SQL</text>
+<path d="M312,340 Q538,282 758,230" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="535" y="212" text-anchor="middle" class="hand s alabel">notifies</text>
+<path d="M312,340 Q535,459 758,570" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="535" y="322" text-anchor="middle" class="hand s alabel">exports</text>
+<text x="96" y="640" text-anchor="start" class="hand b" fill="#f0ad92">both are written by Google's</text>
+<text x="96" y="668" text-anchor="start" class="hand b" fill="#f1eee4">Cloud Asset service agent —</text>
+<text x="96" y="696" text-anchor="start" class="hand b" fill="#f1eee4">not by the caller</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels"></metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-08</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A request to delete an asset feed is checked against the deny policy first. The plan identity is denied. The apply identity and a break-glass human are exempted and reach the allow policy, where their roles are evaluated."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="989" cy="758" rx="180" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1028" cy="604" rx="145" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="191" cy="734" rx="202" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="586" cy="324" rx="187" ry="27" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1064" cy="415" rx="144" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="732" cy="62" rx="185" ry="21" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="687" cy="464" rx="229" ry="30" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="747" cy="247" rx="127" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="924" cy="440" rx="95" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">Deny is checked first</text>
+<path d="M64,96 Q286,96 505,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 8</text>
+<path d="M97,170 Q255,169 414,171" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M415,168 Q415,234 414,299" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M417,300 Q256,300 96,299" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M96,301 Q97,235 94,171" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="120" y="210" text-anchor="start" class="hand h2">a request</text>
+<text x="120" y="252" text-anchor="start" class="hand b" fill="#f1eee4">delete an asset feed</text>
+<path d="M468,152 Q648,153 828,151" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M829,152 Q832,241 830,330" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M830,332 Q648,331 471,328" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M468,328 Q469,242 470,149" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="822" y="140" text-anchor="end" class="hand s" opacity=".6">evaluated FIRST</text>
+<text x="494" y="190" text-anchor="start" class="hand h2" fill="#f0ad92">deny policy</text>
+<text x="494" y="232" text-anchor="start" class="hand b" fill="#f1eee4">before any allow policy</text>
+<text x="494" y="266" text-anchor="start" class="hand b" fill="#f1eee4">is even read</text>
+<path d="M471,451 Q650,452 832,448" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M828,450 Q829,516 830,582" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M830,580 Q648,580 469,579" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M471,580 Q471,514 469,452" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="494" y="490" text-anchor="start" class="hand h2" fill="#f0ad92">tf-plan: denied</text>
+<text x="494" y="532" text-anchor="start" class="hand b" fill="#f1eee4">no role can override it</text>
+<path d="M471,649 Q649,650 829,649" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M830,651 Q829,717 828,780" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M829,779 Q651,779 470,782" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M468,779 Q469,717 469,649" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="494" y="690" text-anchor="start" class="hand h2" fill="#a6d2ae">tf-apply: exempt</text>
+<text x="494" y="732" text-anchor="start" class="hand b" fill="#f1eee4">and a break-glass human</text>
+<path d="M1145.1,690.5 L1141.5,700.4 L1138.5,710.0 L1132.2,717.9 L1126.1,726.3 L1116.5,730.4 L1106.6,732.4 L1096.4,734.2 L1086.3,732.0 L1076.9,727.8 L1069.9,720.2 L1062.9,712.9 L1056.8,704.2 L1055.5,693.7 L1057.0,683.5 L1058.1,673.0 L1063.1,663.7 L1070.4,656.1 L1080.2,652.2 L1089.2,647.2 L1099.4,646.1 L1109.8,646.1 L1119.6,650.0 L1128.7,655.2 L1135.3,663.3 L1140.1,672.5 L1142.0,682.4" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(1078,668) scale(1.875)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g>
+<text x="1100" y="770" text-anchor="middle" class="hand h2">allow policy</text>
+<path d="M422,235 Q442,237 460,240" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M650,336 Q650,392 650,440" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M836,715 Q939,713 1046,707" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="941" y="689" text-anchor="middle" class="hand s alabel">reaches</text>
+<text x="96" y="420" text-anchor="start" class="hand b" fill="#f0ad92">a deny rule outranks</text>
+<text x="96" y="448" text-anchor="start" class="hand b" fill="#f1eee4">every role you hold</text>
+<text x="930" y="300" text-anchor="start" class="hand b" fill="#f1eee4">only here are</text>
+<text x="930" y="328" text-anchor="start" class="hand b" fill="#f1eee4">roles evaluated</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">req:96,170,320,130;deny:470,150,360,180;stop:470,450,360,130;pass:470,650,360,130</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-09</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A decision applied to every service account: if it authenticated recently, keep it; if it never authenticated, check whether it holds any role; if it holds none, disable it, which is reversible. Deletion is not done in this lab."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="1000" cy="316" rx="219" ry="43" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="69" cy="450" rx="182" ry="29" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="727" cy="47" rx="173" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="179" cy="418" rx="94" ry="40" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1098" cy="230" rx="170" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="261" cy="517" rx="155" ry="24" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1059" cy="690" rx="119" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="150" cy="47" rx="159" ry="31" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="273" cy="169" rx="196" ry="23" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">Disable is reversible. Delete is not.</text>
+<path d="M64,96 Q450,98 841,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 9</text>
+<path d="M286.0,280.8 L280.5,292.4 L271.4,301.4 L260.8,308.5 L248.8,312.8 L236.2,312.7 L223.5,313.1 L211.6,308.7 L200.5,302.2 L191.6,292.8 L186.0,281.3 L183.0,269.0 L181.0,256.4 L184.4,244.0 L190.5,233.0 L196.6,221.9 L207.4,215.1 L218.8,210.1 L230.9,207.7 L243.2,207.2 L255.4,210.0 L266.6,215.8 L275.6,224.5 L282.3,234.9 L286.8,246.4 L291.1,258.5 L288.5,271.0" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(208,232) scale(2.333)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g>
+<text x="236" y="350" text-anchor="middle" class="hand h2">every service account</text>
+<text x="236" y="390" text-anchor="middle" class="hand b" fill="#f1eee4">in the organization</text>
+<path d="M558,151 Q770,150 982,150" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M981,149 Q980,221 979,289" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M978,292 Q769,288 561,288" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M559,291 Q562,218 560,148" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="584" y="190" text-anchor="start" class="hand h2" fill="#a6d2ae">authenticated recently?</text>
+<text x="584" y="232" text-anchor="start" class="hand b" fill="#f1eee4">keep it</text>
+<path d="M559,381 Q773,381 979,381" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M980,378 Q979,453 981,530" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M981,528 Q771,531 560,529" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M559,530 Q558,456 560,378" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="584" y="420" text-anchor="start" class="hand h2">holds any role?</text>
+<text x="584" y="462" text-anchor="start" class="hand b" fill="#f1eee4">never authenticated,</text>
+<text x="584" y="496" text-anchor="start" class="hand b" fill="#f1eee4">but still granted — keep</text>
+<path d="M561,622 Q772,619 981,621" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M980,621 Q981,689 980,758" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M980,759 Q768,761 561,762" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M560,762 Q560,692 562,622" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="584" y="660" text-anchor="start" class="hand h2" fill="#f2d08a">holds none: disable</text>
+<text x="584" y="702" text-anchor="start" class="hand b" fill="#f1eee4">reversible, and it is</text>
+<path d="M296,310 Q422,269 550,220" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M770,296 Q771,330 770,370" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M770,536 Q772,572 770,610" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="140" y="520" text-anchor="start" class="hand b" fill="#f0ad92">deletion is NOT done in this lab</text>
+<text x="140" y="548" text-anchor="start" class="hand b" fill="#f1eee4">a deleted account's id</text>
+<text x="140" y="576" text-anchor="start" class="hand b" fill="#f1eee4">can never be reused</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">recent:560,150,420,140;role:560,380,420,150;off:560,620,420,140</metadata>
+</svg>
+</div></div><div style="margin:0 0 16px"><div style="font:12px monospace;color:#8aa;padding:3px 0">week-10</div><div style="width:696px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A service account that holds no roles of its own is a member of a group. The group holds roles/logging.viewer on the platform folder. The folder contains the logging project, so the service account can read its logs only for as long as the membership exists."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="239" cy="581" rx="194" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1099" cy="318" rx="155" ry="43" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1077" cy="326" rx="218" ry="21" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="812" cy="132" rx="132" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="872" cy="451" rx="205" ry="37" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="458" cy="334" rx="114" ry="29" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="831" cy="438" rx="179" ry="25" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="438" cy="162" rx="206" ry="39" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="755" cy="192" rx="150" ry="36" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">The role belongs to the group</text>
+<path d="M64,96 Q368,98 673,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 10</text>
+<path d="M200.5,250.8 L201.1,263.1 L195.5,274.0 L189.0,284.2 L179.3,291.4 L169.8,299.3 L157.5,300.5 L145.5,302.1 L134.1,297.9 L121.8,295.5 L114.1,285.6 L104.4,277.7 L99.7,266.2 L99.7,253.9 L99.7,242.0 L100.5,229.6 L106.8,218.8 L116.3,210.8 L126.8,205.1 L137.2,198.1 L149.6,197.8 L162.0,198.0 L173.2,203.3 L182.9,210.5 L191.2,219.3 L198.4,229.2 L201.1,241.1" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(123,223) scale(2.250)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g>
+<text x="150" y="338" text-anchor="middle" class="hand h2">a service account</text>
+<text x="150" y="378" text-anchor="middle" class="hand b" fill="#f0ad92">holds no roles</text>
+<path d="M468,170 Q650,169 830,172" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M830,171 Q828,244 831,318" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M832,320 Q648,319 468,319" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M472,320 Q471,243 471,169" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="494" y="210" text-anchor="start" class="hand h2">an access group</text>
+<text x="494" y="252" text-anchor="start" class="hand b" fill="#f1eee4">holds logging.viewer</text>
+<text x="494" y="286" text-anchor="start" class="hand b" fill="#f1eee4">on the platform folder</text>
+<path d="M420,470 Q648,469 878,471" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M879,470 Q881,547 880,622" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M881,619 Q648,622 418,619" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M420,620 Q422,545 421,470" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="444" y="510" text-anchor="start" class="hand h2" fill="#f2d08a">platform folder</text>
+<text x="444" y="552" text-anchor="start" class="hand b" fill="#f1eee4">contains the logging project</text>
+<path d="M1108.3,549.9 L1104.0,560.6 L1098.1,570.2 L1090.6,578.9 L1080.5,584.6 L1069.7,588.9 L1058.1,589.1 L1046.9,587.1 L1036.0,583.3 L1025.9,577.3 L1018.1,568.4 L1013.0,557.8 L1011.1,546.2 L1010.6,534.6 L1011.7,522.8 L1018.4,512.9 L1024.7,502.8 L1034.9,496.6 L1045.6,491.8 L1057.2,489.7 L1069.0,489.9 L1080.6,492.8 L1091.0,498.9 L1098.6,508.1 L1105.4,517.8 L1108.6,529.1 L1111.4,540.7" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(1034,514) scale(2.167)"><defs><style>.i2cls-1{fill:#4285f4;}.i2cls-2{fill:none;}.i2cls-3{fill:#669df6;}.i2cls-4{fill:#aecbfa;}</style></defs><title>Icon_24px_Logging_Color</title><g data-name="Product Icons"><rect class="i2cls-1" x="6" y="11" width="4" height="2"/><rect class="i2cls-1" x="4" y="18" width="6" height="2"/><g data-name="colored-32/logs"><rect class="i2cls-2" width="24" height="24"/><g ><polygon id="Fill-3" class="i2cls-1" points="4 18 6 18 6 6 4 6 4 18"/><polygon id="Fill-4" class="i2cls-3" points="9 7 22 7 22 3 9 3 9 7"/><polygon id="Fill-4-2" data-name="Fill-4" class="i2cls-3" points="9 14 22 14 22 10 9 10 9 14"/><polygon id="Fill-4-3" data-name="Fill-4" class="i2cls-3" points="9 21 22 21 22 17 9 17 9 21"/><polygon id="Fill-7" class="i2cls-4" points="2 8 8 8 8 2 2 2 2 8"/></g></g></g></g>
+<text x="1060" y="626" text-anchor="middle" class="hand h2">its logs</text>
+<text x="1060" y="666" text-anchor="middle" class="hand b" fill="#f1eee4">readable — for now</text>
+<path d="M208,300 Q333,269 460,245" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="334" y="227" text-anchor="middle" class="hand s alabel">member of</text>
+<path d="M650,326 Q649,390 650,460" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M886,545 Q944,565 1000,590" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="96" y="560" text-anchor="start" class="hand b" fill="#a6d2ae">access appears and disappears</text>
+<text x="96" y="588" text-anchor="start" class="hand b" fill="#f1eee4">with membership and nothing else</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">grp:470,170,360,150;folder:420,470,460,150</metadata>
+</svg>
+</div></div>

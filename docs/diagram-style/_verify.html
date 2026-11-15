@@ -1,0 +1,61 @@
+<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="https://jayanthkatta.com/blog/assets/fonts.css"><style>body{margin:0;background:#15171a}svg{width:100%}</style><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 700" width="1280" height="700" role="img" aria-label="Two states side by side. On the left both VPN tunnels are up and the hub's route table holds two entries for the branch subnet, one per tunnel. On the right one tunnel has been cut: the route table holds one entry and traffic still flows over the surviving tunnel. The change took between 3.1 and 3.6 seconds and nobody edited a route table - BGP withdrew the dead path by itself."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="700" fill="#30342f"/>
+<rect width="1280" height="700" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="273" cy="409" rx="100" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="795" cy="73" rx="98" ry="43" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="72" cy="592" rx="195" ry="31" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1127" cy="46" rx="156" ry="34" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="796" cy="336" rx="151" ry="25" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="343" cy="428" rx="215" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="870" cy="639" rx="120" ry="25" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="429" cy="74" rx="137" ry="36" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="367" cy="496" rx="211" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="700" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">What happens when a tunnel dies</text>
+<path d="M64,96 Q390,95 715,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 13</text>
+<path d="M91,190 Q332,189 568,191" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M569,192 Q570,345 570,500" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M572,498 Q329,502 91,499" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M88,502 Q92,348 91,190" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="114" y="230" text-anchor="start" class="hand h2">both tunnels up</text>
+<text x="114" y="272" text-anchor="start" class="hand b" fill="#f1eee4">hub  =====  branch</text>
+<text x="114" y="306" text-anchor="start" class="hand b" fill="#f1eee4">hub  =====  branch</text>
+<text x="114" y="340" text-anchor="start" class="hand b" fill="#f1eee4"></text>
+<text x="114" y="374" text-anchor="start" class="hand b" fill="#a6d2ae">route table: 2 entries</text>
+<text x="114" y="408" text-anchor="start" class="hand b" fill="#f1eee4">both paths to 10.30.0.0/24</text>
+<path d="M711,190 Q952,189 1189,189" fill="none" stroke="#f2a07a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1189,188 Q1188,345 1191,501" fill="none" stroke="#f2a07a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M1190,500 Q951,497 710,501" fill="none" stroke="#f2a07a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<path d="M710,502 Q710,344 712,191" fill="none" stroke="#f2a07a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
+<text x="734" y="230" text-anchor="start" class="hand h2" fill="#f2a07a">one tunnel cut</text>
+<text x="734" y="272" text-anchor="start" class="hand b" fill="#f1eee4">hub  ==X==  branch</text>
+<text x="734" y="306" text-anchor="start" class="hand b" fill="#f1eee4">hub  =====  branch</text>
+<text x="734" y="340" text-anchor="start" class="hand b" fill="#f1eee4"></text>
+<text x="734" y="374" text-anchor="start" class="hand b" fill="#f0ad92">route table: 1 entry</text>
+<text x="734" y="408" text-anchor="start" class="hand b" fill="#f1eee4">traffic still flowing</text>
+<path d="M576,345 Q638,348 700,345" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="638" y="327" text-anchor="middle" class="hand s alabel">3.1 - 3.6s</text>
+<text x="90" y="600" text-anchor="start" class="hand b" fill="#a6d2ae">nobody edited a route table.</text>
+<text x="90" y="628" text-anchor="start" class="hand b" fill="#f1eee4">the two routers told each other what they could reach,</text>
+<text x="90" y="656" text-anchor="start" class="hand b" fill="#f1eee4">so when one stopped answering its route was dropped.</text>
+<text x="1252" y="686" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels">ok:90,190,480,310;cut:710,190,480,310</metadata>
+</svg>

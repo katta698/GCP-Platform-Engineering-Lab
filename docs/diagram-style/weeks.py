@@ -273,29 +273,39 @@ def week_12():
 
 
 def week_13():
-    b = Board("The route nobody wrote", eyebrow="GCP Lab · Week 13",
-              w=W, h=H)
-    b.icon_node("hubvpc", 180, 230, "virtual_private_cloud.svg", r=52,
-                title="hub VPC", lines=["10.20.0.0/24"])
-    b.icon_node("hubr", 180, 580, "cloud_router.svg", r=50,
-                title="hub router", lines=[("ASN 64512", "good")])
-    b.icon_node("vpn", 640, 400, "cloud_vpn.svg", r=54,
-                title="two tunnels", lines=[("both live", "good")])
-    b.icon_node("brr", 1090, 580, "cloud_router.svg", r=50,
-                title="branch router", lines=[("ASN 64513", "good")])
-    b.icon_node("brvpc", 1090, 230, "virtual_private_cloud.svg", r=52,
-                title="branch VPC", lines=["10.30.0.0/24"])
-    b.arrow("hubvpc", "vpn")
-    b.arrow("vpn", "brvpc")
-    b.arrow("hubr", "vpn", "BGP")
-    b.arrow("brr", "vpn", "BGP")
-    b.note(430, 730, [("the routers tell each other what they reach —", "good"),
-                     "kill one tunnel and BGP withdraws it in ~3s"])
-    return b, ("A hub VPC and a branch VPC joined by two HA VPN tunnels. A Cloud "
-               "Router on each side runs BGP over the tunnels on different ASNs, "
-               "so each VPC learns the other's subnet rather than being told it. "
-               "When one tunnel drops, BGP withdraws the routes learned through "
-               "it in about three seconds and the surviving tunnel carries the "
+    """Week 13 onward use the Google Cloud reference-architecture style."""
+    from gcparch import Arch
+    a = Arch("Hybrid connectivity with HA VPN and BGP",
+             subtitle="Two networks, two tunnels, and routing the two sides "
+                      "negotiate between themselves",
+             eyebrow="GCP Platform Engineering Lab · Week 13",
+             w=1280, h=470)
+
+    a.zone("gc", 40, 96, 1200, 228, "Google Cloud", kind="cloud")
+    a.zone("hub", 72, 134, 512, 172, "hub VPC — 10.20.0.0/24", kind="vpc")
+    a.zone("br", 696, 134, 512, 172, "branch VPC — 10.30.0.0/24", kind="vpc")
+
+    a.node("hgw", 470, 212, "cloud_vpn.svg", "HA VPN gateway", "2 interfaces")
+    a.node("hr", 190, 212, "cloud_router.svg", "Cloud Router", "ASN 64512")
+    a.node("bgw", 790, 212, "cloud_vpn.svg", "HA VPN gateway", "2 interfaces")
+    a.node("brr", 1070, 212, "cloud_router.svg", "Cloud Router", "ASN 64513")
+
+    a.flow("hgw", "bgw", "2 IPsec tunnels", step=1)
+    a.flow("hr", "hgw", "BGP", step=2)
+    a.flow("brr", "bgw", "BGP", step=3)
+
+    a.note(40, 368, [
+        "1   Two tunnels, interface 0 to interface 0 and 1 to 1. A single active interface carries no availability SLA.",
+        "2   Each Cloud Router advertises its own subnet and installs whatever the other side advertises.",
+        "3   When a tunnel drops, the routes learned through it are withdrawn in 3.1–3.6s and the survivor carries the traffic.",
+    ])
+    return a, ("Two VPC networks inside Google Cloud, each with an HA VPN "
+               "gateway and a Cloud Router on its own BGP ASN. Two IPsec "
+               "tunnels join the gateways. Each router advertises its own "
+               "subnet over BGP and installs what the other advertises, so "
+               "neither side is configured with a static route. When one "
+               "tunnel drops, the routes learned through it are withdrawn in "
+               "about three seconds and the surviving tunnel carries the "
                "traffic.")
 
 
