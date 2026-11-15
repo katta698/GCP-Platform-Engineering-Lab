@@ -166,7 +166,7 @@ remains here is everything that needs a VPC to already exist.
 
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
-| [Week 13](./week-13-hybrid-connectivity) | HA VPN and BGP between two VPCs | HA VPN, Cloud Router, BGP | 🔨 In progress |
+| [Week 13](./week-13-hybrid-connectivity) | HA VPN and BGP between two VPCs | HA VPN, Cloud Router, BGP | ✅ Complete |
 | Week 14 | Private Service Connect | PSC endpoints, Private Google Access | 📅 Planned |
 | Week 15 | Global load balancing | Global external ALB, Cloud CDN, Cloud Armor | 📅 Planned |
 | Week 16 | Cloud NAT and egress control | Cloud NAT, Secure Web Proxy | 📅 Planned |
@@ -549,6 +549,25 @@ find week-NN-* -name '*.tf' -not -path '*/.terraform/*' | xargs grep -h '^resour
 - CMEK revocation is real but not instant — 70s, 2s and 27s across three trials. Any fixed wait under ~70s will sometimes call a working control broken.
 - A key version is billed while **Disabled** and while **Scheduled for destruction**. Only `DESTROYED` stops the meter, and that defaults to 30 days away.
 - `terraform destroy` reports success and leaves the key. `DESTROYED` is not `deleted` — the version still blocks the key until an explicit `versions delete`. The key ring deletes only over REST; `gcloud kms keyrings` has no `delete`.
+
+## Week 13 — Hybrid connectivity: HA VPN and BGP
+
+**The story:** Join two VPCs with two IPsec tunnels, then break one and watch BGP route around it without anyone touching a route table.
+
+**What it builds:**
+- Two HA VPN gateways, two interfaces each
+- Two Cloud Routers on separate private ASNs, 64512 and 64513
+- Four tunnel resources, which are the two logical tunnels seen from both ends
+- A VM either side, as instruments rather than as the subject
+
+**Resources:** 22 | **Blog:** https://jayanthkatta.com/blog/week-13-hybrid-connectivity/
+
+**Key lessons:**
+- **BGP is what makes the HA real.** Routes learned through a dead tunnel were withdrawn in 3.1–3.6s across three trials, and the surviving tunnel carried the prefix throughout. A static route points at a dead tunnel as confidently as a live one.
+- **A single active interface carries no SLA.** 99.99% requires two interfaces, two tunnels and two peer addresses; one of each is a supported configuration with no availability promise attached.
+- A GCP-to-GCP pair needs **four** tunnel resources for two logical tunnels, and each one bills separately at $0.05/hr. The week cost $1.99.
+- HA VPN tunnels have no enable/disable verb. Disabling the BGP peer is the closest reversible equivalent and exercises the same withdrawal path.
+- Classic VPN is **not** deprecated, which is worth saying because every comparison implies it is.
 
 ---
 
