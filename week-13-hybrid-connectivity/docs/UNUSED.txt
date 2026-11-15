@@ -19,8 +19,9 @@ RETIRED — the cost slot, closed 2026-11-14 rather than captured.
 
   06-cost.png
       Declared as the cost slot, exempt from the pre-destroy check because
-      charges post about a day after teardown. They have now posted: $1.76
-      gross, $1.72 after credits, of which $1.72 is the tunnel SKU.
+      charges post about a day after teardown. They have now posted: $2.02
+      gross, $1.99 after credits, almost all of it the tunnel SKU, read
+      from the export at 23:20 on 2026-11-14.
 
       Retired rather than captured for the same reason as Week 12's cost
       slot — an image of a query result proves less than the figure and the

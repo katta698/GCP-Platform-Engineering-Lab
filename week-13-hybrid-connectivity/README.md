@@ -16,10 +16,13 @@ to keep moving.
 | 2 e2-micro probes, no external IP | free tier | `us-central1`, within the monthly allowance |
 | Egress between the two VPCs | per GB | Negligible at ping volume |
 
-**Measured cost for this week: $1.76 gross, $1.72 after credits**, read from
-the billing export on 2026-11-14. The tunnels are $1.72 of it. The two probes
-net to zero — they bill and then carry an equal free-tier discount, which is
-why a query filtered to `cost > 0` overstates the week.
+**Measured cost for this week: $2.02 gross, $1.99 after credits**, read from
+the billing export at 23:20 on 2026-11-14. The tunnels billed 06:00–17:00 and
+are $1.99 of it; the two probes carry an offsetting free-tier discount.
+
+Read the export AFTER it has settled. A read at 22:40 the same evening showed
+$1.76, because the day's rows were still being written — a partially loaded
+export looks exactly like a finished one.
 
 The teardown removes everything: both gateways, all four tunnels, both routers
 and their BGP peers, the branch VPC and subnet, both firewall rules and both
