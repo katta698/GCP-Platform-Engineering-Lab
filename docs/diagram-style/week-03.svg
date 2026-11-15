@@ -1,70 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="Four policies are set at the organization in dry run: three managed Compute constraints and one custom bucket-label constraint. The workloads/dev folder carries a deliberate exception that disables the serial port constraint. Violations are logged to the project audit log, not the organization's."><defs>
-  <filter id="grain" x="0" y="0" width="100%" height="100%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
-    <feColorMatrix type="saturate" values="0"/>
-    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
-  </filter>
-  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
-  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
-          markerHeight="10" orient="auto-start-reverse">
-    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
-          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-  <style>
-    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
-    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
-    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
-  </style>
-</defs>
-<rect width="1280" height="820" fill="#30342f"/>
-<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
-<ellipse cx="609" cy="706" rx="125" ry="21" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="818" cy="269" rx="212" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="353" cy="177" rx="150" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="548" cy="496" rx="134" ry="20" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="1153" cy="233" rx="184" ry="21" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="663" cy="698" rx="168" ry="25" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="1186" cy="243" rx="126" ry="19" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="983" cy="398" rx="223" ry="45" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="399" cy="310" rx="160" ry="41" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<rect width="1280" height="820" filter="url(#grain)"/>
-<text x="64" y="78" class="hand h1">Report before you refuse</text>
-<path d="M64,96 Q314,94 568,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
-<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 3</text>
-<path d="M96,161 Q308,160 514,158" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M516,160 Q517,270 514,379" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M518,380 Q307,381 95,379" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M95,379 Q97,271 96,161" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="508" y="150" text-anchor="end" class="hand s" opacity=".6">all DRY RUN</text>
-<text x="120" y="200" text-anchor="start" class="hand h2">organization</text>
-<text x="120" y="242" text-anchor="start" class="hand b" fill="#f1eee4">requireOsLogin</text>
-<text x="120" y="276" text-anchor="start" class="hand b" fill="#f1eee4">blockProjectSshKeys</text>
-<text x="120" y="310" text-anchor="start" class="hand b" fill="#f1eee4">disableSerialPortAccess</text>
-<text x="120" y="344" text-anchor="start" class="hand b" fill="#f1eee4">requireTerraformLabels</text>
-<path d="M95,470 Q306,471 516,472" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M515,470 Q517,533 518,600" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M515,601 Q304,600 97,600" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M97,599 Q96,533 94,471" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="120" y="510" text-anchor="start" class="hand h2" fill="#f2d08a">workloads / dev</text>
-<text x="120" y="552" text-anchor="start" class="hand b" fill="#f1eee4">one exception, scoped</text>
-<path d="M974.1,259.4 L968.3,270.8 L962.7,281.9 L955.0,292.0 L943.8,298.0 L932.3,303.5 L919.5,303.0 L907.0,302.2 L894.6,299.1 L885.5,290.0 L876.3,281.5 L870.9,270.2 L867.9,258.2 L864.9,245.7 L869.1,233.5 L873.1,221.4 L881.2,211.5 L891.4,203.8 L903.1,199.0 L915.4,196.9 L927.9,197.0 L940.2,199.9 L951.3,205.9 L961.5,213.7 L968.0,224.7 L973.0,236.5 L974.3,249.2" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
-<g transform="translate(892,222) scale(2.333)"><defs><style>.i1cls-1{fill:#4285f4;}.i1cls-2{fill:none;}.i1cls-3{fill:#669df6;}.i1cls-4{fill:#aecbfa;}</style></defs><title>Icon_24px_Logging_Color</title><g data-name="Product Icons"><rect class="i1cls-1" x="6" y="11" width="4" height="2"/><rect class="i1cls-1" x="4" y="18" width="6" height="2"/><g data-name="colored-32/logs"><rect class="i1cls-2" width="24" height="24"/><g ><polygon id="Fill-3" class="i1cls-1" points="4 18 6 18 6 6 4 6 4 18"/><polygon id="Fill-4" class="i1cls-3" points="9 7 22 7 22 3 9 3 9 7"/><polygon id="Fill-4-2" data-name="Fill-4" class="i1cls-3" points="9 14 22 14 22 10 9 10 9 14"/><polygon id="Fill-4-3" data-name="Fill-4" class="i1cls-3" points="9 21 22 21 22 17 9 17 9 21"/><polygon id="Fill-7" class="i1cls-4" points="2 8 8 8 8 2 2 2 2 8"/></g></g></g></g>
-<text x="920" y="340" text-anchor="middle" class="hand h2">the PROJECT log</text>
-<text x="920" y="380" text-anchor="middle" class="hand b" fill="#f1eee4">where violations land</text>
-<path d="M682,518 Q931,521 1182,521" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M1179,520 Q1180,601 1181,681" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M1182,680 Q928,682 681,680" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M681,679 Q681,601 678,520" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="704" y="560" text-anchor="start" class="hand h2" fill="#f0ad92">not the organization log</text>
-<text x="704" y="602" text-anchor="start" class="hand b" fill="#f1eee4">that stream does not exist,</text>
-<text x="704" y="636" text-anchor="start" class="hand b" fill="#f1eee4">and querying it returns empty</text>
-<text x="704" y="670" text-anchor="start" class="hand b" fill="#f1eee4">with no error at all</text>
-<path d="M306,386 Q308,422 306,460" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<text x="346" y="423" text-anchor="middle" class="hand s alabel">inherits down</text>
-<path d="M522,270 Q686,286 856,300" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<text x="689" y="252" text-anchor="middle" class="hand s alabel">logs to</text>
-<text x="96" y="700" text-anchor="start" class="hand b" fill="#f0ad92">7 constraints were already enforced before any of this</text>
-<text x="96" y="728" text-anchor="start" class="hand b" fill="#f1eee4">list shows what is SET, --effective shows what is ENFORCED</text>
-<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
-<metadata id="panels">org:96,160,420,220;exc:96,470,420,130;note:680,520,500,160</metadata>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="960" height="500" role="img"><title>Four organization policies in dry run, inheriting down to the workloads folder, which contains a dev folder carrying one exception and a project beneath it. Violations are written to that project's audit log rather than the organization's.</title><metadata id="panels">org:40,96,880,260;work:330,150,280,180;dev:352,196,236,118</metadata><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9" fill="none" stroke="#5F6368" stroke-width="1.4"/></marker></defs><rect width="960" height="500" fill="#FFFFFF"/><text x="40" y="40" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="500" fill="#5F6368" letter-spacing="0.6">GCP PLATFORM ENGINEERING LAB · WEEK 03</text><text x="40" y="66" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="21" font-weight="600" fill="#202124">Org policy: report before you refuse</text><text x="40" y="88" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" fill="#5F6368">Every constraint runs in dry run first, and the violations land in the project log</text><rect x="40" y="96" width="880" height="260" rx="8" fill="#FFFFFF" stroke="#DADCE0" stroke-width="1"/><text x="56" y="123" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#5F6368" text-anchor="start">Organization — 4 policies, all dry run</text><g transform="translate(128.0,193.0) scale(1.8333)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<g transform="translate(2.000000, 2.000000)">
+		<path fill-rule="evenodd" fill="#85A4E6" d="M-0.5-0.5v21H10v-21H-0.5z M4,5.5H1.8V3.2H4V5.5L4,5.5z M4,9.2H1.8V7H4V9.2L4,9.2z
+			 M4,13H1.8v-2.2H4V13L4,13z M4,16.8H1.8v-2.2H4V16.8L4,16.8z M7.8,5.5H5.5V3.2h2.2V5.5L7.8,5.5z M7.8,9.2H5.5V7h2.2V9.2L7.8,9.2z
+			 M7.8,13H5.5v-2.2h2.2V13L7.8,13z M7.8,16.8H5.5v-2.2h2.2V16.8L7.8,16.8z"/>
+		<path fill-rule="evenodd" fill="#5C85DE" d="M4.8-0.5v21H10v-21H4.8z M7.8,5.5H5.5V3.2h2.2V5.5L7.8,5.5z M7.8,9.2H5.5V7h2.2V9.2
+			L7.8,9.2z M7.8,13H5.5v-2.2h2.2V13L7.8,13z M7.8,16.8H5.5v-2.2h2.2V16.8L7.8,16.8z"/>
+		<path fill-rule="evenodd" fill="#85A4E6" d="M10,8.5v12h10.5v-12H10z M14.5,13h-2.2v-2.2h2.2V13L14.5,13z M14.5,16.8h-2.2v-2.2
+			h2.2V16.8L14.5,16.8z M18.2,13H16v-2.2h2.2V13L18.2,13z M18.2,16.8H16v-2.2h2.2V16.8L18.2,16.8z"/>
+		<path fill-rule="evenodd" fill="#5C85DE" d="M15.2,8.5v12h5.2v-12H15.2z M18.2,13H16v-2.2h2.2V13L18.2,13z M18.2,16.8H16v-2.2h2.2
+			V16.8L18.2,16.8z"/>
+		<rect x="10" y="6.2" fill-rule="evenodd" fill="#85A4E6" width="10.5" height="2.2"/>
+			<rect x="10" y="8.5" fill-rule="evenodd" fill="#5C85DE" width="10.5" height="0.8"/>
+			<rect x="10" y="6.2" fill-rule="evenodd" fill="#3367D6" width="0.8" height="2.2"/>
+			<rect x="10" y="8.5" fill-rule="evenodd" fill="#3367D6" width="0.8" height="12"/>
+	</g>
+</g>
+</g><text x="150" y="257" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">Org Policy</text><text x="150" y="274" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">3 managed, 1 custom</text><rect x="330" y="150" width="280" height="180" rx="8" fill="#F8F9FA" stroke="#DADCE0" stroke-width="1"/><text x="346" y="177" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#5F6368" text-anchor="start">workloads folder</text><rect x="352" y="196" width="236" height="118" rx="8" fill="#FFFFFF" stroke="#C6CBD1" stroke-width="1" stroke-dasharray="6 4"/><text x="368" y="223" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#5F6368" text-anchor="start">dev — one exception</text><g transform="translate(448.0,234.0) scale(1.8333)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,5.9 3.7,0.8 9.5,0.8 12.4,5.9 9.5,10.9 3.7,10.9 	"/>
+	<polygon fill-rule="evenodd" fill="#5C85DE" points="11.4,7.7 8.5,2.6 9.5,0.7 12.4,5.9 	"/>
+	<polygon id="Shape-Copy_00000019646383529055310330000009913415011964925323_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,9.3 8.5,9.3 10.5,5.9 11.4,7.7 9.5,10.9 3.7,11 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="11.2,11.9 14.2,6.8 20,6.8 22.9,11.9 20,16.9 14.2,16.9 	"/>
+	<polygon id="Shape-Copy_00000133527958483064390410000012377415375428947900_" fill-rule="evenodd" fill="#5C85DE" points="
+		21.9,13.7 19,8.6 20,6.7 22.9,11.9 	"/>
+	<polygon id="Shape-Copy_00000176019471624316745960000001248137580190207128_" fill-rule="evenodd" fill="#3367D6" points="
+		13.2,15.3 19,15.3 21,11.9 21.9,13.7 20,16.9 14.2,17 	"/>
+	<polygon fill-rule="evenodd" fill="#85A4E6" points="0.8,17.9 3.7,12.8 9.5,12.8 12.4,17.9 9.5,22.9 3.7,22.9 	"/>
+	<polygon id="Shape-Copy_00000096041779745201399360000017167964797373102485_" fill-rule="evenodd" fill="#5C85DE" points="
+		11.4,19.7 8.5,14.6 9.5,12.7 12.4,17.9 	"/>
+	<polygon id="Shape-Copy_00000049204188488742950820000010444321201512143025_" fill-rule="evenodd" fill="#3367D6" points="
+		2.7,21.3 8.5,21.3 10.5,17.9 11.4,19.7 9.5,22.9 3.7,23 	"/>
+</g>
+</g><text x="470" y="298" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">a project</text><g transform="translate(768.0,234.0) scale(1.8333)"><defs><style>.i3cls-1{fill:#4285f4;}.i3cls-2{fill:none;}.i3cls-3{fill:#669df6;}.i3cls-4{fill:#aecbfa;}</style></defs><title>Icon_24px_Logging_Color</title><g data-name="Product Icons"><rect class="i3cls-1" x="6" y="11" width="4" height="2"/><rect class="i3cls-1" x="4" y="18" width="6" height="2"/><g data-name="colored-32/logs"><rect class="i3cls-2" width="24" height="24"/><g ><polygon id="Fill-3" class="i3cls-1" points="4 18 6 18 6 6 4 6 4 18"/><polygon id="Fill-4" class="i3cls-3" points="9 7 22 7 22 3 9 3 9 7"/><polygon id="Fill-4-2" data-name="Fill-4" class="i3cls-3" points="9 14 22 14 22 10 9 10 9 14"/><polygon id="Fill-4-3" data-name="Fill-4" class="i3cls-3" points="9 21 22 21 22 17 9 17 9 21"/><polygon id="Fill-7" class="i3cls-4" points="2 8 8 8 8 2 2 2 2 8"/></g></g></g></g><text x="790" y="298" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">project audit log</text><text x="790" y="315" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">the violations</text><path d="M172,215 L330,215" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="251" cy="215" r="10" fill="#1A73E8"/><text x="251" y="219" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">1</text><path d="M492,256 L768,256" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="630" cy="256" r="10" fill="#1A73E8"/><text x="630" y="260" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">2</text><text x="40" y="400" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">1   A policy set at the organization applies to everything beneath it. An exception is set lower down, on one folder.</text><text x="40" y="419" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">2   Dry-run violations are written to the PROJECT log, not the organization's. Querying the org stream returns</text><text x="40" y="438" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">     empty with no error, which reads exactly like no violations, and is the reason to look at the project first.</text></svg>

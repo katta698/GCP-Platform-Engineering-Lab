@@ -1,65 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A decision applied to every service account: if it authenticated recently, keep it; if it never authenticated, check whether it holds any role; if it holds none, disable it, which is reversible. Deletion is not done in this lab."><defs>
-  <filter id="grain" x="0" y="0" width="100%" height="100%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
-    <feColorMatrix type="saturate" values="0"/>
-    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
-  </filter>
-  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
-  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
-          markerHeight="10" orient="auto-start-reverse">
-    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
-          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-  <style>
-    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
-    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
-    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
-  </style>
-</defs>
-<rect width="1280" height="820" fill="#30342f"/>
-<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
-<ellipse cx="1000" cy="316" rx="219" ry="43" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="69" cy="450" rx="182" ry="29" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="727" cy="47" rx="173" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="179" cy="418" rx="94" ry="40" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="1098" cy="230" rx="170" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="261" cy="517" rx="155" ry="24" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="1059" cy="690" rx="119" ry="22" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="150" cy="47" rx="159" ry="31" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="273" cy="169" rx="196" ry="23" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<rect width="1280" height="820" filter="url(#grain)"/>
-<text x="64" y="78" class="hand h1">Disable is reversible. Delete is not.</text>
-<path d="M64,96 Q450,98 841,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
-<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 9</text>
-<path d="M286.0,280.8 L280.5,292.4 L271.4,301.4 L260.8,308.5 L248.8,312.8 L236.2,312.7 L223.5,313.1 L211.6,308.7 L200.5,302.2 L191.6,292.8 L186.0,281.3 L183.0,269.0 L181.0,256.4 L184.4,244.0 L190.5,233.0 L196.6,221.9 L207.4,215.1 L218.8,210.1 L230.9,207.7 L243.2,207.2 L255.4,210.0 L266.6,215.8 L275.6,224.5 L282.3,234.9 L286.8,246.4 L291.1,258.5 L288.5,271.0" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
-<g transform="translate(208,232) scale(2.333)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g>
-<text x="236" y="350" text-anchor="middle" class="hand h2">every service account</text>
-<text x="236" y="390" text-anchor="middle" class="hand b" fill="#f1eee4">in the organization</text>
-<path d="M558,151 Q770,150 982,150" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M981,149 Q980,221 979,289" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M978,292 Q769,288 561,288" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M559,291 Q562,218 560,148" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="584" y="190" text-anchor="start" class="hand h2" fill="#a6d2ae">authenticated recently?</text>
-<text x="584" y="232" text-anchor="start" class="hand b" fill="#f1eee4">keep it</text>
-<path d="M559,381 Q773,381 979,381" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M980,378 Q979,453 981,530" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M981,528 Q771,531 560,529" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M559,530 Q558,456 560,378" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="584" y="420" text-anchor="start" class="hand h2">holds any role?</text>
-<text x="584" y="462" text-anchor="start" class="hand b" fill="#f1eee4">never authenticated,</text>
-<text x="584" y="496" text-anchor="start" class="hand b" fill="#f1eee4">but still granted — keep</text>
-<path d="M561,622 Q772,619 981,621" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M980,621 Q981,689 980,758" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M980,759 Q768,761 561,762" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M560,762 Q560,692 562,622" fill="none" stroke="#f2d08a" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="584" y="660" text-anchor="start" class="hand h2" fill="#f2d08a">holds none: disable</text>
-<text x="584" y="702" text-anchor="start" class="hand b" fill="#f1eee4">reversible, and it is</text>
-<path d="M296,310 Q422,269 550,220" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<path d="M770,296 Q771,330 770,370" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<path d="M770,536 Q772,572 770,610" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<text x="140" y="520" text-anchor="start" class="hand b" fill="#f0ad92">deletion is NOT done in this lab</text>
-<text x="140" y="548" text-anchor="start" class="hand b" fill="#f1eee4">a deleted account's id</text>
-<text x="140" y="576" text-anchor="start" class="hand b" fill="#f1eee4">can never be reused</text>
-<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
-<metadata id="panels">recent:560,150,420,140;role:560,380,420,150;off:560,620,420,140</metadata>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 490" width="960" height="490" role="img"><title>Every service account in scope measured with Activity Analyzer for real authentication, then the ones that have never authenticated and hold no role are disabled rather than deleted, with key creation blocked by organization policy.</title><metadata id="panels">gc:40,96,880,230</metadata><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9" fill="none" stroke="#5F6368" stroke-width="1.4"/></marker></defs><rect width="960" height="490" fill="#FFFFFF"/><text x="40" y="40" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="500" fill="#5F6368" letter-spacing="0.6">GCP PLATFORM ENGINEERING LAB · WEEK 09</text><text x="40" y="66" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="21" font-weight="600" fill="#202124">Service account lifecycle: disable is reversible, delete is not</text><text x="40" y="88" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" fill="#5F6368">Measure what has actually authenticated before touching anything</text><rect x="40" y="96" width="880" height="230" rx="8" fill="#FFFFFF" stroke="#DADCE0" stroke-width="1"/><text x="56" y="123" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#5F6368" text-anchor="start">Google Cloud</text><g transform="translate(128.0,178.0) scale(1.8333)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g><text x="150" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">service accounts</text><text x="150" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">every one in scope</text><g transform="translate(348.0,178.0) scale(1.8333)">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M16.1843472,12.4178657 L20.125,14.2055265 L20.125,16.8870177 C20.125,17.9506758 19.8141263,18.9830499 19.2843274,19.8590037 L19.2843274,19.8590037 L18.0145615,18.5629496 C18.5750099,17.6959342 18.4830613,16.516078 17.7343373,15.7518531 C16.8805292,14.8803684 15.4925437,14.8803684 14.6387356,15.7518531 C13.7849275,16.6233377 13.7849275,18.0400589 14.6387356,18.9115435 C15.3874596,19.6757685 16.5433844,19.7740898 17.392814,19.1975692 L17.392814,19.1975692 L18.758907,20.5919446 C18.080239,21.4008611 17.1914029,21.9997275 16.1843472,22.25 C13.9250396,21.6868869 12.2436944,19.367397 12.2436944,16.8870177 L12.2436944,16.8870177 L12.2436944,14.2055265 L16.1843472,12.4178657 Z M16.2206149,2.25 L16.3602738,2.25605034 C17.1400163,2.32391093 17.7609452,2.95457947 17.8312976,3.74109011 L17.837941,3.89028777 L17.843,12.452 L16.22,11.714 L16.2206149,3.89028777 L5.76237127,3.89028777 L5.76237127,17.0125899 L11.677,17.012 L11.6789235,17.0719751 C11.7003003,17.6117712 11.7902952,18.1429057 11.9401529,18.6526991 L5.75418441,18.6528777 C4.9010278,18.6528777 4.20217416,17.9904014 4.13097393,17.1535892 L4.125,17.0125899 L4.13318686,3.89028777 C4.13318686,3.03561151 4.78713752,2.32815222 5.6216884,2.25605034 L5.76237127,2.25 L16.2206149,2.25 Z M11.6739614,13.7128297 L11.6739614,15.3435252 L7.35348665,15.3435252 L7.35348665,13.7128297 L11.6739614,13.7128297 Z M14.4751484,10.4514388 L14.4751484,12.0821343 L7.35348665,12.0821343 L7.35348665,10.4514388 L14.4751484,10.4514388 Z M13.5730712,7.19004796 L13.5730712,8.77278177 L7.35348665,8.77278177 L7.35348665,7.19004796 L13.5730712,7.19004796 Z M16.1843472,18.6746784 C16.9098013,18.6746784 17.4978981,18.0744062 17.4978981,17.3339329 C17.4978981,16.5934595 16.9098013,15.9931873 16.1843472,15.9931873 C15.458893,15.9931873 14.8707962,16.5934595 14.8707962,17.3339329 C14.8707962,18.0744062 15.458893,18.6746784 16.1843472,18.6746784 Z" fill="#4285F4" fill-rule="nonzero"></path>
+    </g>
+</g><text x="370" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">Activity Analyzer</text><text x="370" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">authenticated when?</text><g transform="translate(568.0,178.0) scale(1.8333)"><defs><style>.i3cls-1{fill:#669df6;}.i3cls-1,.i3cls-2{fill-rule:evenodd;}.i3cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i3cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i3cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g><text x="590" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">disabled</text><text x="590" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">not deleted</text><g transform="translate(788.0,178.0) scale(1.8333)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<g transform="translate(2.000000, 2.000000)">
+		<path fill-rule="evenodd" fill="#85A4E6" d="M-0.5-0.5v21H10v-21H-0.5z M4,5.5H1.8V3.2H4V5.5L4,5.5z M4,9.2H1.8V7H4V9.2L4,9.2z
+			 M4,13H1.8v-2.2H4V13L4,13z M4,16.8H1.8v-2.2H4V16.8L4,16.8z M7.8,5.5H5.5V3.2h2.2V5.5L7.8,5.5z M7.8,9.2H5.5V7h2.2V9.2L7.8,9.2z
+			 M7.8,13H5.5v-2.2h2.2V13L7.8,13z M7.8,16.8H5.5v-2.2h2.2V16.8L7.8,16.8z"/>
+		<path fill-rule="evenodd" fill="#5C85DE" d="M4.8-0.5v21H10v-21H4.8z M7.8,5.5H5.5V3.2h2.2V5.5L7.8,5.5z M7.8,9.2H5.5V7h2.2V9.2
+			L7.8,9.2z M7.8,13H5.5v-2.2h2.2V13L7.8,13z M7.8,16.8H5.5v-2.2h2.2V16.8L7.8,16.8z"/>
+		<path fill-rule="evenodd" fill="#85A4E6" d="M10,8.5v12h10.5v-12H10z M14.5,13h-2.2v-2.2h2.2V13L14.5,13z M14.5,16.8h-2.2v-2.2
+			h2.2V16.8L14.5,16.8z M18.2,13H16v-2.2h2.2V13L18.2,13z M18.2,16.8H16v-2.2h2.2V16.8L18.2,16.8z"/>
+		<path fill-rule="evenodd" fill="#5C85DE" d="M15.2,8.5v12h5.2v-12H15.2z M18.2,13H16v-2.2h2.2V13L18.2,13z M18.2,16.8H16v-2.2h2.2
+			V16.8L18.2,16.8z"/>
+		<rect x="10" y="6.2" fill-rule="evenodd" fill="#85A4E6" width="10.5" height="2.2"/>
+			<rect x="10" y="8.5" fill-rule="evenodd" fill="#5C85DE" width="10.5" height="0.8"/>
+			<rect x="10" y="6.2" fill-rule="evenodd" fill="#3367D6" width="0.8" height="2.2"/>
+			<rect x="10" y="8.5" fill-rule="evenodd" fill="#3367D6" width="0.8" height="12"/>
+	</g>
+</g>
+</g><text x="810" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">Org Policy</text><text x="810" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">no key creation</text><path d="M172,200 L348,200" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="260" cy="200" r="10" fill="#1A73E8"/><text x="260" y="204" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">1</text><path d="M392,200 L568,200" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="480" cy="200" r="10" fill="#1A73E8"/><text x="480" y="204" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">2</text><path d="M612,200 L788,200" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="700" cy="200" r="10" fill="#1A73E8"/><text x="700" y="204" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">3</text><text x="40" y="372" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">1   Activity Analyzer reports real authentication. An account that looks dormant may not be - one here had</text><text x="40" y="391" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">     authenticated days earlier, and a list of unused accounts is a guess until it has been measured.</text><text x="40" y="410" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">2-3 A deleted account's email can be reused, but IAM tracks an internal unique ID, so old bindings never apply</text><text x="40" y="429" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">     to the replacement: the rebuild looks identical and behaves differently. Disable instead, and block keys.</text></svg>

@@ -1,73 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A request to delete an asset feed is checked against the deny policy first. The plan identity is denied. The apply identity and a break-glass human are exempted and reach the allow policy, where their roles are evaluated."><defs>
-  <filter id="grain" x="0" y="0" width="100%" height="100%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
-    <feColorMatrix type="saturate" values="0"/>
-    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
-  </filter>
-  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
-  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
-          markerHeight="10" orient="auto-start-reverse">
-    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
-          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-  <style>
-    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
-    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
-    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
-  </style>
-</defs>
-<rect width="1280" height="820" fill="#30342f"/>
-<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
-<ellipse cx="989" cy="758" rx="180" ry="33" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="1028" cy="604" rx="145" ry="42" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="191" cy="734" rx="202" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="586" cy="324" rx="187" ry="27" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="1064" cy="415" rx="144" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="732" cy="62" rx="185" ry="21" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="687" cy="464" rx="229" ry="30" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="747" cy="247" rx="127" ry="47" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<ellipse cx="924" cy="440" rx="95" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
-<rect width="1280" height="820" filter="url(#grain)"/>
-<text x="64" y="78" class="hand h1">Deny is checked first</text>
-<path d="M64,96 Q286,96 505,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
-<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 8</text>
-<path d="M97,170 Q255,169 414,171" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M415,168 Q415,234 414,299" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M417,300 Q256,300 96,299" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M96,301 Q97,235 94,171" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="120" y="210" text-anchor="start" class="hand h2">a request</text>
-<text x="120" y="252" text-anchor="start" class="hand b" fill="#f1eee4">delete an asset feed</text>
-<path d="M468,152 Q648,153 828,151" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M829,152 Q832,241 830,330" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M830,332 Q648,331 471,328" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M468,328 Q469,242 470,149" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="822" y="140" text-anchor="end" class="hand s" opacity=".6">evaluated FIRST</text>
-<text x="494" y="190" text-anchor="start" class="hand h2" fill="#f0ad92">deny policy</text>
-<text x="494" y="232" text-anchor="start" class="hand b" fill="#f1eee4">before any allow policy</text>
-<text x="494" y="266" text-anchor="start" class="hand b" fill="#f1eee4">is even read</text>
-<path d="M471,451 Q650,452 832,448" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M828,450 Q829,516 830,582" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M830,580 Q648,580 469,579" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M471,580 Q471,514 469,452" fill="none" stroke="#f0ad92" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="494" y="490" text-anchor="start" class="hand h2" fill="#f0ad92">tf-plan: denied</text>
-<text x="494" y="532" text-anchor="start" class="hand b" fill="#f1eee4">no role can override it</text>
-<path d="M471,649 Q649,650 829,649" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M830,651 Q829,717 828,780" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M829,779 Q651,779 470,782" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<path d="M468,779 Q469,717 469,649" fill="none" stroke="#a6d2ae" stroke-width="2.4" stroke-linecap="round" opacity="0.62"/>
-<text x="494" y="690" text-anchor="start" class="hand h2" fill="#a6d2ae">tf-apply: exempt</text>
-<text x="494" y="732" text-anchor="start" class="hand b" fill="#f1eee4">and a break-glass human</text>
-<path d="M1145.1,690.5 L1141.5,700.4 L1138.5,710.0 L1132.2,717.9 L1126.1,726.3 L1116.5,730.4 L1106.6,732.4 L1096.4,734.2 L1086.3,732.0 L1076.9,727.8 L1069.9,720.2 L1062.9,712.9 L1056.8,704.2 L1055.5,693.7 L1057.0,683.5 L1058.1,673.0 L1063.1,663.7 L1070.4,656.1 L1080.2,652.2 L1089.2,647.2 L1099.4,646.1 L1109.8,646.1 L1119.6,650.0 L1128.7,655.2 L1135.3,663.3 L1140.1,672.5 L1142.0,682.4" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
-<g transform="translate(1078,668) scale(1.875)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g>
-<text x="1100" y="770" text-anchor="middle" class="hand h2">allow policy</text>
-<path d="M422,235 Q442,237 460,240" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<path d="M650,336 Q650,392 650,440" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<path d="M836,715 Q939,713 1046,707" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
-<text x="941" y="689" text-anchor="middle" class="hand s alabel">reaches</text>
-<text x="96" y="420" text-anchor="start" class="hand b" fill="#f0ad92">a deny rule outranks</text>
-<text x="96" y="448" text-anchor="start" class="hand b" fill="#f1eee4">every role you hold</text>
-<text x="930" y="300" text-anchor="start" class="hand b" fill="#f1eee4">only here are</text>
-<text x="930" y="328" text-anchor="start" class="hand b" fill="#f1eee4">roles evaluated</text>
-<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
-<metadata id="panels">req:96,170,320,130;deny:470,150,360,180;stop:470,450,360,130;pass:470,650,360,130</metadata>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" role="img"><title>A request evaluated first against an IAM deny policy and only then against the allow policy, with Policy Troubleshooter explaining which rule decided the outcome.</title><metadata id="panels">gc:40,96,880,230</metadata><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9" fill="none" stroke="#5F6368" stroke-width="1.4"/></marker></defs><rect width="960" height="470" fill="#FFFFFF"/><text x="40" y="40" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="500" fill="#5F6368" letter-spacing="0.6">GCP PLATFORM ENGINEERING LAB · WEEK 08</text><text x="40" y="66" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="21" font-weight="600" fill="#202124">IAM deny: checked before allow</text><text x="40" y="88" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" fill="#5F6368">A deny policy refuses a permission that no grant can give back</text><rect x="40" y="96" width="880" height="230" rx="8" fill="#FFFFFF" stroke="#DADCE0" stroke-width="1"/><text x="56" y="123" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#5F6368" text-anchor="start">Google Cloud</text><g transform="translate(128.0,178.0) scale(1.8333)"><defs><style>.i1cls-1{fill:#669df6;}.i1cls-1,.i1cls-2{fill-rule:evenodd;}.i1cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i1cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i1cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g><text x="150" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">a request</text><text x="150" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">any principal</text><g transform="translate(348.0,178.0) scale(1.8333)">
+<g >
+	<rect y="0" fill="none" width="24" height="24"/>
+	<g transform="translate(2.000000, 2.000000)">
+		<path fill-rule="evenodd" fill="#85A4E6" d="M-0.5-0.5v21H10v-21H-0.5z M4,5.5H1.8V3.2H4V5.5L4,5.5z M4,9.2H1.8V7H4V9.2L4,9.2z
+			 M4,13H1.8v-2.2H4V13L4,13z M4,16.8H1.8v-2.2H4V16.8L4,16.8z M7.8,5.5H5.5V3.2h2.2V5.5L7.8,5.5z M7.8,9.2H5.5V7h2.2V9.2L7.8,9.2z
+			 M7.8,13H5.5v-2.2h2.2V13L7.8,13z M7.8,16.8H5.5v-2.2h2.2V16.8L7.8,16.8z"/>
+		<path fill-rule="evenodd" fill="#5C85DE" d="M4.8-0.5v21H10v-21H4.8z M7.8,5.5H5.5V3.2h2.2V5.5L7.8,5.5z M7.8,9.2H5.5V7h2.2V9.2
+			L7.8,9.2z M7.8,13H5.5v-2.2h2.2V13L7.8,13z M7.8,16.8H5.5v-2.2h2.2V16.8L7.8,16.8z"/>
+		<path fill-rule="evenodd" fill="#85A4E6" d="M10,8.5v12h10.5v-12H10z M14.5,13h-2.2v-2.2h2.2V13L14.5,13z M14.5,16.8h-2.2v-2.2
+			h2.2V16.8L14.5,16.8z M18.2,13H16v-2.2h2.2V13L18.2,13z M18.2,16.8H16v-2.2h2.2V16.8L18.2,16.8z"/>
+		<path fill-rule="evenodd" fill="#5C85DE" d="M15.2,8.5v12h5.2v-12H15.2z M18.2,13H16v-2.2h2.2V13L18.2,13z M18.2,16.8H16v-2.2h2.2
+			V16.8L18.2,16.8z"/>
+		<rect x="10" y="6.2" fill-rule="evenodd" fill="#85A4E6" width="10.5" height="2.2"/>
+			<rect x="10" y="8.5" fill-rule="evenodd" fill="#5C85DE" width="10.5" height="0.8"/>
+			<rect x="10" y="6.2" fill-rule="evenodd" fill="#3367D6" width="0.8" height="2.2"/>
+			<rect x="10" y="8.5" fill-rule="evenodd" fill="#3367D6" width="0.8" height="12"/>
+	</g>
+</g>
+</g><text x="370" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">deny policy</text><text x="370" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">evaluated FIRST</text><g transform="translate(568.0,178.0) scale(1.8333)"><defs><style>.i3cls-1{fill:#669df6;}.i3cls-1,.i3cls-2{fill-rule:evenodd;}.i3cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_IAM_Color</title><g data-name="Product Icons"><g ><path class="i3cls-1" d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z"/><path class="i3cls-2" d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z"/></g></g></g><text x="590" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">allow policy</text><text x="590" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">roles and bindings</text><g transform="translate(788.0,178.0) scale(1.8333)">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M16.1843472,12.4178657 L20.125,14.2055265 L20.125,16.8870177 C20.125,17.9506758 19.8141263,18.9830499 19.2843274,19.8590037 L19.2843274,19.8590037 L18.0145615,18.5629496 C18.5750099,17.6959342 18.4830613,16.516078 17.7343373,15.7518531 C16.8805292,14.8803684 15.4925437,14.8803684 14.6387356,15.7518531 C13.7849275,16.6233377 13.7849275,18.0400589 14.6387356,18.9115435 C15.3874596,19.6757685 16.5433844,19.7740898 17.392814,19.1975692 L17.392814,19.1975692 L18.758907,20.5919446 C18.080239,21.4008611 17.1914029,21.9997275 16.1843472,22.25 C13.9250396,21.6868869 12.2436944,19.367397 12.2436944,16.8870177 L12.2436944,16.8870177 L12.2436944,14.2055265 L16.1843472,12.4178657 Z M16.2206149,2.25 L16.3602738,2.25605034 C17.1400163,2.32391093 17.7609452,2.95457947 17.8312976,3.74109011 L17.837941,3.89028777 L17.843,12.452 L16.22,11.714 L16.2206149,3.89028777 L5.76237127,3.89028777 L5.76237127,17.0125899 L11.677,17.012 L11.6789235,17.0719751 C11.7003003,17.6117712 11.7902952,18.1429057 11.9401529,18.6526991 L5.75418441,18.6528777 C4.9010278,18.6528777 4.20217416,17.9904014 4.13097393,17.1535892 L4.125,17.0125899 L4.13318686,3.89028777 C4.13318686,3.03561151 4.78713752,2.32815222 5.6216884,2.25605034 L5.76237127,2.25 L16.2206149,2.25 Z M11.6739614,13.7128297 L11.6739614,15.3435252 L7.35348665,15.3435252 L7.35348665,13.7128297 L11.6739614,13.7128297 Z M14.4751484,10.4514388 L14.4751484,12.0821343 L7.35348665,12.0821343 L7.35348665,10.4514388 L14.4751484,10.4514388 Z M13.5730712,7.19004796 L13.5730712,8.77278177 L7.35348665,8.77278177 L7.35348665,7.19004796 L13.5730712,7.19004796 Z M16.1843472,18.6746784 C16.9098013,18.6746784 17.4978981,18.0744062 17.4978981,17.3339329 C17.4978981,16.5934595 16.9098013,15.9931873 16.1843472,15.9931873 C15.458893,15.9931873 14.8707962,16.5934595 14.8707962,17.3339329 C14.8707962,18.0744062 15.458893,18.6746784 16.1843472,18.6746784 Z" fill="#4285F4" fill-rule="nonzero"></path>
+    </g>
+</g><text x="810" y="242" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="13.5" font-weight="500" fill="#202124" text-anchor="middle">Troubleshooter</text><text x="810" y="259" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="400" fill="#5F6368" text-anchor="middle">names the rule</text><path d="M172,200 L348,200" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="260" cy="200" r="10" fill="#1A73E8"/><text x="260" y="204" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">1</text><path d="M392,200 L568,200" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="480" cy="200" r="10" fill="#1A73E8"/><text x="480" y="204" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">2</text><path d="M612,200 L788,200" fill="none" stroke="#5F6368" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#ar)"/><circle cx="700" cy="200" r="10" fill="#1A73E8"/><text x="700" y="204" class="alabel" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">3</text><text x="40" y="372" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">1   Deny is evaluated before allow, so a deny rule cannot be undone by granting a role on top of it.</text><text x="40" y="391" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">2   Only a request that survives the deny policy is then checked against the allow policy.</text><text x="40" y="410" font-family="'DM Sans','Google Sans',Roboto,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5F6368" text-anchor="start">3   Policy Troubleshooter v3 reports WHICH rule decided a request, rather than leaving it to be inferred.</text></svg>
