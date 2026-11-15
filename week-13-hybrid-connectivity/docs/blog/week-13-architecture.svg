@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" role="img" aria-label="A hub VPC and a branch VPC joined by two HA VPN tunnels. A Cloud Router on each side runs BGP over the tunnels on different ASNs, so each VPC learns the other's subnet rather than being told it. When one tunnel drops, BGP withdraws the routes learned through it in about three seconds and the surviving tunnel carries the traffic."><defs>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+  </filter>
+  <filter id="smudge"><feGaussianBlur stdDeviation="9"/></filter>
+  <marker id="nib" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10"
+          markerHeight="10" orient="auto-start-reverse">
+    <path d="M1.5,1.5 L10.5,6 L1.5,10.5" fill="none" stroke="#f1eee4"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .hand { font-family: Caveat, 'Segoe Script', cursive; fill: #f1eee4; }
+    .h1 { font-size: 44px; } .h2 { font-size: 30px; }
+    .b { font-size: 23px; fill: #c3cbc0; } .s { font-size: 20px; fill: #c3cbc0; }
+  </style>
+</defs>
+<rect width="1280" height="820" fill="#30342f"/>
+<rect width="1280" height="820" fill="#2b2f2b" opacity=".5"/>
+<ellipse cx="1039" cy="355" rx="147" ry="27" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1175" cy="106" rx="174" ry="31" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1182" cy="409" rx="93" ry="31" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="142" cy="102" rx="168" ry="46" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="378" cy="779" rx="92" ry="48" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1167" cy="57" rx="200" ry="37" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="91" cy="63" rx="153" ry="29" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="1186" cy="66" rx="128" ry="44" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<ellipse cx="272" cy="406" rx="102" ry="28" fill="#ffffff" opacity="0.016" filter="url(#smudge)"/>
+<rect width="1280" height="820" filter="url(#grain)"/>
+<text x="64" y="78" class="hand h1">The route nobody wrote</text>
+<path d="M64,96 Q297,95 526,96" fill="none" stroke="#f1eee4" stroke-width="2.6" opacity=".4"/>
+<text x="1216" y="78" text-anchor="end" class="hand s" opacity=".55">GCP Lab · Week 13</text>
+<path d="M231.5,241.2 L227.9,253.0 L219.3,261.9 L211.4,271.0 L201.7,278.6 L189.6,281.0 L177.5,281.0 L165.8,278.5 L154.2,275.3 L144.0,268.4 L135.6,259.4 L131.6,247.6 L126.9,236.1 L127.7,223.7 L132.2,212.3 L137.6,201.7 L145.4,192.8 L154.7,185.2 L165.4,178.9 L177.7,178.2 L189.6,180.2 L202.0,181.2 L211.5,189.2 L221.3,196.7 L226.5,207.9 L229.5,219.5 L231.9,231.3" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(153,203) scale(2.250)"><defs><style>.i1cls-1{fill:#aecbfa;}.i1cls-2{fill:#669df6;}.i1cls-3{fill:#4285f4;}</style></defs><title>Icon_24px_VirtualPrivateCloud_Color</title><g data-name="Product Icons"><rect class="i1cls-1" x="16" y="2" width="6" height="6"/><rect class="i1cls-2" x="19" y="2" width="3" height="6"/><rect class="i1cls-1" x="16" y="16" width="6" height="6"/><rect class="i1cls-2" x="19" y="16" width="3" height="6"/><rect class="i1cls-1" x="2" y="2" width="6" height="6"/><rect class="i1cls-2" x="5" y="2" width="3" height="6"/><rect class="i1cls-1" x="2" y="16" width="6" height="6"/><rect class="i1cls-2" x="5" y="16" width="3" height="6"/><rect class="i1cls-2" x="8" y="4" width="8" height="2"/><rect class="i1cls-2" x="8" y="18" width="8" height="2"/><rect class="i1cls-2" x="18" y="8" width="2" height="8"/><rect class="i1cls-2" x="4" y="8" width="2" height="8"/><rect class="i1cls-3" x="4" y="8" width="2" height="2"/><rect class="i1cls-3" x="18" y="8" width="2" height="2"/><rect class="i1cls-3" x="8" y="4" width="2" height="2"/><rect class="i1cls-3" x="8" y="18" width="2" height="2"/></g></g>
+<text x="180" y="318" text-anchor="middle" class="hand h2">hub VPC</text>
+<text x="180" y="358" text-anchor="middle" class="hand b" fill="#f1eee4">10.20.0.0/24</text>
+<path d="M230.7,584.2 L226.6,595.3 L223.2,606.6 L215.6,615.6 L206.1,622.5 L196.0,628.8 L184.0,628.8 L172.5,628.9 L161.2,626.1 L150.7,620.9 L143.4,611.7 L136.5,602.7 L131.6,592.2 L129.9,580.6 L131.3,569.0 L134.1,557.4 L141.9,548.4 L150.6,540.9 L159.9,533.8 L171.1,529.8 L182.9,529.6 L194.2,532.8 L205.5,536.3 L215.5,542.8 L221.1,553.4 L226.3,563.6 L229.8,574.7" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(154,554) scale(2.167)"><defs><style>.i2cls-1{fill:#4285f4;}</style></defs><title>Icon_24px_Router_Color</title><g data-name="Product Icons"><g ><g ><g data-name=" 24 router"><path class="i2cls-1" d="M19,14v3l-5-5,5-5v3h3v4ZM5,10H2v4H5v3l5-5L5,7Zm9,7V14H10v3H7l5,5,5-5ZM14,7v3H10V7H7l5-5,5,5Z"/></g></g></g></g></g>
+<text x="180" y="666" text-anchor="middle" class="hand h2">hub router</text>
+<text x="180" y="706" text-anchor="middle" class="hand b" fill="#a6d2ae">ASN 64512</text>
+<path d="M692.0,409.2 L689.2,421.3 L681.9,431.5 L673.6,440.5 L664.5,449.6 L651.9,452.0 L639.5,452.7 L627.2,451.1 L614.7,448.8 L603.7,442.0 L596.9,431.0 L591.0,420.1 L585.5,408.5 L585.6,395.6 L588.9,383.4 L594.8,372.4 L600.9,361.0 L611.8,354.3 L623.5,350.0 L635.5,346.4 L648.0,347.6 L660.5,349.4 L672.0,355.1 L679.6,365.5 L688.4,374.7 L692.3,386.7 L695.1,399.2" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(612,372) scale(2.333)"><defs><style>.i3cls-1{fill:#669df6;}.i3cls-2{fill:#4285f4;}</style></defs><title>Icon_24px_VPN-01_Color</title><g data-name="Product Icons"><g ><rect class="i3cls-1" x="14.73" y="11.28" width="4.18" height="1.38"/><rect class="i3cls-1" x="17.95" y="6.12" width="1.38" height="11.71"/><rect class="i3cls-2" x="16.3" y="17.32" width="4.68" height="4.68" rx="0.28"/><rect class="i3cls-2" x="16.3" y="2" width="4.68" height="4.68" rx="0.28"/><rect class="i3cls-1" x="6.98" y="11.28" width="4.28" height="1.38"/><rect class="i3cls-2" x="3.03" y="9.63" width="4.68" height="4.68" rx="0.28"/><path class="i3cls-2" d="M13,14.17a2.2,2.2,0,1,1,2.2-2.2A2.19,2.19,0,0,1,13,14.17Zm0-3.57A1.38,1.38,0,1,0,14.33,12,1.37,1.37,0,0,0,13,10.6Z"/></g></g></g>
+<text x="640" y="490" text-anchor="middle" class="hand h2">two tunnels</text>
+<text x="640" y="530" text-anchor="middle" class="hand b" fill="#a6d2ae">both live</text>
+<path d="M1140.9,581.6 L1137.5,593.0 L1134.5,604.3 L1128.0,614.3 L1119.0,622.2 L1107.4,625.3 L1096.7,630.3 L1084.9,629.9 L1073.7,626.6 L1063.7,620.9 L1054.2,614.4 L1046.1,605.8 L1042.4,594.5 L1039.7,583.1 L1039.5,571.2 L1043.9,560.2 L1049.2,549.6 L1058.8,542.6 L1067.9,535.6 L1078.6,530.4 L1090.4,529.1 L1101.9,532.0 L1113.4,534.7 L1122.6,542.2 L1131.0,550.4 L1135.9,561.1 L1138.6,572.3" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(1064,554) scale(2.167)"><defs><style>.i4cls-1{fill:#4285f4;}</style></defs><title>Icon_24px_Router_Color</title><g data-name="Product Icons"><g ><g ><g data-name=" 24 router"><path class="i4cls-1" d="M19,14v3l-5-5,5-5v3h3v4ZM5,10H2v4H5v3l5-5L5,7Zm9,7V14H10v3H7l5,5,5-5ZM14,7v3H10V7H7l5-5,5,5Z"/></g></g></g></g></g>
+<text x="1090" y="666" text-anchor="middle" class="hand h2">branch router</text>
+<text x="1090" y="706" text-anchor="middle" class="hand b" fill="#a6d2ae">ASN 64513</text>
+<path d="M1138.5,247.4 L1133.6,258.5 L1125.9,268.0 L1115.7,274.5 L1105.2,281.2 L1092.8,282.3 L1080.6,281.5 L1068.8,278.1 L1058.5,271.6 L1049.7,263.1 L1043.3,252.7 L1040.1,241.1 L1039.3,229.2 L1040.6,217.4 L1044.2,205.9 L1050.7,195.6 L1060.7,188.8 L1071.2,183.2 L1082.4,179.4 L1094.5,177.2 L1105.9,181.9 L1117.8,185.1 L1126.4,193.9 L1134.6,202.8 L1138.2,214.4 L1143.0,225.8 L1141.8,238.1" fill="none" stroke="#f1eee4" stroke-width="2.2" stroke-linecap="round" opacity="0.45"/>
+<g transform="translate(1063,203) scale(2.250)"><defs><style>.i5cls-1{fill:#aecbfa;}.i5cls-2{fill:#669df6;}.i5cls-3{fill:#4285f4;}</style></defs><title>Icon_24px_VirtualPrivateCloud_Color</title><g data-name="Product Icons"><rect class="i5cls-1" x="16" y="2" width="6" height="6"/><rect class="i5cls-2" x="19" y="2" width="3" height="6"/><rect class="i5cls-1" x="16" y="16" width="6" height="6"/><rect class="i5cls-2" x="19" y="16" width="3" height="6"/><rect class="i5cls-1" x="2" y="2" width="6" height="6"/><rect class="i5cls-2" x="5" y="2" width="3" height="6"/><rect class="i5cls-1" x="2" y="16" width="6" height="6"/><rect class="i5cls-2" x="5" y="16" width="3" height="6"/><rect class="i5cls-2" x="8" y="4" width="8" height="2"/><rect class="i5cls-2" x="8" y="18" width="8" height="2"/><rect class="i5cls-2" x="18" y="8" width="2" height="8"/><rect class="i5cls-2" x="4" y="8" width="2" height="8"/><rect class="i5cls-3" x="4" y="8" width="2" height="2"/><rect class="i5cls-3" x="18" y="8" width="2" height="2"/><rect class="i5cls-3" x="8" y="4" width="2" height="2"/><rect class="i5cls-3" x="8" y="18" width="2" height="2"/></g></g>
+<text x="1090" y="318" text-anchor="middle" class="hand h2">branch VPC</text>
+<text x="1090" y="358" text-anchor="middle" class="hand b" fill="#f1eee4">10.30.0.0/24</text>
+<path d="M238,280 Q408,365 576,450" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M700,450 Q867,367 1028,280" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<path d="M236,630 Q410,543 576,450" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="406" y="432" text-anchor="middle" class="hand s alabel">BGP</text>
+<path d="M1034,630 Q868,541 704,450" fill="none" stroke="#f1eee4" stroke-width="2.4" stroke-linecap="round" opacity="0.92" marker-end="url(#nib)"/>
+<text x="869" y="432" text-anchor="middle" class="hand s alabel">BGP</text>
+<text x="430" y="730" text-anchor="start" class="hand b" fill="#a6d2ae">the routers tell each other what they reach —</text>
+<text x="430" y="758" text-anchor="start" class="hand b" fill="#f1eee4">kill one tunnel and BGP withdraws it in ~3s</text>
+<text x="1252" y="806" text-anchor="end" class="hand s" opacity=".32">jayanthkatta.com</text>
+<metadata id="panels"></metadata>
+</svg>

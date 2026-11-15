@@ -272,9 +272,36 @@ def week_12():
                "secret version. Without the function the secret never changes.")
 
 
+def week_13():
+    b = Board("The route nobody wrote", eyebrow="GCP Lab · Week 13",
+              w=W, h=H)
+    b.icon_node("hubvpc", 180, 230, "virtual_private_cloud.svg", r=52,
+                title="hub VPC", lines=["10.20.0.0/24"])
+    b.icon_node("hubr", 180, 580, "cloud_router.svg", r=50,
+                title="hub router", lines=[("ASN 64512", "good")])
+    b.icon_node("vpn", 640, 400, "cloud_vpn.svg", r=54,
+                title="two tunnels", lines=[("both live", "good")])
+    b.icon_node("brr", 1090, 580, "cloud_router.svg", r=50,
+                title="branch router", lines=[("ASN 64513", "good")])
+    b.icon_node("brvpc", 1090, 230, "virtual_private_cloud.svg", r=52,
+                title="branch VPC", lines=["10.30.0.0/24"])
+    b.arrow("hubvpc", "vpn")
+    b.arrow("vpn", "brvpc")
+    b.arrow("hubr", "vpn", "BGP")
+    b.arrow("brr", "vpn", "BGP")
+    b.note(430, 730, [("the routers tell each other what they reach —", "good"),
+                     "kill one tunnel and BGP withdraws it in ~3s"])
+    return b, ("A hub VPC and a branch VPC joined by two HA VPN tunnels. A Cloud "
+               "Router on each side runs BGP over the tunnels on different ASNs, "
+               "so each VPC learns the other's subnet rather than being told it. "
+               "When one tunnel drops, BGP withdraws the routes learned through "
+               "it in about three seconds and the surviving tunnel carries the "
+               "traffic.")
+
+
 WEEKS = {"01": week_01, "02": week_02, "03": week_03, "04": week_04,
          "05": week_05, "06": week_06, "07": week_07, "08": week_08,
-         "09": week_09, "10": week_10, "12": week_12}
+         "09": week_09, "10": week_10, "12": week_12, "13": week_13}
 
 if __name__ == "__main__":
     want = sys.argv[1:] or sorted(WEEKS)
