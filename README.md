@@ -167,7 +167,7 @@ remains here is everything that needs a VPC to already exist.
 | Week | Project | Key services | Status |
 |------|---------|--------------|--------|
 | [Week 13](./week-13-hybrid-connectivity) | HA VPN and BGP between two VPCs | HA VPN, Cloud Router, BGP | ✅ Complete |
-| Week 14 | Private Service Connect | PSC endpoints, Private Google Access | 📅 Planned |
+| [Week 14](./week-14-private-service-connect) | Private access to Google APIs for a workload with no internet route | Private Service Connect endpoints, Private Google Access | 🔨 In progress |
 | Week 15 | Global load balancing | Global external ALB, Cloud CDN, Cloud Armor | 📅 Planned |
 | Week 16 | Cloud NAT and egress control | Cloud NAT, Secure Web Proxy | 📅 Planned |
 | Week 17 | Cloud DNS: private and split-horizon | Cloud DNS, peering, forwarding | 📅 Planned |
