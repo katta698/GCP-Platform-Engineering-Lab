@@ -19,7 +19,7 @@ ZONE="${ZONE:-${REGION}-a}"
 NETWORK="${NETWORK:-psc-lab}"
 SUBNET="${SUBNET:-psc-lab-${REGION}}"
 VM="${VM:-psc-probe}"
-RULE="${RULE:-psc-apis}"
+RULE="${RULE:-pscapis}"
 ENDPOINT="${ENDPOINT:-10.99.0.2}"
 
 PASS=0
@@ -132,9 +132,13 @@ fi
 echo
 echo "== The route the comparison turns on"
 
-RT="$(g compute routes list --project="$PROJECT" \
-      --filter="network~${NETWORK}$ AND destRange=0.0.0.0/0 AND nextHopGateway~default-internet-gateway" \
-      --format='value(name)' | head -1)"
+# `routes list` rejects that three-term filter server-side with "Invalid list
+# filter expression", and under `set -e` the whole script died silently right
+# after printing this section header. Filter on the network only and pick the
+# default route here.
+RT="$(g compute routes list --project="$PROJECT" --filter="network~${NETWORK}" \
+      --format='value(name,destRange,nextHopGateway)' \
+      | awk '$2 == "0.0.0.0/0" && $3 ~ /default-internet-gateway/ {print $1; exit}')"
 if [[ -n "$RT" ]]; then
   note "default internet-gateway route present: ${RT}"
 else

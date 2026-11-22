@@ -1,0 +1,12 @@
+title:    Route restored, and Private Google Access comes back
+subtitle: The control was degraded on purpose, and put back the same way
+width:    980
+---
+route restored: Private Google Access -> 401   PSC endpoint -> 401
+
+# Proof that the failure in the previous card was caused by the route and by
+# nothing else. A measurement that breaks something and cannot restore it has
+# not isolated a cause; it has just broken something.
+#
+# The route is recreated in a trap that runs on every exit path of
+# scripts/break-pga.sh, including Ctrl-C and an exception.

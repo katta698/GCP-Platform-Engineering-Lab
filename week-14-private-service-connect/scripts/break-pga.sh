@@ -18,6 +18,20 @@
 #
 # The route is recreated in a trap on every path out, including Ctrl-C. A
 # script that degrades a control restores it however it exits.
+#
+# ONE CONSEQUENCE FOR TEARDOWN. Google creates that default route itself when
+# the network is created, so Terraform never owned it. Once this script has
+# recreated it by hand, `terraform destroy` fails on the network with:
+#
+#   The network resource '...psc-lab' is already being used by
+#   '...routes/default-route-<hash>'
+#
+# Delete the route before destroying:
+#
+#   gcloud compute routes delete <name> --project="$PROJECT" --quiet
+#
+# Nothing bills in the meantime - a network and a route are free - but the
+# destroy does not complete until it is gone.
 set -euo pipefail
 
 PROJECT="${PROJECT:-katta698-gcp-net-hub}"
@@ -37,9 +51,12 @@ say() { printf '[%s] %s\n' "$(date -u +%H:%M:%S)" "$*"; }
 # output that looks identical.
 g() { gcloud "$@" 2>/dev/null | tr -d '\r'; }
 
-ROUTE="$(g compute routes list --project="$PROJECT" \
-  --filter="network~${NETWORK}$ AND destRange=0.0.0.0/0 AND nextHopGateway~default-internet-gateway" \
-  --format='value(name)' | head -1)"
+# Filter on the network only: `routes list` rejects the combined filter with
+# "Invalid list filter expression", which would leave ROUTE empty and make this
+# script report "no default route" on a network that has one.
+ROUTE="$(g compute routes list --project="$PROJECT" --filter="network~${NETWORK}" \
+  --format='value(name,destRange,nextHopGateway)' \
+  | awk '$2 == "0.0.0.0/0" && $3 ~ /default-internet-gateway/ {print $1; exit}')"
 
 if [[ -z "$ROUTE" ]]; then
   echo "No default internet-gateway route on ${NETWORK}." >&2
@@ -74,9 +91,13 @@ probe() {
 
 both() {
   local label="$1" pga psc
-  pga="$(probe pga || echo 000)"
-  psc="$(probe psc || echo 000)"
-  say "${label}: Private Google Access -> ${pga:-000}   PSC endpoint -> ${psc:-000}"
+  pga="$(probe pga)"; pga="${pga: -3}"
+  psc="$(probe psc)"; psc="${psc: -3}"
+  # To STDERR on purpose. The caller captures stdout to read the two codes, so
+  # a `say` here would be swallowed and the per-stage numbers would exist
+  # nowhere in the log - which is what happened on the first run: the only
+  # surviving record of the measurement was the summary line.
+  say "${label}: Private Google Access -> ${pga:-000}   PSC endpoint -> ${psc:-000}" >&2
   echo "${pga:-000} ${psc:-000}"
 }
 

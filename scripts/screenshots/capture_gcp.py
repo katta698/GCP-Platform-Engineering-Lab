@@ -457,7 +457,27 @@ def main() -> None:
 
     with sync_playwright() as pw:
         if args.cdp:
-            browser = pw.chromium.connect_over_cdp(f"http://127.0.0.1:{args.cdp}")
+            # Try IPv4 and IPv6 on the same port. Three labs share this machine
+            # and all use 9222; on 2026-11-22 another session's Chrome held
+            # 127.0.0.1 while this lab's capture profile was on [::1]. They are
+            # separate listeners, so both start happily and connecting to the
+            # wrong one fails with "Browser context management is not
+            # supported" - which reads like the capture Chrome is broken.
+            browser = None
+            problems = []
+            for host in ("127.0.0.1", "[::1]"):
+                try:
+                    b = pw.chromium.connect_over_cdp(f"http://{host}:{args.cdp}")
+                    if b.contexts:
+                        browser = b
+                        break
+                    problems.append(f"{host}: no browser context")
+                    b.close()
+                except Exception as exc:                        # noqa: BLE001
+                    problems.append(f"{host}: {str(exc)[:70]}")
+            if browser is None:
+                sys.exit("Could not attach to the capture Chrome on port "
+                         f"{args.cdp}:\n  " + "\n  ".join(problems))
             context = browser.contexts[0]
         else:
             # HCP Terraform needs no --cdp and no manual sign-in.

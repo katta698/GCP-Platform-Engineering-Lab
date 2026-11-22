@@ -1,0 +1,23 @@
+title:    The endpoint address is ours, and it is not a Google VIP
+subtitle: Reserved in this VPC, and deliberately outside every subnet range
+width:    980
+---
+$ gcloud compute addresses describe psc-apis-endpoint-ip --global
+  10.99.0.2
+  PRIVATE_SERVICE_CONNECT
+  INTERNAL
+
+$ gcloud compute networks subnets list --filter="network~psc-lab"
+  psc-lab-us-central1	10.40.0.0/24	True
+
+$ gcloud compute forwarding-rules describe pscapis --global
+  pscapis	all-apis	10.99.0.2
+
+# 10.99.0.2 is not inside 10.40.0.0/24, and that is required, not incidental:
+# a PSC endpoint "can't be within the range of subnets configured in the VPC
+# network". Private Google Access, by contrast, sends traffic to 199.36.153.8/30
+# - addresses Google owns, reached through the default internet gateway.
+#
+# The True on the subnet line is Private Google Access. Both mechanisms are
+# live on this one VM at the same time, which is what makes the next card a
+# controlled comparison rather than two separate experiments.

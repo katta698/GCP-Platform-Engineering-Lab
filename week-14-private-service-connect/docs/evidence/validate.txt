@@ -1,0 +1,26 @@
+== Infrastructure deployed
+  PASS  network psc-lab exists
+  PASS  subnet psc-lab-us-central1 exists
+  PASS  forwarding rule pscapis exists
+
+== Private Google Access is on, because it is half the comparison
+  PASS  subnet has privateIpGoogleAccess (True)
+
+== The endpoint address is ours, and is not a Google VIP
+  PASS  address purpose is PRIVATE_SERVICE_CONNECT (PRIVATE_SERVICE_CONNECT)
+  PASS  forwarding rule targets all-apis (all-apis)
+  PASS  endpoint address is 10.99.0.2
+  PASS  endpoint sits outside every subnet range (10.40.0.0/24)
+
+== The client has nothing of its own
+  PASS  probe has no external IP (empty)
+  PASS  probe is in psc-lab-us-central1 (psc-lab-us-central1)
+  PASS  no Cloud Router or NAT on psc-lab
+
+== The route the comparison turns on
+  PASS  default internet-gateway route present: default-route-69910e8c91454f44
+
+12 passed, 0 failed
+
+Both paths should now work from the probe. To prove they are different:
+  ./scripts/break-pga.sh --json docs/pga-vs-psc.json

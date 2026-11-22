@@ -1,0 +1,16 @@
+[21:06:25] default route on psc-lab: default-route-69910e8c91454f44
+[21:06:25] baseline, with the default route in place
+[21:06:42] baseline: Private Google Access -> 401   PSC endpoint -> 401
+[21:06:42] deleting default-route-69910e8c91454f44
+Deleted [https://www.googleapis.com/compute/v1/projects/katta698-gcp-net-hub/global/routes/default-route-69910e8c91454f44].
+[21:06:51] deleted - Private Google Access now has no path to Google's addresses
+[21:07:15] route deleted: Private Google Access -> 000   PSC endpoint -> 401
+[21:07:19] restoring default-route-69910e8c91454f44
+[21:07:29] restored
+[21:07:50] route restored: Private Google Access -> 401   PSC endpoint -> 401
+
+RESULT: deleting the default internet-gateway route broke Private Google
+  Access (401 -> 000) and left the PSC endpoint working
+  (401 -> 401). The VM, the subnet flag and the firewall
+  were untouched. Only the route changed.
+[21:07:50] written to docs/pga-vs-psc.json

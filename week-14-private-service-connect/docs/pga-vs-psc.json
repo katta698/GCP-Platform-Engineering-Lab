@@ -1,0 +1,8 @@
+{
+  "route": "default-route-69910e8c91454f44",
+  "endpoint": "10.99.0.2",
+  "api": "https://storage.googleapis.com/storage/v1/b?project=katta698-gcp-net-hub",
+  "baseline":       { "pga": "401",  "psc": "401" },
+  "route_deleted":  { "pga": "000", "psc": "401" },
+  "route_restored": { "pga": "401",  "psc": "401" }
+}

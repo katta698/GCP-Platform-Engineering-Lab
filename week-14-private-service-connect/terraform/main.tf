@@ -75,7 +75,10 @@ resource "google_compute_global_address" "psc" {
 # The name is capped at 20 characters for this kind of forwarding rule, which
 # is shorter than the convention the rest of this lab uses.
 resource "google_compute_global_forwarding_rule" "psc" {
-  name                  = "psc-apis"
+  # No hyphens: a PSC-to-Google-APIs forwarding rule name accepts only
+  # lowercase letters and numbers, 1-20 chars, starting with a letter.
+  # "psc-apis" is rejected with Error 400 naming the field.
+  name                  = "pscapis"
   project               = var.net_hub_project_id
   target                = "all-apis"
   network               = google_compute_network.psc.id

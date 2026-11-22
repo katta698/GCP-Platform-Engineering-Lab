@@ -47,16 +47,44 @@ CHECKS = [
 ]
 
 
+def attach(pw, port=9222):
+    """Attach to the capture Chrome, trying IPv4 and IPv6 on the same port.
+
+    Three labs share this machine and all of them use 9222. On 2026-11-22 two
+    Chromes were listening: this lab's capture profile on [::1] and another
+    session's automation profile on 127.0.0.1. Connecting to 127.0.0.1 reached
+    the wrong browser and failed with "Browser context management is not
+    supported" - which reads like the capture Chrome is broken, when it was
+    running and signed in the whole time.
+
+    So try both, and accept the first that actually supports contexts.
+    """
+    errors = []
+    for host in ("127.0.0.1", "[::1]"):
+        try:
+            b = pw.chromium.connect_over_cdp(f"http://{host}:{port}", timeout=60000)
+            if b.contexts:
+                return b, host
+            errors.append(f"{host}: connected but has no browser context")
+            b.close()
+        except Exception as e:                                  # noqa: BLE001
+            errors.append(f"{host}: {str(e)[:70]}")
+    return None, errors
+
+
 def main() -> int:
     bad = []
     with sync_playwright() as pw:
-        try:
-            browser = pw.chromium.connect_over_cdp("http://127.0.0.1:9222", timeout=60000)
-        except Exception as e:
-            print("  CDP: DOWN -", str(e)[:70])
+        browser, where = attach(pw)
+        if browser is None:
+            print("  CDP: DOWN")
+            for line in where:
+                print("    ", line)
             print("\n  Start it with scripts/screenshots/start-capture-chrome.bat")
+            print("  If another lab's Chrome holds the port, this lab's may be")
+            print("  on the other address - both are tried above.")
             return 1
-        print("  CDP: up")
+        print(f"  CDP: up (on {where})")
         ctx = browser.contexts[0]
         for name, url, markers in CHECKS:
             page = ctx.new_page()

@@ -1,0 +1,17 @@
+Week 14 — figure slots not in the post, and why.
+
+PENDING — cannot be captured yet.
+
+  07-cost.png
+      The cost slot. Exempt from the pre-destroy check by design: charges do
+      not post until roughly a day after teardown, so this cannot exist before
+      the week is torn down.
+
+      Week 13's equivalent slot was eventually retired rather than captured,
+      because a screenshot of a BigQuery result proves less than the number and
+      the query do. This one will likely go the same way, but it is PENDING
+      until the charges are actually read - deciding in advance would be
+      assuming the answer.
+
+Nothing here is retired. If a slot is abandoned rather than captured, this file
+must say so explicitly and give the reason.

@@ -1,0 +1,11 @@
+# captured 2026-11-22T21:08:10Z
+$ gcloud compute addresses describe psc-apis-endpoint-ip --global
+  10.99.0.2
+  PRIVATE_SERVICE_CONNECT
+  INTERNAL
+
+$ gcloud compute networks subnets list --filter="network~psc-lab"
+  psc-lab-us-central1	10.40.0.0/24	True
+
+$ gcloud compute forwarding-rules describe pscapis --global
+  pscapis	all-apis	10.99.0.2

@@ -1,0 +1,15 @@
+title:    week-14-private-service-connect
+subtitle: What each directory is responsible for
+width:    820
+---
+  terraform/          the VPC, the subnet with Private Google Access,
+                      the PSC endpoint, and one probe VM with no external IP
+  scripts/
+    validate.sh       12 assertions, run against the live deployment
+    break-pga.sh      deletes the default route, measures both paths,
+                      and restores the route in a trap on every exit
+  docs/
+    FIGURE_PLAN.md    written before the deploy, in reader order
+    deprecations.md   each service, the deprecation page read, and the date
+    evidence/         raw command output behind every figure
+    pga-vs-psc.json   the measurement itself

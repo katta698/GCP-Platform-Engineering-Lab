@@ -1,0 +1,17 @@
+title:    One route deleted. One path dies, the other does not notice.
+subtitle: Nothing else changed - not the VM, not the subnet flag, not the firewall
+width:    980
+---
+route deleted: Private Google Access -> 000   PSC endpoint -> 401
+
+# The only change was deleting the VPC's default route to the internet gateway.
+#
+# Private Google Access needs that route: the documentation requires "routes
+# whose next hops are the default internet gateway", because the traffic is
+# going to Google's PUBLIC addresses. Remove it and there is no path.
+#
+# The PSC endpoint never used it. 10.99.0.2 is inside this VPC, so the packet
+# never needs a route off the network at all.
+#
+# This is what "private" actually buys you, and the two mechanisms are not
+# interchangeable - which is invisible until the route is gone.

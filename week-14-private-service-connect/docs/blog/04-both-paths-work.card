@@ -1,0 +1,15 @@
+title:    Both paths work, from a VM with no external IP
+subtitle: Same API, same machine - only the address curl connects to differs
+width:    980
+---
+baseline: Private Google Access -> 401   PSC endpoint -> 401
+
+# 401 is the proof, not a problem. The call reached Google and was refused for
+# lack of credentials, which means the network path completed. A path that does
+# not work returns 000: the connection never opened at all.
+#
+# PGA  curl https://storage.googleapis.com         (default DNS -> a Google VIP)
+# PSC  curl --resolve storage.googleapis.com:443:10.99.0.2
+#
+# The VM has no external IP and there is no Cloud NAT on this network, so
+# neither of these is an ordinary internet call.
