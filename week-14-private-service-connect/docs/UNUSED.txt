@@ -1,5 +1,17 @@
 Week 14 — figure slots not in the post, and why.
 
+RETIRED — the repository structure card.
+
+  01-repo-structure.png
+      Rendered, and then not used. The master standard calls this figure
+      optional and says to omit it when it does not help a reader understand
+      the implementation. This post links to the repository twice and the
+      layout is four directories; a picture of their names adds nothing the
+      link does not give better.
+
+      The .card source stays committed, so the decision is reversible and the
+      figure can be dropped in without re-deriving it.
+
 PENDING — cannot be captured yet.
 
   07-cost.png
