@@ -335,10 +335,40 @@ def week_13():
                "and the surviving tunnel carries the traffic.")
 
 
+def week_14():
+    a = Arch("Private access to Google APIs, with no route to the internet",
+             subtitle="One workload, two paths out — and only one of them survives losing the gateway",
+             eyebrow=EYE % "14", w=W, h=580)
+    a.zone("gc", 40, 96, 880, 330, "Google Cloud", kind="cloud")
+    a.zone("vpc", 64, 140, 560, 270, "psc-lab VPC", kind="vpc")
+    a.zone("sub", 90, 250, 230, 130, "subnet", kind="region")
+    a.node("vm", 200, 310, "compute_engine.svg", "probe VM", "10.40.0.x, no external IP")
+    a.node("psc", 470, 310, "cloud_network.svg", "PSC endpoint", "10.99.0.2")
+    a.node("gw", 470, 185, "cloud_nat.svg", "internet gateway", "the default route")
+    a.node("api", 800, 310, "cloud_apis.svg", "Google APIs", "storage.googleapis.com")
+    a.flow("vm", "psc", step=1)
+    a.flow("psc", "api", step=2)
+    a.flow("vm", "gw", step=3, route="v")
+    a.flow("gw", "api", step=4)
+    a.note(40, 472, [
+        "1-2 Private Service Connect. The VM talks to 10.99.0.2, an address reserved inside this VPC. Google requires it to",
+        "     sit OUTSIDE every subnet range, which is why it is not part of 10.40.0.0/24.",
+        "3-4 Private Google Access. The VM talks to Google's OWN addresses, 199.36.153.8/30, out through the default route.",
+        "Delete that route and 3-4 stops. 1-2 never used it. That is the entire difference, and it is testable in one command.",
+    ])
+    return a, ("A probe VM with no external IP inside a subnet, reaching Google "
+               "APIs two ways. One goes to a Private Service Connect endpoint "
+               "on an address reserved inside the VPC but deliberately outside "
+               "any subnet range. The other goes up through the VPC's default "
+               "internet gateway to Google's own public addresses, which is "
+               "what Private Google Access does. Deleting the default route "
+               "breaks the second path and leaves the first working.")
+
+
 WEEKS = {"01": week_01, "02": week_02, "03": week_03, "04": week_04,
          "05": week_05, "06": week_06, "07": week_07, "08": week_08,
          "09": week_09, "10": week_10, "11": week_11, "12": week_12,
-         "13": week_13}
+         "13": week_13, "14": week_14}
 
 if __name__ == "__main__":
     for n in (sys.argv[1:] or sorted(WEEKS)):
