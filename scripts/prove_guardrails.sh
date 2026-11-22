@@ -57,9 +57,27 @@ fi
 
 echo
 echo "== leftovers"
-LEFT="$(g compute instances list --project="$PROJECT" --filter='name~^gr-proof' --format='value(name)' | grep -c . || true)"
+# Deletion is ASYNC. The first version listed instances the instant after a
+# successful delete, saw the VM still in DELETING, and reported a leftover that
+# was already going away - a false alarm on the one check whose whole job is to
+# tell you nothing is costing money. Poll instead of asserting once.
+# NOT the g() helper here: it merges stderr, and when the filter matches
+# nothing gcloud prints "WARNING: The following filter keys were not present
+# in any resource", which grep -c counts as one leftover instance. The check
+# whose job is to say "nothing is costing money" failed on its own noise.
+count_proof_vms() {
+  gcloud compute instances list --project="$PROJECT" \
+    --filter='name~^gr-proof' --format='value(name)' 2>/dev/null \
+    | tr -d '\r' | grep -c . || true
+}
+LEFT=1
+for _ in 1 2 3 4 5 6 7 8 9 10; do
+  LEFT="$(count_proof_vms)"
+  [ "$LEFT" = "0" ] && break
+  sleep 10
+done
 [ "$LEFT" = "0" ] && { echo "  PASS  nothing left running"; PASS=$((PASS+1)); } \
-                  || { echo "  FAIL  ${LEFT} test instance(s) still exist"; FAIL=$((FAIL+1)); }
+                  || { echo "  FAIL  ${LEFT} test instance(s) still exist after 100s"; FAIL=$((FAIL+1)); }
 
 echo
 printf '%d passed, %d failed\n' "$PASS" "$FAIL"
