@@ -9,8 +9,9 @@ product page. Checked 2026-11-20, before any Terraform was written.
 | PSC endpoints for Google APIs | https://docs.cloud.google.com/vpc/docs/configure-private-service-connect-apis | 2026-11-20 | current. One dated change: endpoints created before 2026-09-01 are unsupported inside VPC Service Controls perimeters and must be recreated. This week creates new ones, so it is unaffected |
 | Private Google Access | https://docs.cloud.google.com/vpc/docs/private-google-access | 2026-11-20 | current, no deprecation. Still a per-subnet setting, still requires a route whose next hop is the default internet gateway |
 | Private services access | https://docs.cloud.google.com/vpc/docs/private-access-options | 2026-11-20 | current, and explicitly NOT the mechanism for Google APIs — it is VPC peering to a producer network. Not used this week |
+| Cloud Router | https://docs.cloud.google.com/network-connectivity/docs/router/concepts/overview | 2026-11-20 | current. Named in the README only as context for hybrid reachability; this week deploys none |
 | Compute Engine (probe VM) | https://docs.cloud.google.com/compute/docs/deprecations | 2026-11-20 | e2 family current; no deprecation affecting e2-micro in us-central1 |
-| Cloud VPN / Cloud Router | https://docs.cloud.google.com/network-connectivity/docs/vpn/deprecations/classic-vpn-deprecation | 2026-11-20 | carried over from Week 13: BGP on Classic VPN ended 2025-08-01; HA VPN unaffected. Only relevant if the hybrid variant is built |
+| Cloud VPN | https://docs.cloud.google.com/network-connectivity/docs/vpn/deprecations/classic-vpn-deprecation | 2026-11-20 | carried over from Week 13: BGP on Classic VPN ended 2025-08-01; HA VPN unaffected. Only relevant if the hybrid variant is built |
 
 ## The one dated item worth repeating
 
