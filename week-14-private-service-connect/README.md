@@ -19,10 +19,19 @@ deleting the internet route and showing the workload carries on working.
 | 1 e2-micro probe, no external IP | free tier | `us-central1`, within the monthly allowance |
 | VPC, subnet, routes, firewall rule | no charge | |
 
-**Measured cost: not yet available.** The week ran about 1.2 hours and the
-charges had not posted when this was written. Read it from the billing export
-once they settle, not from the rate card — and attach the time it was read.
-Week 13's export returned $1.76 at 22:40 and $1.99 at 23:20 on the same day.
+**Measured cost: $0.01**, read from the billing export on 2026-11-23, the day
+after the deploy. All of it is the endpoint SKU `Networking Private Service
+Connect Consumer End Point` ($0.0129 for ~1.2 hours). The probe VM is charged
+$0.0115 and discounted $0.0115 by the free tier; Network Intelligence Center's
+$0.009 is fully credited.
+
+The billing day also carries $0.0065 of N2 that is **not** this week: an
+`n2-standard-8` created to prove the org-level machine-type guardrail refuses
+one, which ran for seconds before the policy had propagated. Recorded here so
+the day's total and the week's cost are not confused.
+
+Read the export the day AFTER the deploy. Week 13's returned $1.76 at 22:40
+and $1.99 at 23:20 on the day itself.
 
 The teardown removes everything: the endpoint, the reserved address, the probe,
 the firewall rule, the subnet and the VPC. **One manual step** — see LAB.md:

@@ -12,18 +12,20 @@ RETIRED — the repository structure card.
       The .card source stays committed, so the decision is reversible and the
       figure can be dropped in without re-deriving it.
 
-PENDING — cannot be captured yet.
+RETIRED — the cost slot, closed 2026-11-23 rather than captured.
 
   07-cost.png
-      The cost slot. Exempt from the pre-destroy check by design: charges do
-      not post until roughly a day after teardown, so this cannot exist before
-      the week is torn down.
+      The charges posted and were read the day after the deploy: $0.01, all of
+      it the endpoint SKU. The number and the breakdown are in the post's Cost
+      section and in README.md.
 
-      Week 13's equivalent slot was eventually retired rather than captured,
-      because a screenshot of a BigQuery result proves less than the number and
-      the query do. This one will likely go the same way, but it is PENDING
-      until the charges are actually read - deciding in advance would be
-      assuming the answer.
+      Retired rather than captured, on the same reasoning as Week 13's: a
+      screenshot of a BigQuery result is weaker evidence than the figure and
+      the query. A reader cannot check an image; the query is reproducible.
+
+      Worth recording because reading it a day late mattered. The same billing
+      day also carries $0.0065 of N2 from the cost-guardrail proof, which is
+      not this week - a day total is not a week's cost.
 
 Nothing here is retired. If a slot is abandoned rather than captured, this file
 must say so explicitly and give the reason.
